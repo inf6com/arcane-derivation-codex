@@ -1,0 +1,16 @@
+DerivedData/
+.build/
+.swiftpm/
+*.xcresult/
+*.mlmodelc/
+*.mlpackage/
+*.pt
+*.pth
+*.onnx
+*.npz
+*.jsonl
+*.u8
+*.f32le
+*.i64le
+.env
+.env.*

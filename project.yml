@@ -1,0 +1,70 @@
+name: ArcaneDerivation
+options:
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  ArcaneDerivation:
+    type: application
+    platform: iOS
+    sources:
+      - Sources
+    resources:
+      - path: Sources/Assets.xcassets
+        type: folder
+      - path: Models/yolo11n_doc_layout.mlpackage
+        type: folder
+      - path: Models/Inf6TextEmbedding.mlpackage
+        type: folder
+      - path: Models/Inf6TextEmbedding.mlmodelc
+        type: folder
+      - path: Models/Inf6TextEmbeddingTokenizer
+        type: folder
+      - path: Models/TexTellerEncoder.mlpackage
+        type: folder
+      - path: Models/TexTellerDecoderInit.mlpackage
+        type: folder
+      - path: Models/TexTellerDecoderKV.mlpackage
+        type: folder
+      - path: Models/TexTellerTokenizer
+        type: folder
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.inf6.inf6
+        DEVELOPMENT_TEAM: W7RB5ZZNUJ
+        CODE_SIGN_STYLE: Automatic
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: 6.0
+        INFOPLIST_KEY_CFBundleDisplayName: inf6.com
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+    info:
+      path: ArcaneDerivation-Info.plist
+      properties:
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        BGTaskSchedulerPermittedIdentifiers:
+          - com.inf6.inf6.syllabus-refresh
+  ArcaneDerivationTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - Tests
+    dependencies:
+      - target: ArcaneDerivation
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.inf6.inf6.tests
+        DEVELOPMENT_TEAM: W7RB5ZZNUJ
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/ArcaneDerivation.app/ArcaneDerivation"
+schemes:
+  ArcaneDerivation:
+    build:
+      targets:
+        ArcaneDerivation: all
+    test:
+      targets:
+        - ArcaneDerivationTests
+    run:
+      config: Debug
+      debugEnabled: false
