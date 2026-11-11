@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="火の鳥アンサンブルモデルの構成と候補生成の設計。">
+  <meta name="theme-color" content="#005A9C">
+  <title>火の鳥アンサンブルモデル | Arcane Derivation Codex</title>
+  <style>
+    :root { color-scheme:dark; --bg:#005A9C; --panel:#00467a; --line:#3b91c7; --ink:#b9e4ff; --muted:#e0f2ff; --accent:#8bd8ff; --gold:#f1c88a; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(circle at 80% 0%,#1682c2 0,transparent 38%),var(--bg); color:var(--muted); font:16px/1.7 -apple-system,BlinkMacSystemFont,"SF Pro Display","Hiragino Sans",sans-serif; }
+    main { max-width:1080px; margin:auto; padding:28px 22px 72px; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:20px; border-bottom:1px solid var(--line); padding-bottom:18px; }
+    a { color:var(--accent); }
+    .brand { display:flex; align-items:center; gap:12px; color:var(--ink); text-decoration:none; font-weight:700; background:linear-gradient(90deg,#9438f2,#f229ad,#0fd1f5,#2eebb3,#add19e,#ff5275,#b338f0); background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .brand img { width:42px; height:42px; border-radius:10px; }
+    nav { display:flex; flex-wrap:wrap; align-items:center; gap:16px; }
+    .lang { border:1px solid var(--line); background:transparent; color:var(--ink); border-radius:999px; padding:7px 13px; cursor:pointer; }
+    .hero { padding:70px 0 42px; max-width:850px; }
+    .eyebrow { color:var(--gold); letter-spacing:.12em; }
+    h1 { color:var(--ink); background:linear-gradient(90deg,#9438f2,#f229ad,#0fd1f5,#2eebb3,#add19e,#ff5275,#b338f0); background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:clamp(2.2rem,6vw,4.4rem); line-height:1.1; margin:12px 0 18px; }
+    h2 { color:var(--ink); margin:0 0 12px; font-size:1.45rem; }
+    p { margin:0; }
+    .diagram { overflow:auto; margin:26px 0 36px; padding:18px; background:rgba(0,70,122,.92); border:1px solid var(--line); border-radius:16px; }
+    .mermaid { min-width:900px; text-align:center; font-size:22px; }
+    .mermaid svg { max-width:none !important; min-width:900px; }
+    .panel { background:rgba(0,70,122,.92); border:1px solid var(--line); border-radius:16px; padding:18px; }
+    .panel { margin-top:18px; }
+    .formula { overflow-wrap:anywhere; padding:14px; margin:14px 0; border-radius:10px; background:rgba(4,24,56,.75); color:#fff; font-family:ui-monospace,SFMono-Regular,monospace; }
+    details { margin-top:18px; }
+    summary { color:var(--accent); cursor:pointer; font-weight:700; }
+    .steps { padding-left:1.4em; }
+    .steps li { margin:6px 0; }
+    footer { border-top:1px solid var(--line); margin-top:60px; padding-top:18px; }
+    [data-en] { display:none; }
+    .en [data-ja] { display:none; } .en [data-en] { display:block; }
+    @media(max-width:760px) { header { align-items:flex-start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <a class="brand" href="/index.html"><img src="inf6.png" alt=""><span>Arcane Derivation Codex</span></a>
+      <nav aria-label="Site links"><a href="/index.html">ホーム</a><button class="lang" type="button" aria-label="Change language">EN</button></nav>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">ARCANE DERIVATION CODEX · HINOTORI</div>
+      <div data-ja><h1>火の鳥アンサンブルモデル</h1><p>手書きと活字の記号分類を確率融合し、利用者が候補を確定する孤立記号認識モデルです。</p></div>
+      <div data-en><h1>Hinotori Ensemble Model</h1><p>An isolated-symbol recognition model that fuses handwritten and typeset classification probabilities and lets the user confirm a candidate.</p></div>
+    </section>
+    <section aria-label="Ensemble stages">
+      <h2 data-ja>火の鳥の全体構成</h2><h2 data-en>Hinotori architecture</h2>
+      <div class="diagram" data-ja><pre class="mermaid">flowchart TD
+        subgraph OFF[事前作成]
+          FONT[活字字形画像] --> COS[画素支持率・コサイン比較] --> S87[87類似部分集合]
+          TEACH[活字画像＋手書き教師] --> VIT[ViT画像分類・誤分類分析] --> S124[124視覚類似部分集合]
+        end
+        subgraph ON[入力時]
+          I[手書き記号] --> H[Fold-07 手書きモデル<br/>229記号・128次元特徴]
+          I --> T[活字補助モデル<br/>222記号]
+          H --> F[確率校正・融合] --> TOP[統合Top-5]
+          T --> F
+          TOP --> EXP[87・124部分集合で候補を追加]
+          H --> EXP
+          I --> XY[元の座標] --> POS[位置判定]
+          EXP --> CONF[利用者が確定]
+          POS --> CONF
+        end
+        S87 --> EXP
+        S124 --> EXP
+        CONF --> OUT[数式編集欄へ反映]
+        classDef main fill:#073b65,stroke:#8bd8ff,color:#e0f2ff,stroke-width:2px
+        classDef decision fill:#12304b,stroke:#f1c88a,color:#fff,stroke-width:2px
+        class I,H,T,F,TOP,EXP,XY,POS,OUT,FONT,COS,S87,TEACH,VIT,S124 main
+        class CONF decision</pre></div>
+      <div class="diagram" data-en><pre class="mermaid">flowchart TD
+        subgraph OFF[Prepared offline]
+          FONT[Typeset glyph images] --> COS[Pixel support and cosine comparison] --> S87[87 similarity subsets]
+          TEACH[Typeset images + handwriting teachers] --> VIT[ViT image classification and confusion] --> S124[124 visual subsets]
+        end
+        subgraph ON[At input time]
+          I[Handwritten symbol] --> H[Fold-07 handwritten model<br/>229 symbols · 128D feature]
+          I --> T[Typeset auxiliary model<br/>222 symbols]
+          H --> F[Calibrate and fuse probabilities] --> TOP[Fused Top-5]
+          T --> F
+          TOP --> EXP[Expand candidates with 87 and 124 subsets]
+          H --> EXP
+          I --> XY[Original coordinates] --> POS[Position reasoning]
+          EXP --> CONF[User confirms]
+          POS --> CONF
+        end
+        S87 --> EXP
+        S124 --> EXP
+        CONF --> OUT[Insert into formula editor]
+        classDef main fill:#073b65,stroke:#8bd8ff,color:#e0f2ff,stroke-width:2px
+        classDef decision fill:#12304b,stroke:#f1c88a,color:#fff,stroke-width:2px
+        class I,H,T,F,TOP,EXP,XY,POS,OUT,FONT,COS,S87,TEACH,VIT,S124 main
+        class CONF decision</pre></div>
+    </section>
+    <section class="panel">
+      <h2 data-ja>三つの要素技術</h2><h2 data-en>Three technical components</h2>
+      <div data-ja><p><strong>手書きモデル：</strong>Fold-07が229記号を分類し、128次元の特徴を出力。</p><p><strong>活字モデル：</strong>活字字形で学習した補助分類器。222記号の確率を手書き枝と統合。</p><p><strong>類似集合：</strong>活字画像のコサイン比較による87集合と、ViTの誤分類分析による124集合。Top-5の後で候補を補います。</p><p>位置判定は類似集合と分け、元座標を使います。</p><div class="formula">融合確率 = 0.745 × 手書き + 0.255 × 活字</div></div>
+      <div data-en><p><strong>Handwriting:</strong> Fold-07 classifies 229 symbols and outputs a 128D feature.</p><p><strong>Typeset:</strong> An auxiliary classifier trained on glyphs; its 222-class probabilities are fused with handwriting.</p><p><strong>Similar sets:</strong> 87 sets from typeset-image cosine comparison and 124 from ViT confusion analysis. They add candidates after Top-5.</p><p>Position reasoning is separate and uses original coordinates.</p><div class="formula">Fused probability = 0.745 × handwriting + 0.255 × typeset</div></div>
+    </section>
+    <details class="panel">
+      <summary data-ja>87集合の生成条件</summary><summary data-en>How the 87 sets are built</summary>
+      <ol class="steps" data-ja><li>活字輪郭・骨格画像68,689枚と解像度違いの合成画像540枚から、記号ごとの画素支持率を作ります。</li><li>画素支持率が30%以下の画素を0にし、229記号の全26,106対でコサイン類似度を計算します。</li><li>類似度を計算できない228対を除き、0.30以上の7,413対を、全ペアが閾値を満たす重複可能な408個の部分集合へまとめます。</li><li>4記号以下の部分集合を除いて234個とし、部分集合同士が完全連結で3記号以上を共有するとき統合して119個にします。</li><li>統合後、15記号未満の部分集合を採用します。この手順で87個を得ます。</li></ol>
+      <ol class="steps" data-en><li>Build per-symbol pixel-support features from 68,689 typeset contour and skeleton images plus 540 synthetic resolution variants.</li><li>Zero pixels supported by 30% or fewer images and calculate cosine similarity for all 26,106 pairs among 229 symbols.</li><li>Exclude 228 undefined pairs; organize the 7,413 pairs at or above 0.30 into 408 overlapping subsets whose internal pairs all meet the threshold.</li><li>Remove subsets of four symbols or fewer, leaving 234. Merge only when subsets share at least three symbols under complete-link, yielding 119 merged subsets.</li><li>Keep merged subsets with fewer than 15 symbols, yielding 87 subsets.</li></ol>
+    </details>
+    <footer><a href="/index.html">Arcane Derivation Codex</a></footer>
+  </main>
+  <script>
+    const button = document.querySelector('.lang');
+    button.addEventListener('click', () => { document.body.classList.toggle('en'); button.textContent = document.body.classList.contains('en') ? 'JA' : 'EN'; });
+  </script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      securityLevel: 'strict',
+      themeVariables: { fontSize: '21px', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' },
+      flowchart: { useMaxWidth: false, nodeSpacing: 42, rankSpacing: 56 }
+    });
+    const renderVisibleDiagram = () => {
+      const language = document.body.classList.contains('en') ? 'en' : 'ja';
+      const node = document.querySelector(`[data-${language}] .mermaid`);
+      if (node) mermaid.run({ nodes: [node] });
+    };
+    document.querySelector('.lang').addEventListener('click', renderVisibleDiagram);
+  </script>
+</body>
+</html>

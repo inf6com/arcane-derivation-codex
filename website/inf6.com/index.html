@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apple Neural Engineで動く端末内エッジAIを搭載。iPad mini A17 Pro実機で火の鳥のCore ML推論を確認した Arcane Derivation Codex。">
+  <meta name="theme-color" content="#005A9C">
+  <meta property="og:title" content="Arcane Derivation Codex">
+  <meta property="og:description" content="Apple Neural Engineで動く端末内エッジAIを搭載。iPad mini A17 Pro実機で火の鳥のCore ML推論を確認。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://inf6.com/">
+  <meta property="og:image" content="https://inf6.com/inf6.png?v=20261106-codex-icon2">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="https://inf6.com/inf6.png?v=20261106-codex-icon2">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=20261106-codex-icon2">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=20261106-codex-icon2">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png?v=20261106-codex-icon2">
+  <link rel="shortcut icon" href="favicon.ico?v=20261106-codex-icon2">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png?v=20261106-codex-icon2">
+  <link rel="manifest" href="manifest.webmanifest?v=20261106-codex-icon2">
+  <title>Arcane Derivation Codex | inf6.com</title>
+  <style>
+    :root { color-scheme: dark; --bg:#005A9C; --panel:#00467a; --line:#3b91c7; --ink:#b9e4ff; --muted:#e0f2ff; --accent:#8bd8ff; --accent2:#f1c88a; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(circle at 80% 0%,#1682c2 0,transparent 38%),var(--bg); color:var(--muted); font:16px/1.7 -apple-system,BlinkMacSystemFont,"SF Pro Display","Hiragino Sans",sans-serif; }
+    main { max-width:1080px; margin:auto; padding:28px 22px 72px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line); padding-bottom:18px; }
+    .brand { display:flex; align-items:center; gap:14px; color:var(--ink); text-decoration:none; }
+    .brand img { width:48px; height:48px; object-fit:contain; border-radius:12px; }
+    .brand > span { display:flex; flex-direction:column; line-height:1.2; }
+    .brand b { color:var(--ink); background:linear-gradient(90deg,#9438f2,#f229ad,#0fd1f5,#2eebb3,#add19e,#ff5275,#b338f0); background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .company { color:var(--muted); font-size:.84rem; letter-spacing:.12em; text-transform:uppercase; }
+    .lang { border:1px solid var(--line); background:transparent; color:var(--ink); border-radius:999px; padding:7px 13px; cursor:pointer; }
+    .hero { padding:82px 0 64px; max-width:none; }
+    .eyebrow { color:var(--accent); letter-spacing:.15em; text-transform:uppercase; font-size:.78rem; }
+    h1 { color:var(--ink); background:linear-gradient(90deg,#9438f2,#f229ad,#0fd1f5,#2eebb3,#add19e,#ff5275,#b338f0); background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:clamp(2.4rem,7vw,5.6rem); line-height:1.04; letter-spacing:-.05em; margin:16px 0 24px; }
+    h2 { color:var(--ink); font-size:1.45rem; margin:0 0 10px; }
+    p { color:var(--muted); margin:0; }
+    .hero p { font-size:1.16rem; max-width:none; text-wrap:pretty; }
+    .edge-ai { position:relative; overflow:hidden; margin:-18px 0 52px; padding:clamp(24px,5vw,48px); border:1px solid #12d8ee; border-radius:22px; background:linear-gradient(125deg,rgba(15,209,245,.16),rgba(46,235,179,.08) 48%,rgba(148,56,242,.16)),rgba(0,24,56,.72); box-shadow:0 0 36px rgba(15,209,245,.15),inset 0 0 32px rgba(15,209,245,.06); }
+    .edge-ai:before { content:""; position:absolute; inset:0 auto 0 0; width:5px; background:linear-gradient(#9438f2,#f229ad,#0fd1f5,#2eebb3,#ff5275); }
+    .edge-ai .eyebrow { color:#32e6ec; font-weight:800; }
+    .edge-ai h2 { margin:8px 0 12px; font-size:clamp(1.8rem,4vw,3.2rem); line-height:1.15; }
+    .edge-ai > p { max-width:760px; font-size:1.08rem; }
+    .edge-proof { display:flex; flex-wrap:wrap; align-items:stretch; gap:12px; margin-top:24px; }
+    .edge-proof > div { min-width:150px; flex:1; padding:14px 16px; border:1px solid rgba(139,216,255,.32); border-radius:14px; background:rgba(2,20,48,.52); }
+    .edge-proof b { display:block; color:#51eff0; font-size:1.32rem; line-height:1.3; }
+    .edge-proof span { display:block; color:var(--muted); font-size:.9rem; }
+    .edge-note { margin-top:14px!important; color:#a9c5dd!important; font-size:.84rem!important; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .card { background:rgba(0,70,122,.92); border:1px solid var(--line); border-radius:18px; padding:24px; box-shadow:0 8px 24px rgba(0,28,65,.28); }
+    .card strong { display:block; color:var(--accent2); margin-bottom:8px; }
+    .roadmap { margin-top:64px; }
+    .timeline { display:grid; gap:10px; margin-top:18px; }
+    .step { display:grid; grid-template-columns:110px 1fr; gap:18px; padding:18px 0; border-top:1px solid var(--line); }
+    .step b { color:var(--accent); }
+    footer { border-top:1px solid var(--line); margin-top:70px; padding-top:18px; color:var(--muted); font-size:.9rem; }
+    [data-en] { display:none; }
+    .en [data-ja] { display:none; } .en [data-en] { display:block; }
+    @media (max-width:650px) { .grid { grid-template-columns:1fr; } .step { grid-template-columns:1fr; gap:2px; } header { align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <a class="brand" href="./"><img src="inf6.png" alt="Arcane Derivation Codex icon"><span><b>Arcane Derivation Codex</b><small class="company">inf6.com</small></span></a>
+      <nav aria-label="Site links">
+        <a href="hinotori.html">火の鳥モデル</a>
+        <a href="mailto:inf6.com@icloud.com">メール</a>
+        <a href="legal.html#privacy">Privacy Policy</a>
+        <a href="legal.html#terms">Terms</a>
+        <button class="lang" type="button" aria-label="Change language">EN</button>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="eyebrow">inf6.com</div>
+      <div data-ja><h1>Arcane Derivation Codex</h1><p>全宇宙と時空を自在に飛ぶ火の鳥と対話し、数学・導出・計算・根拠・実装をともに読み解くアプリです。</p></div>
+      <div data-en><h1>Arcane Derivation Codex</h1><p>An app for conversing with the Phoenix, free to fly across the universe and spacetime, and exploring mathematics, derivations, evidence, and implementation together.</p></div>
+    </section>
+    <section class="edge-ai" aria-label="On-device Edge AI">
+      <div data-ja>
+        <div class="eyebrow">ON-DEVICE EDGE AI · CORE ML · APPLE NEURAL ENGINE</div>
+        <h2>火の鳥は、iPadの中で動く。</h2>
+        <p>手書き数式認識を端末内で実行するエッジAI。分割・手書き記号分類・活字補助の3つのCore MLモデルすべてで、iPad mini（A17 Pro）のApple Neural Engine実行を実測確認しました。</p>
+        <div class="edge-proof">
+          <div><b>ANE 実機確認</b><span>iPad mini · A17 Pro</span></div>
+          <div><b>85.91 ms</b><span>認識パイプライン全体の中央値</span></div>
+          <div><b>3 / 3 モデル</b><span>ANEハードウェア区間を記録</span></div>
+        </div>
+        <p class="edge-note">ウォームアップ後10回の推論測定。文字認識精度・電力・長時間連続時の性能を示す値ではありません。</p>
+      </div>
+      <div data-en>
+        <div class="eyebrow">ON-DEVICE EDGE AI · CORE ML · APPLE NEURAL ENGINE</div>
+        <h2>Hinotori runs on your iPad.</h2>
+        <p>Handwritten formula recognition runs as on-device edge AI. Apple Neural Engine execution was measured for all three Core ML models—segmentation, handwritten-symbol classification, and typeset auxiliary candidates—on iPad mini (A17 Pro).</p>
+        <div class="edge-proof">
+          <div><b>ANE verified</b><span>iPad mini · A17 Pro</span></div>
+          <div><b>85.91 ms</b><span>Median end-to-end recognition pipeline</span></div>
+          <div><b>3 / 3 models</b><span>ANE hardware intervals recorded</span></div>
+        </div>
+        <p class="edge-note">Median over 10 warmed runs. This is not a symbol-accuracy, power, or sustained-thermal result.</p>
+      </div>
+    </section>
+    <section class="grid" aria-label="Product capabilities">
+      <article class="card"><strong>01</strong><h2 data-ja>数式導出</h2><h2 data-en>Derivation</h2><p data-ja>選択した数式を起点に、記号・次元・変形・計算結果を編集し、検証済みの導出として保存します。</p><p data-en>Start from a selected equation, edit symbols, dimensions, transformations, and calculations, then save the verified derivation.</p></article>
+      <article class="card"><strong>02</strong><h2 data-ja>論文の根拠</h2><h2 data-en>Paper evidence</h2><p data-ja>原典の本文・図・表・数式を、出典位置とともに学習対象へ結び付けます。</p><p data-en>Connect the original paper text, figures, tables, and equations to the learning object with source locations.</p></article>
+      <article class="card"><strong>03</strong><h2 data-ja>理論とコード</h2><h2 data-en>Theory and code</h2><p data-ja>理論上の処理を、実データを扱う実行可能なコードと対応付けます。</p><p data-en>Relate the mathematical operation to executable code using meaningful data.</p></article>
+      <article class="card"><strong>04</strong><h2 data-ja>保存と共有</h2><h2 data-en>Save and share</h2><p data-ja>検証済み成果物をユーザーが選択したローカルフォルダに保持し、必要なときだけZIPで入出力します。</p><p data-en>Keep verified artifacts in a user-selected local folder and use Zip export/import sharing only when requested.</p></article>
+      <article class="card"><strong>05</strong><h2 data-ja>E資格試験プリセット</h2><h2 data-en>E-Qualification preset</h2><p data-ja>公式シラバスを初期プリセットとして学習を開始できます。追加した資格・論文・技術領域は別ドメインで管理します。</p><p data-en>Start with the official syllabus as the initial preset. Added qualifications, papers, and technical subjects remain separate domains.</p></article>
+      <article class="card"><strong>06</strong><h2 data-ja>火の鳥アンサンブル</h2><h2 data-en>Hinotori ensemble</h2><p data-ja>手書き・活字の記号分類と類似記号候補を組み合わせる設計を紹介します。</p><p data-en>Explore how handwritten and typeset symbol classifiers work with similar-symbol candidates.</p><a href="hinotori.html">設計を見る / View design</a></article>
+    </section>
+    <footer><span>© inf6.com · Arcane Derivation Codex</span> · <a href="mailto:inf6.com@icloud.com">メール</a> · <a href="legal.html#privacy">Privacy Policy</a> · <a href="legal.html#terms">Terms</a></footer>
+  </main>
+  <script>
+    const button = document.querySelector('.lang');
+    button.addEventListener('click', () => { document.body.classList.toggle('en'); button.textContent = document.body.classList.contains('en') ? 'JA' : 'EN'; });
+  </script>
+</body>
+</html>

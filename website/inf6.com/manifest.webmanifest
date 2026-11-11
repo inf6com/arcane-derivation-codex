@@ -1,0 +1,12 @@
+{
+  "name": "Arcane Derivation Codex",
+  "short_name": "Arcane Codex",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06142f",
+  "theme_color": "#005A9C",
+  "icons": [
+    { "src": "/icon-192.png?v=20261106-codex-icon2", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png?v=20261106-codex-icon2", "sizes": "512x512", "type": "image/png" }
+  ]
+}

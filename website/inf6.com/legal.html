@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>inf6 – Support / Privacy / Terms</title>
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#005A9C" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="inf6.png" />
+  <link rel="apple-touch-icon" href="inf6.png" />
+
+  <style>
+    :root{
+      --dodgers:#005A9C; --dodgers-600:#00467a; --dodgers-400:#0a6cc2;
+      --sky-50:#F2F8FF; --sky-100:#E6F2FF;
+      --ink:#0b1521; --muted:#5b6b7c;
+      --ring:#cfe6ff; --max:1080px; --radius:14px;
+      --shadow:0 10px 30px rgba(0,26,39,.08), 0 2px 8px rgba(0,26,39,.05);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--ink);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(0,122,204,.12), transparent 60%),
+        radial-gradient(1000px 500px at 90% -20%, rgba(0,90,156,.10), transparent 55%),
+        var(--sky-50);
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.65; -webkit-font-smoothing:antialiased;
+    }
+    a{color:var(--dodgers); text-decoration:none}
+    a:hover{text-decoration:underline}
+    a:focus-visible{outline:3px solid var(--ring); outline-offset:2px; border-radius:10px}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+
+    header{
+      background:linear-gradient(180deg,#fff 0%,#fff 70%,rgba(255,255,255,.92) 100%);
+      padding:22px 0 16px;
+      border-bottom:1px solid #e7f1ff;
+    }
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
+    .brand{display:flex; align-items:center; gap:10px}
+    .brand img{width:36px; height:36px; border-radius:10px; box-shadow:var(--shadow)}
+    .brand a{display:inline-flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px}
+    .brand span{color:var(--dodgers); font-size:18px}
+
+    nav{display:flex; gap:10px; flex-wrap:wrap}
+    nav a{
+      display:inline-flex; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid #cfe6ff;
+      background:#fff;
+      color:var(--dodgers);
+      font-weight:800;
+      font-size:13px;
+    }
+    nav a:hover{background:#f7fbff; text-decoration:none}
+
+    main{padding:28px 0 34px}
+    .lede{margin:6px 0 0; color:var(--muted); font-size:13px}
+
+    section{scroll-margin-top:72px; margin-top:18px}
+    .card{
+      background:#fff;
+      border:1px solid #dfeefe;
+      border-radius:var(--radius);
+      padding:16px 16px 14px;
+      box-shadow:var(--shadow);
+    }
+    h1{margin:0 0 10px; font-size:24px; letter-spacing:.2px; color:#06233b}
+    h2{margin:16px 0 10px; font-size:18px; letter-spacing:.2px; color:#06233b}
+    p{margin:0 0 12px}
+    ul{margin:0 0 12px; padding-left:18px}
+    li{margin:6px 0}
+
+    .divider{height:1px; background:#e7f1ff; border:0; margin:16px 0}
+
+    footer{
+      background:linear-gradient(180deg,#fff 0%,#f7fbff 100%);
+      border-top:1px solid #e7f1ff;
+      color:#3a4a5a;
+      font-size:13px;
+      padding:22px 0;
+    }
+    .footlinks{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+
+    @media (max-width: 520px){
+      .topbar{justify-content:center}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <a href="index.html" aria-label="inf6 home">
+            <img src="inf6.png" alt="inf6 logo" />
+            <span>inf6.com</span>
+          </a>
+        </div>
+        <nav aria-label="Legal navigation">
+          <a href="#support">Support</a>
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#terms">Terms</a>
+        </nav>
+      </div>
+      <p class="lede">Support / Privacy / Terms</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section id="support" class="card">
+        <h1>Support</h1>
+        <p>If you have questions or would like to report a bug about inf6, please contact us at the email address below.</p>
+        <p><strong>E-mail:</strong> <a href="mailto:inf6.com@icloud.com">inf6.com@icloud.com</a></p>
+
+        <h2>FAQ</h2>
+        <ul>
+          <li><strong>Q.</strong> How do I back up my data?<br><strong>A.</strong> Export your YAML from the app and save it to any storage service.</li>
+          <li><strong>Q.</strong> ChatGPT integration doesn’t work.<br><strong>A.</strong> Make sure your API key is correctly set in the settings screen and that your network connection is available.</li>
+          <li><strong>Q.</strong> My nodes aren’t being saved.<br><strong>A.</strong> Ensure the save process completes before leaving the screen with the “Back” button.</li>
+        </ul>
+      </section>
+
+      <hr class="divider" />
+
+      <section id="privacy" class="card">
+        <h1>Privacy Policy</h1>
+        <p>This Privacy Policy explains how the app "inf6" ("the App") handles user information. We respect your privacy and strive to protect your personal data.</p>
+
+        <h2>1. Information We Collect</h2>
+        <ul>
+          <li>Text data (e.g., YAML) that you input or import within the App</li>
+          <li>App settings (font size, display language, etc.)</li>
+          <li>Your ChatGPT API key (stored locally on your device)</li>
+        </ul>
+        <p>The App does not send your personal information to our own servers. Any data sent for ChatGPT requests goes directly to the OpenAI API endpoint you configure.</p>
+
+        <h2>2. Purpose of Use</h2>
+        <ul>
+          <li>To provide learning support features (summaries, explanations, etc.)</li>
+          <li>To retain user preferences and improve usability</li>
+        </ul>
+
+        <h2>3. Disclosure to Third Parties</h2>
+        <p>We do not disclose personal data to third parties without your consent unless required by law.</p>
+
+        <h2>4. Security</h2>
+        <p>Data stored on your device is protected by the security features provided by the operating system. Please manage device locks and backups appropriately.</p>
+
+        <h2>5. Changes to This Policy</h2>
+        <p>We may update this policy as needed. Significant changes will be announced in the App or on this website.</p>
+
+        <h2>6. Contact</h2>
+        <p>If you have questions about this policy, please contact <a href="mailto:inf6.com@icloud.com">inf6.com@icloud.com</a>.</p>
+      </section>
+
+      <hr class="divider" />
+
+      <section id="terms" class="card">
+        <h1>Terms of Use</h1>
+        <p>These Terms of Use ("Terms") set forth the conditions for using the App and the rights and obligations between the developer and users. Please read these Terms carefully before using the App.</p>
+
+        <h2>1. Scope</h2>
+        <p>These Terms apply to all relationships related to the use of the App.</p>
+
+        <h2>2. Prohibited Acts</h2>
+        <ul>
+          <li>Acts that violate laws or public order and morals</li>
+          <li>Acts that interfere with the operation of the App</li>
+          <li>Reverse engineering, decompiling, or other analysis of the App</li>
+          <li>Acts that infringe the rights of other users or third parties</li>
+        </ul>
+
+        <h2>3. Disclaimer</h2>
+        <ul>
+          <li>We do not guarantee the accuracy, completeness, usefulness, or fitness for purpose of the contents or services of the App.</li>
+          <li>We are not liable for any damages arising from the use of the App.</li>
+        </ul>
+
+        <h2>4. Suspension / Changes</h2>
+        <p>The developer may change, suspend, or terminate the App without prior notice to users.</p>
+
+        <h2>5. Governing Law / Jurisdiction</h2>
+        <p>These Terms shall be governed by the laws of Japan. Any disputes shall be subject to the exclusive jurisdiction of the court having jurisdiction over the developer's location in the first instance.</p>
+
+        <p style="margin-top:18px; color:var(--muted); font-size:13px;">Last updated: July 24, 2025</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footlinks">
+        <a href="#privacy">Privacy Policy</a>
+        <span aria-hidden="true">·</span>
+        <a href="#terms">Terms</a>
+        <span aria-hidden="true">·</span>
+        <a href="#support">Support</a>
+      </div>
+      <p style="margin:10px 0 0;">© 2025 inf6. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

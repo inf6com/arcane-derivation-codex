@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ja" data-lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>inf6.com – AI を使って人類の知的独立を守るためのツール</title>
+  <meta name="description" content="inf6.com は、AI を使って人類の知的独立を守るためのツールです。知のメジャメント・リスク判定・期限管理。暗記は不要になった。理解は不可欠になった。" />
+
+  <link rel="canonical" href="https://inf6.com/" />
+  <link rel="alternate" hreflang="ja" href="https://inf6.com/?lang=ja" />
+  <link rel="alternate" hreflang="en" href="https://inf6.com/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://inf6.com/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0b1521" />
+  <meta name="apple-itunes-app" content="app-id=6748942148" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="inf6.com – AI を使って人類の知的独立を守るためのツール" />
+  <meta property="og:description" content="知のメジャメント・リスク判定・期限管理。暗記は不要になった。理解は不可欠になった。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://inf6.com/" />
+  <meta property="og:image" content="https://inf6.com/inf6.png" />
+  <meta property="og:site_name" content="inf6.com" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="inf6.com – AI を使って人類の知的独立を守るためのツール" />
+  <meta name="twitter:description" content="知のメジャメント・リスク判定・期限管理。暗記は不要になった。理解は不可欠になった。" />
+  <meta name="twitter:image" content="https://inf6.com/inf6.png" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png" />
+
+  <style>
+    :root {
+      --ink: #0b1521;
+      --ink-60: #3a4a5a;
+      --ink-40: #5b6b7c;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --accent: #005A9C;
+      --accent-light: #0a6cc2;
+      --red: #c0392b;
+      --orange: #d35400;
+      --green: #1a7a3c;
+      --border: #dde6f0;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(11,21,33,.07), 0 1px 4px rgba(11,21,33,.04);
+      --max: 900px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      color: var(--ink);
+      background: var(--bg);
+      font-family: 'Noto Sans JP', Inter, -apple-system, system-ui, sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      color: var(--white);
+      padding: 80px 0 72px;
+      text-align: center;
+    }
+    .hero-logo {
+      width: 72px; height: 72px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+      margin-bottom: 28px;
+    }
+    .hero-mission {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 900;
+      letter-spacing: -.5px;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .hero-mission em {
+      font-style: normal;
+      color: #7ab8f5;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,.55);
+      max-width: 540px;
+      margin: 0 auto 36px;
+      line-height: 1.8;
+    }
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); color: var(--ink);
+      font-weight: 800; font-size: 14px;
+      padding: 13px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+    .btn-primary:hover { background: #eaf2ff; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid rgba(255,255,255,.3); color: rgba(255,255,255,.8);
+      font-weight: 700; font-size: 14px;
+      padding: 13px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,.6); color: var(--white); }
+
+    /* ── LANG SWITCH ── */
+    .lang-strip {
+      background: rgba(255,255,255,.08);
+      display: flex; justify-content: center; gap: 6px;
+      padding: 6px;
+      border-radius: 999px;
+      width: fit-content;
+      margin: 0 auto 32px;
+    }
+    .lang-btn {
+      background: none; border: none; color: rgba(255,255,255,.5);
+      font-weight: 800; font-size: 12px;
+      padding: 5px 12px; border-radius: 999px; cursor: pointer;
+      transition: background .15s;
+    }
+    .lang-btn[aria-pressed="true"] {
+      background: rgba(255,255,255,.18); color: var(--white);
+    }
+
+    /* ── SECTION ── */
+    section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    .section-label {
+      font-size: 11px; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 900;
+      letter-spacing: -.4px;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    h3 { font-size: 18px; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    p { color: var(--ink-60); font-size: 15px; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    .lead { font-size: 16px; color: var(--ink); line-height: 1.85; }
+
+    /* ── TURNING POINT ── */
+    .turning-point {
+      background: var(--ink);
+      color: var(--white);
+      padding: 72px 0;
+      border-bottom: none;
+    }
+    .turning-point h2 { color: var(--white); }
+    .turning-point p { color: rgba(255,255,255,.65); }
+    .turning-point .accent-text { color: #7ab8f5; font-weight: 700; }
+    .big-statement {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800;
+      line-height: 1.45;
+      color: var(--white);
+      margin: 28px 0;
+      border-left: 3px solid #7ab8f5;
+      padding-left: 20px;
+    }
+    .compare-table {
+      width: 100%; border-collapse: collapse;
+      margin: 28px 0; font-size: 14px;
+    }
+    .compare-table th {
+      padding: 10px 16px; text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.5); font-weight: 700; font-size: 12px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .compare-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .compare-table td:first-child { color: rgba(255,255,255,.45); }
+    .compare-table td:last-child { color: var(--white); font-weight: 700; }
+
+    /* ── THREE PILLARS ── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .pillar {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .pillar-num {
+      font-size: 11px; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .pillar h3 { font-size: 17px; margin-bottom: 8px; }
+    .pillar p { font-size: 14px; color: var(--ink-40); }
+
+    /* ── HOW IT WORKS ── */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 32px;
+    }
+    .flow-step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-num {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: var(--ink);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900;
+    }
+    .flow-body h3 { font-size: 16px; margin-bottom: 4px; }
+    .flow-body p { font-size: 14px; color: var(--ink-40); margin: 0; }
+
+    /* ── SCREENS ── */
+    .screens {
+      display: flex; gap: 14px;
+      overflow-x: auto;
+      padding: 4px 0 16px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .screens::-webkit-scrollbar { display: none; }
+    .screens img {
+      display: block;
+      width: auto; height: auto;
+      max-height: 400px;
+      max-width: 85vw;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--white);
+      flex: 0 0 auto;
+      cursor: zoom-in;
+    }
+
+    /* ── MANIFESTO QUOTE ── */
+    .quote-block {
+      background: var(--white);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 24px 28px;
+      box-shadow: var(--shadow);
+      margin: 32px 0;
+    }
+    .quote-block p {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ── APP STORE ── */
+    .appstore-wrap {
+      display: flex; justify-content: center;
+      margin-top: 36px;
+    }
+    .appstore-badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #000; color: #fff;
+      padding: 12px 20px; border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    }
+    .appstore-badge:hover { background: #111; }
+    .appstore-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .appstore-top { font-size: 11px; font-weight: 700; opacity: .85; }
+    .appstore-bottom { font-size: 16px; font-weight: 900; }
+
+    /* ── RELATED ── */
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .pill {
+      display: inline-flex; align-items: center;
+      padding: 7px 14px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--white);
+      color: var(--accent); font-weight: 700; font-size: 13px;
+      text-decoration: none;
+    }
+    .pill:hover { background: #eaf2ff; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      color: var(--ink-40); font-size: 13px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── LANG BLOCKS ── */
+    [data-lang-block] { display: none; }
+    html[data-lang="en"] [data-lang-block="en"] { display: block; }
+    html[data-lang="ja"] [data-lang-block="ja"] { display: block; }
+    html[data-lang="en"] [data-lang-inline="en"] { display: inline; }
+    html[data-lang="ja"] [data-lang-inline="ja"] { display: inline; }
+    [data-lang-inline] { display: none; }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,.85);
+      justify-content: center; align-items: center;
+      z-index: 10000;
+    }
+    #lightbox img { max-width: 95vw; max-height: 95vh; border-radius: 12px; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 56px 0 52px; }
+      section { padding: 52px 0; }
+      .turning-point { padding: 52px 0; }
+      .compare-table { font-size: 13px; }
+      .compare-table th, .compare-table td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <img src="inf6.png" alt="inf6 logo" class="hero-logo" />
+
+      <div class="lang-strip" role="group" aria-label="Language">
+        <button class="lang-btn" type="button" id="btn-ja" data-lang="ja" aria-pressed="true">日本語</button>
+        <button class="lang-btn" type="button" id="btn-en" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+
+      <div data-lang-block="ja">
+        <h1 class="hero-mission">
+          AI を使って<br>
+          <em>人類の知的独立</em>を守るためのツール
+        </h1>
+        <p class="hero-sub">
+          知のメジャメント・リスク判定・期限管理。<br>
+          暗記は不要になった。理解は不可欠になった。
+        </p>
+      </div>
+
+      <div data-lang-block="en">
+        <h1 class="hero-mission">
+          A tool to defend<br>
+          <em>human intellectual independence</em><br>
+          using AI
+        </h1>
+        <p class="hero-sub">
+          Knowledge measurement · Risk assessment · Deadline management.<br>
+          Memorization is obsolete. Judgment is irreplaceable.
+        </p>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn-primary" href="https://apps.apple.com/app/id6748942148" target="_blank" rel="noopener">
+          <span data-lang-inline="ja">App Store で入手</span>
+          <span data-lang-inline="en">Download on App Store</span>
+        </a>
+        <a class="btn-outline" href="#mission">
+          <span data-lang-inline="ja">使命を読む</span>
+          <span data-lang-inline="en">Read the mission</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- TURNING POINT -->
+    <section class="turning-point" id="mission">
+      <div class="wrap">
+
+        <div data-lang-block="ja">
+          <div class="section-label">時代の転換点</div>
+          <h2>知識を得るためだけに<br>何十年もかけるスキームは<br>終わりを迎えた。</h2>
+
+          <div class="big-statement">
+            暗記は不要になった。<br>理解は不可欠になった。
+          </div>
+
+          <p>活版印刷が写本師を過去にしたように、AI が暗記力を過去にしている。</p>
+          <p>学校の12年、大学の4年、資格勉強の数年——その大半は「知識を頭に入れる」ための時間だった。AI はその時間を、数秒に圧縮した。</p>
+          <p>これは学習の否定ではない。<span class="accent-text">学習の再定義である。</span></p>
+
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>AI が代替したもの</th>
+                <th>人間に残るもの</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>知識の保有・記憶</td><td>境界を判断する力</td></tr>
+              <tr><td>情報の検索・要約</td><td>失敗条件を読む力</td></tr>
+              <tr><td>定義の再生</td><td>文脈で選択する力</td></tr>
+              <tr><td>手順の暗記</td><td>新しいものを発明する力</td></tr>
+            </tbody>
+          </table>
+
+          <p>AI が知識を保持するから、人間は知識を保持しなくても良いのか——<span class="accent-text">違う。</span></p>
+          <p>AI が保持するのは<strong style="color:#fff">情報</strong>である。人間が持つべきは<strong style="color:#fff">判断力</strong>である。</p>
+          <p>「この状況でどちらを選ぶか」「どこで崩れるか」「なぜそれが成立するか」——これらは、AI に問うことができても、AI が代わりに判断することはできない。判断するのは、常に人間である。</p>
+        </div>
+
+        <div data-lang-block="en">
+          <div class="section-label">The Turning Point</div>
+          <h2>The decades-long scheme of<br>accumulating knowledge<br>is over.</h2>
+
+          <div class="big-statement">
+            Memorization is obsolete.<br>Judgment is irreplaceable.
+          </div>
+
+          <p>Just as the printing press made scribes obsolete, AI has made memorization obsolete.</p>
+          <p>12 years of school, 4 years of university, years of certification study — most of that time was spent putting knowledge into your head. AI compressed that to seconds.</p>
+          <p>This is not the end of learning. <span class="accent-text">It is the redefinition of learning.</span></p>
+
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>What AI replaced</th>
+                <th>What remains human</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Holding and memorizing knowledge</td><td>The power to judge boundaries</td></tr>
+              <tr><td>Searching and summarizing information</td><td>The power to read failure conditions</td></tr>
+              <tr><td>Reciting definitions</td><td>The power to choose in context</td></tr>
+              <tr><td>Memorizing procedures</td><td>The power to invent something new</td></tr>
+            </tbody>
+          </table>
+
+          <p>Since AI holds knowledge, do humans no longer need to hold knowledge? — <span class="accent-text">No.</span></p>
+          <p>What AI holds is <strong style="color:#fff">information</strong>. What humans must possess is <strong style="color:#fff">judgment</strong>.</p>
+          <p>"Which do I choose in this situation?" "Where does this break down?" "Why does this hold?" — You can ask AI these questions, but AI cannot make the judgment for you. The judgment is always human.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WHAT IS INF6 -->
+    <section id="what">
+      <div class="wrap">
+
+        <div data-lang-block="ja">
+          <div class="section-label">inf6.com とは</div>
+          <h2>知のサバイバルコンパス</h2>
+
+          <div class="quote-block">
+            <p>今この瞬間、何を知っていて、何を知らないか。<br>
+            知らないことのリスクは何か。<br>
+            いつまでに知らなければならないのか。<br>
+            それを照らし、次に向かうべき方向を示す。</p>
+          </div>
+
+          <p>inf6.com は PDF ビューワーではない。AI チャットでもない。試験対策ツールでもない。</p>
+          <p>AI が既存知を無限に供給し、脳科学に従った測定で判断力を内面化させる機構である。</p>
+
+          <div class="pillars">
+            <div class="pillar">
+              <div class="pillar-num">第一層</div>
+              <h3>知のメジャメント</h3>
+              <p>「知っている」の定義は、定義を再生できることではない。説明できる / 比較できる / 選べる / 失敗条件を言える——これらを達成できて初めて「知っている」とみなす。</p>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">第二層</div>
+              <h3>知のリスク判定</h3>
+              <p>知らないことのコストとリスクを評価する。リスク = 未知の重要度 × 期限の近さ × 代替不可能性。AI が代わりに知っていても、人間が判断できなければリスクは消えない。</p>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">第三層</div>
+              <h3>知の期限管理</h3>
+              <p>いつまでに何を知らなければならないか。試験日、プロジェクト期限、組織の要求を起点に、期限に対して逆算した習得順序を提示する。</p>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">第四層</div>
+              <h3>知の起源をたどる</h3>
+              <p>概念がどの論文から生まれたかを特定し、その論文の図・表・数式を根拠に理解点を組み立てる。演習は選択式ではない。正しい内容だけを箇条書きで示し、採点しない。</p>
+            </div>
+          </div>
+        </div>
+
+        <div data-lang-block="en">
+          <div class="section-label">What is inf6.com</div>
+          <h2>The Knowledge Survival Compass</h2>
+
+          <div class="quote-block">
+            <p>At this moment, what do you know and what don't you know?<br>
+            What is the risk of not knowing?<br>
+            By when must you know it?<br>
+            inf6.com illuminates the answer and points you in the right direction.</p>
+          </div>
+
+          <p>inf6.com is not a PDF viewer. Not an AI chat. Not an exam prep tool.</p>
+          <p>It is a mechanism: AI supplies unlimited existing knowledge, and brain-science-aligned measurement internalizes judgment.</p>
+
+          <div class="pillars">
+            <div class="pillar">
+              <div class="pillar-num">Layer 1</div>
+              <h3>Knowledge Measurement</h3>
+              <p>"Knowing" is not defined by reciting a definition. Can you explain it? Compare it? Choose it? State its failure conditions? Only when these are achieved is "knowing" recognized.</p>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">Layer 2</div>
+              <h3>Risk Assessment</h3>
+              <p>Evaluate the cost and risk of not knowing. Risk = importance of the unknown × urgency × irreplaceability. Even if AI knows it, if you cannot judge — the risk remains.</p>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">Layer 3</div>
+              <h3>Deadline Management</h3>
+              <p>By when must you know what? Starting from exam dates, project deadlines, and organizational requirements — present the acquisition sequence working backwards from the deadline.</p>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num">Layer 4</div>
+              <h3>Tracing the Origin of Knowledge</h3>
+              <p>Identify the paper a concept came from, then build the understanding points on the figures, tables, and equations of that paper. Exercises are not multiple choice: only what is correct is stated, as a bullet list, and nothing is scored.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how">
+      <div class="wrap">
+
+        <div data-lang-block="ja">
+          <div class="section-label">設計原則</div>
+          <h2>入り口は一つ。<br>チャットではなく、測定器。</h2>
+
+          <p>アプリを開くと、システムが今日の最危険原子を選ぶ。ユーザーが決めるのは「挑むか否か」だけだ。</p>
+
+          <div class="flow">
+            <div class="flow-step">
+              <div class="flow-num">1</div>
+              <div class="flow-body">
+                <h3>起動 → 挑戦が来る</h3>
+                <p>タブなし。選択肢なし。今日の最危険な知識原子が全画面に現れる。</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">2</div>
+              <div class="flow-body">
+                <h3>全画面の問い</h3>
+                <p>声に出して、自分の言葉で説明する。入力欄はない。これは対話ではなく、試験である。</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">3</div>
+              <div class="flow-body">
+                <h3>自己判定（二択のみ）</h3>
+                <p>「言えた」か「言えなかった」か。それだけだ。システムが判断するのではなく、人間が判断する。</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">4</div>
+              <div class="flow-body">
+                <h3>知のマップに刻む</h3>
+                <p>結果が知識グラフに永続する。JSON で、ローカルに、人間が読める形で。アプリが消えても知は残る。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-block" style="margin-top: 32px;">
+            <p>AI は道具である。<br>
+            判断するのは、常に人間である。</p>
+          </div>
+        </div>
+
+        <div data-lang-block="en">
+          <div class="section-label">Design Principle</div>
+          <h2>One entry point.<br>A measurement instrument, not a chat.</h2>
+
+          <p>When you open the app, the system selects today's most dangerous knowledge atom. The only decision you make is: challenge it or not.</p>
+
+          <div class="flow">
+            <div class="flow-step">
+              <div class="flow-num">1</div>
+              <div class="flow-body">
+                <h3>Launch → The challenge arrives</h3>
+                <p>No tabs. No choices. Today's most dangerous knowledge atom appears full-screen.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">2</div>
+              <div class="flow-body">
+                <h3>Full-screen question</h3>
+                <p>Speak it out loud in your own words. No input field. This is not a conversation — it is an examination.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">3</div>
+              <div class="flow-body">
+                <h3>Self-judgment (binary only)</h3>
+                <p>"Said it" or "couldn't say it." That is all. The system does not judge — the human does.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">4</div>
+              <div class="flow-body">
+                <h3>Stenciled into the knowledge map</h3>
+                <p>The result persists in the knowledge graph. As JSON, locally, in human-readable form. Even if the app disappears, the knowledge remains.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-block" style="margin-top: 32px;">
+            <p>AI is a tool.<br>
+            The judgment is always human.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCREENS -->
+    <section id="screens">
+      <div class="wrap">
+        <div class="section-label" data-lang-block="ja">スクリーンショット</div>
+        <div class="section-label" data-lang-block="en">Screenshots</div>
+        <div class="screens">
+          <img src="screen1.jpeg" alt="screenshot 1" loading="lazy">
+          <img src="screen2.jpeg" alt="screenshot 2" loading="lazy">
+          <img src="screen3.jpeg" alt="screenshot 3" loading="lazy">
+          <img src="screen4.jpeg" alt="screenshot 4" loading="lazy">
+          <img src="screen5.jpeg" alt="screenshot 5" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section id="download">
+      <div class="wrap" style="text-align:center;">
+
+        <div data-lang-block="ja">
+          <div class="section-label">入手する</div>
+          <h2>iPhone · iPad · Mac</h2>
+          <p style="text-align:center; max-width:480px; margin: 0 auto 8px;">App Store から入手できます。AI 機能には OpenAI API キーが必要です。</p>
+        </div>
+
+        <div data-lang-block="en">
+          <div class="section-label">Get it</div>
+          <h2>iPhone · iPad · Mac</h2>
+          <p style="text-align:center; max-width:480px; margin: 0 auto 8px;">Available on the App Store. AI features require your OpenAI API key.</p>
+        </div>
+
+        <div class="appstore-wrap">
+          <a class="appstore-badge" href="https://apps.apple.com/app/id6748942148" target="_blank" rel="noopener" aria-label="Download on the App Store">
+            <span class="appstore-text">
+              <span class="appstore-top">Download on the</span>
+              <span class="appstore-bottom">App Store</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED -->
+    <section id="related">
+      <div class="wrap">
+        <div data-lang-block="ja">
+          <div class="section-label">関連</div>
+          <h2>素材ソース</h2>
+          <p>以下を素材ソースとして知識原子を抽出し、知のマップを構築できます。</p>
+          <div class="pills">
+            <a class="pill" href="https://arxiv.org/" target="_blank" rel="noopener">arXiv</a>
+            <a class="pill" href="https://www.jdla.org/certificate/engineer/" target="_blank" rel="noopener">JDLA E資格</a>
+            <a class="pill" href="https://www.jdla.org/certificate/general/" target="_blank" rel="noopener">JDLA G検定</a>
+            <a class="pill" href="https://learn.microsoft.com/" target="_blank" rel="noopener">Microsoft Learn</a>
+          </div>
+        </div>
+
+        <div data-lang-block="en">
+          <div class="section-label">Related</div>
+          <h2>Knowledge Sources</h2>
+          <p>Extract knowledge atoms from the following sources to build your knowledge map.</p>
+          <div class="pills">
+            <a class="pill" href="https://arxiv.org/" target="_blank" rel="noopener">arXiv</a>
+            <a class="pill" href="https://www.jdla.org/certificate/engineer/" target="_blank" rel="noopener">JDLA E-shikaku</a>
+            <a class="pill" href="https://www.jdla.org/certificate/general/" target="_blank" rel="noopener">JDLA G-kentei</a>
+            <a class="pill" href="https://learn.microsoft.com/" target="_blank" rel="noopener">Microsoft Learn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="wrap">
+        <div data-lang-block="ja">
+          <div class="section-label">連絡先</div>
+          <h2>サポート</h2>
+          <p>サポート・不具合報告: <a href="mailto:inf6.com@icloud.com">inf6.com@icloud.com</a></p>
+          <p style="margin-top:8px;"><a href="legal.html#privacy">プライバシーポリシー</a> · <a href="legal.html#terms">利用規約</a> · <a href="legal.html#support">サポート</a></p>
+        </div>
+        <div data-lang-block="en">
+          <div class="section-label">Contact</div>
+          <h2>Support</h2>
+          <p>Support / bug reports: <a href="mailto:inf6.com@icloud.com">inf6.com@icloud.com</a></p>
+          <p style="margin-top:8px;"><a href="legal.html#privacy">Privacy Policy</a> · <a href="legal.html#terms">Terms</a> · <a href="legal.html#support">Support</a></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <span>© 2026 inf6.com All rights reserved.</span>
+      <span><a href="legal.html#privacy">Privacy</a> · <a href="legal.html#terms">Terms</a></span>
+    </div>
+  </footer>
+
+  <div id="lightbox" role="dialog" aria-modal="true" tabindex="-1">
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "inf6.com",
+    "applicationCategory": "EducationApplication",
+    "operatingSystem": "iOS, macOS",
+    "url": "https://inf6.com/",
+    "image": "https://inf6.com/inf6.png",
+    "description": "AI を使って人類の知的独立を守るためのツール。知のメジャメント・リスク判定・期限管理。",
+    "publisher": { "@type": "Organization", "name": "inf6.com" }
+  }
+  </script>
+
+  <script>
+    (function () {
+      function setLang(lang, persist) {
+        document.documentElement.setAttribute('data-lang', lang);
+        document.documentElement.setAttribute('lang', lang);
+        document.title = lang === 'ja'
+          ? 'inf6.com – AI を使って人類の知的独立を守るためのツール'
+          : 'inf6.com – A tool to defend human intellectual independence using AI';
+        var btnJa = document.getElementById('btn-ja');
+        var btnEn = document.getElementById('btn-en');
+        if (btnJa) btnJa.setAttribute('aria-pressed', lang === 'ja' ? 'true' : 'false');
+        if (btnEn) btnEn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+        if (persist) { try { localStorage.setItem('inf6_lang', lang); } catch (e) {} }
+      }
+      function getQueryLang() {
+        var v = new URLSearchParams(window.location.search).get('lang');
+        return (v === 'en' || v === 'ja') ? v : null;
+      }
+      function getStoredLang() {
+        try { var v = localStorage.getItem('inf6_lang'); return (v === 'en' || v === 'ja') ? v : null; } catch (e) { return null; }
+      }
+      var initial = getQueryLang() || getStoredLang() || 'ja';
+      setLang(initial, false);
+      var btnJa = document.getElementById('btn-ja');
+      var btnEn = document.getElementById('btn-en');
+      if (btnJa) btnJa.addEventListener('click', function () { setLang('ja', true); });
+      if (btnEn) btnEn.addEventListener('click', function () { setLang('en', true); });
+    })();
+  </script>
+
+  <script>
+    var lightbox = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    var prevFocus = null;
+    function closeLightbox() {
+      lightbox.style.display = 'none';
+      lbImg.src = '';
+      document.body.style.overflow = '';
+      if (prevFocus) prevFocus.focus();
+    }
+    document.querySelectorAll('.screens img').forEach(function (img) {
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('role', 'button');
+      img.addEventListener('click', function () {
+        prevFocus = document.activeElement;
+        document.body.style.overflow = 'hidden';
+        lbImg.src = img.src;
+        lightbox.style.display = 'flex';
+        lightbox.focus();
+      });
+      img.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); img.click(); }
+      });
+    });
+    lightbox.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.style.display === 'flex') closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

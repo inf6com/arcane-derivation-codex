@@ -1,0 +1,40 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr: none
+
+variables:
+  WWW_FTP_REMOTE_DIR: inf6.com
+
+pool:
+  vmImage: macOS-latest
+
+stages:
+  - stage: ValidateWWW
+    displayName: Validate WWW
+    jobs:
+      - job: ValidateWWW
+        displayName: Validate public website contract
+        steps:
+          - checkout: self
+          - script: python3 website/inf6.com/scripts/validate_www.py
+            displayName: Validate HTML and storage wording
+
+  - stage: DeployWWW
+    displayName: Deploy WWW
+    dependsOn: ValidateWWW
+    condition: succeeded()
+    jobs:
+      - job: DeployWWW
+        displayName: Deploy website by FTP
+        steps:
+          - checkout: self
+          - script: bash website/inf6.com/scripts/deploy_www_ftp.sh
+            displayName: Upload to inf6.com
+            env:
+              WWW_FTP_HOST: $(WWW_FTP_HOST)
+              WWW_FTP_USER: $(WWW_FTP_USER)
+              WWW_FTP_PASSWORD: $(WWW_FTP_PASSWORD)
+              WWW_FTP_REMOTE_DIR: $(WWW_FTP_REMOTE_DIR)
