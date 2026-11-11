@@ -1,0 +1,56 @@
+{
+  "schema": "hinotori-position-sensitive-subset-v1",
+  "sourceVocabulary": "Models/Hinotori/HinotoriVocabulary.json",
+  "sourceVocabularyContract": "hinotori-v1",
+  "purpose": "Define only Hinotori classes whose candidate interpretation must inspect neighboring source coordinates before a user confirms a formula structure.",
+  "groups": [
+    {
+      "id": "horizontal-bar",
+      "labels": ["-", "\\frac", "\\underline", "\\overline"],
+      "positionEvidence": ["above-region", "below-region", "left-neighbor", "right-neighbor", "covered-span"],
+      "candidateInterpretations": ["minus", "fraction-bar", "underline", "overline"]
+    },
+    {
+      "id": "dot-mark",
+      "labels": [".", "\\dot", "\\cdot", "\\vdots"],
+      "positionEvidence": ["baseline", "centered-operator-position", "above-base", "vertical-stack"],
+      "candidateInterpretations": ["decimal-or-period", "dot-accent", "centered-dot-operator", "vertical-ellipsis"]
+    },
+    {
+      "id": "punctuation-mark",
+      "labels": [",", ":", ";"],
+      "positionEvidence": ["baseline", "vertical-dot-pair", "vertical-dot-pair-with-descender"],
+      "candidateInterpretations": ["comma", "colon", "semicolon"]
+    },
+    {
+      "id": "postfix-or-accent-mark",
+      "labels": ["\\prime", "\\hat", "\\tilde", "\\vec"],
+      "positionEvidence": ["upper-right-of-base", "above-covered-base"],
+      "candidateInterpretations": ["prime", "hat-accent", "tilde-accent", "vector-accent"]
+    },
+    {
+      "id": "scalable-set-operator",
+      "labels": ["\\bigcap", "\\cap", "\\bigcup", "\\cup", "\\bigoplus", "\\oplus", "\\bigvee", "\\vee", "\\bigwedge", "\\wedge", "\\prod"],
+      "positionEvidence": ["relative-size", "upper-limit-region", "lower-limit-region", "left-right-operand-regions"],
+      "candidateInterpretations": ["display-style-operator", "ordinary-infix-operator"]
+    },
+    {
+      "id": "operand-scope-operator",
+      "labels": ["=", "\\sqrt", "\\int", "\\iint", "\\oint", "\\sum"],
+      "positionEvidence": ["left-right-operand-regions", "covered-radicand-span", "upper-limit-region", "lower-limit-region"],
+      "candidateInterpretations": ["relation-with-operands", "root-with-radicand", "operator-with-limits-and-body"]
+    },
+    {
+      "id": "letter-digit-confusable",
+      "labels": ["0", "O", "o"],
+      "positionEvidence": ["adjacent-digit-context", "adjacent-uppercase-context", "adjacent-lowercase-context"],
+      "candidateInterpretations": ["digit-zero", "uppercase-letter-o", "lowercase-letter-o"]
+    }
+  ],
+  "nonMembers": {
+    "rule": "A class outside these groups must retain the Hinotori model order. It may still participate in structural relations such as superscript or subscript, but this file does not authorize a position-only symbol-label reorder for it."
+  },
+  "confirmation": {
+    "rule": "Position evidence may reorder candidates within one group but never confirms a label or formula relation. The user confirms the selected label and formula structure."
+  }
+}

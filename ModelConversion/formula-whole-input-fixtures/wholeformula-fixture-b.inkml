@@ -1,0 +1,11 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+  <annotation type="sampleId">wholeformula-fixture-b</annotation>
+  <annotation type="normalizedLabel">-</annotation>
+  <annotation type="splitTagOriginal">train</annotation>
+  <annotation type="inkCreationMethod">synthetic-fixture</annotation>
+  <traceFormat>
+    <channel name="X" type="decimal" units="dev"/>
+    <channel name="Y" type="decimal" units="dev"/>
+  </traceFormat>
+  <trace>0 50, 10 50, 20 50</trace>
+</ink>

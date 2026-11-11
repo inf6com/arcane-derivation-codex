@@ -43,6 +43,11 @@ struct FormulaChatView: View {
         }
 
         let schema: String
+        let ensembleModelName: String?
+        let ensembleCalibrationSHA256: String?
+        let fold7Top5ClassIndices: [[Int]]
+        let fold7Top5Logits: [[Float]]
+        let typesetHeadCheckpointSHA256: String
         let segmenter: ModelProvenance
         let classifier: ModelProvenance
         let segmentationThreshold: Float
@@ -53,7 +58,7 @@ struct FormulaChatView: View {
         let selectedClassIndices: [Int]
         let selectedModelRanks: [Int?]
         let selectedPrimaryLabels: [String]
-        let similarityExpansion: Inf6SymbolSimilarityExpansion
+        let similarityExpansion: HinotoriVisualSubsetExpansion
         let fold7SimilarityCandidates: [[[HinotoriFold7SimilarityCandidate]]]
         let typesetCandidates: [[HinotoriTypesetCandidate]]
         let positionClassification: Inf6PositionSensitiveClassification
@@ -220,11 +225,11 @@ struct FormulaChatView: View {
                     Text(isJapanese ? "記号 \(groupIndex + 1)" : "Symbol \(groupIndex + 1)")
                         .font(.caption.weight(.semibold))
                     if selectedRank != nil && fold7Suggestions.isEmpty {
-                        Text(isJapanese ? "この上位候補に該当する87類似群はありません" : "No 87-group match for this Fold7 candidate")
+                        Text(isJapanese ? "この候補に対応するプロトタイプ・コサイン類似群はありません" : "No prototype-cosine similarity group matches this candidate")
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                     } else if selectedRank != nil {
-                        Text(isJapanese ? "Fold7上位候補の選択後に87類似群・活字候補を表示" : "87-group and typeset alternatives follow the Fold7 selection")
+                        Text(isJapanese ? "選択候補に対応する類似群と活字候補" : "Similarity-group and typeset candidates for this selection")
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                     }
@@ -253,7 +258,7 @@ struct FormulaChatView: View {
                                                 .foregroundStyle(Color.cyan)
                                         }
                                         if let fold7Candidate {
-                                            Text("87群 · \(String(format: "%.3f", fold7Candidate.cosineSimilarity))")
+                                            Text("類似群 · \(String(format: "%.3f", fold7Candidate.cosineSimilarity))")
                                                 .font(.caption2.bold())
                                                 .foregroundStyle(Color.purple)
                                         } else if isSimilar {
@@ -302,7 +307,7 @@ struct FormulaChatView: View {
 
     private func candidateAccessibilityLabel(label: String, modelRank: Int?, isSimilar: Bool, typesetRank: Int?) -> String {
         var sources: [String] = []
-        if let modelRank { sources.append(isJapanese ? "手書きTOP\(modelRank)" : "Handwriting Top \(modelRank)") }
+        if let modelRank { sources.append(isJapanese ? "火の鳥TOP\(modelRank)" : "Hinotori Top \(modelRank)") }
         if isSimilar { sources.append(isJapanese ? "類似記号" : "Visual similarity") }
         if let typesetRank { sources.append(isJapanese ? "活字TOP\(typesetRank)" : "Typeset Top \(typesetRank)") }
         return isJapanese ? "\(sources.joined(separator: "、"))候補 \(label)" : "\(sources.joined(separator: ", ")) candidate \(label)"
@@ -323,7 +328,7 @@ struct FormulaChatView: View {
         }
         guard selected.count == pending.result.candidateLabels.count else { return }
         do {
-            let vocabulary = try HinotoriVocabulary.load(bundle: .main)
+            let vocabulary = try HinotoriVocabulary.loadFold7(bundle: .main)
             let selectedClassIndices = try selected.map { label -> Int in
                 guard let index = vocabulary.labels.firstIndex(of: label) else {
                     throw Inf6HandwrittenFormulaError.recognitionFailed("確定候補が火の鳥語彙にありません: \(label)")
@@ -361,12 +366,22 @@ struct FormulaChatView: View {
                 guard let rank = selectedPrimaryCandidateRanks[groupIndex],
                       spatial.symbols.indices.contains(groupIndex),
                       spatial.symbols[groupIndex].candidates.indices.contains(rank) else {
-                    throw Inf6HandwrittenFormulaError.recognitionFailed("Fold7 Top-5の選択記録が記号候補群と一致しません")
+                    throw Inf6HandwrittenFormulaError.recognitionFailed("火の鳥Top-5の選択記録が記号候補群と一致しません")
                 }
                 return spatial.symbols[groupIndex].candidates[rank].label
             }
+            guard let ensembleCalibrationSHA256 = pending.result.candidateCalibrationSHA256,
+                  ensembleCalibrationSHA256.count == 64,
+                  ensembleCalibrationSHA256.allSatisfy(\.isHexDigit) else {
+                throw Inf6HandwrittenFormulaError.recognitionFailed("火の鳥アンサンブル校正資産の識別情報が保存されていません")
+            }
             let evidence = ConfirmedHandwritingEvidence(
-                schema: "firebird-chat-handwriting-confirmation-v3",
+                schema: "hinotori-chat-handwriting-confirmation-v1",
+                ensembleModelName: pending.result.candidateModelName,
+                ensembleCalibrationSHA256: ensembleCalibrationSHA256,
+                fold7Top5ClassIndices: pending.result.fold7Top5ClassIndices,
+                fold7Top5Logits: pending.result.fold7Top5Logits,
+                typesetHeadCheckpointSHA256: HinotoriTypesetAuxiliaryCoreMLClassifier.headCheckpointSHA256,
                 segmenter: .init(name: "HinotoriFormulaSegmenter", checkpointSHA256: segmenter.checkpointSHA256, epoch: segmenter.selectedEpoch),
                 classifier: .init(name: "HinotoriFold7Classifier", checkpointSHA256: classifier.checkpoint.sha256, epoch: classifier.checkpoint.epoch),
                 segmentationThreshold: segmenter.validationThreshold,

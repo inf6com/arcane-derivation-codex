@@ -1,0 +1,2584 @@
+{
+  "$schema": "../schemas/question_pattern_library.schema.json",
+  "library_id": "inf6.question-pattern-library.azure-ai.v1",
+  "version": 1,
+  "created_at": "2026-04-26T09:58:04Z",
+  "classification_method": "heuristic_regex_v1",
+  "source_corpus": {
+    "source_json_file": "azure_ai_quiz_v7_meaning_split_v1.json",
+    "source_images_archive": "画像up.zip",
+    "set_count": 6,
+    "question_count": 310,
+    "choice_count_distribution": {
+      "3": 17,
+      "4": 249,
+      "5": 30,
+      "6": 14
+    },
+    "image_question_count": 85,
+    "zip_image_group_count": 83,
+    "zip_image_group_size_distribution": {
+      "1": 76,
+      "2": 6,
+      "3": 1
+    }
+  },
+  "generation_contract": {
+    "store_pattern_not_instance": true,
+    "preserve_answer_cardinality": true,
+    "preserve_figure_dependency": true,
+    "regenerate_explanation_from_official_sources": true,
+    "forbid_copying_concrete_question_text": true
+  },
+  "new_domain_adaptation_rules": [
+    "新規領域では、pattern の reasoning 形を保持し、製品名やサービス名だけを置換して済ませません。",
+    "CoverageTarget は新規領域の知識原子・経脈から供給し、pattern 側は出題型のみを提供します。",
+    "artifact や figure を使う pattern は、新規領域でも同じ種類の成果物を用意できる場合にだけ適用します。",
+    "複数選択問題は cardinality を保持し、単一選択へ劣化させません。",
+    "解説本文は新規生成でよいですが、公式根拠 URL と論理順は pattern 契約を守ります。"
+  ],
+  "base_patterns": [
+    {
+      "pattern_id": "prerequisite_enablement",
+      "name_ja": "前提資源・有効化判定",
+      "intent": "identify_required_resource_or_permission",
+      "description_ja": "機能を使う前に必要なリソース、認可、デプロイ前提、ネットワーク条件を問う問題型です。",
+      "mma_question_types": [
+        "prereq",
+        "setting",
+        "decision"
+      ],
+      "stem_slots": [
+        {
+          "slot": "target_capability",
+          "required": true,
+          "description_ja": "最終的に使いたい機能"
+        },
+        {
+          "slot": "required_resource",
+          "required": true,
+          "description_ja": "必要な資源や有効化対象"
+        },
+        {
+          "slot": "boundary",
+          "required": false,
+          "description_ja": "サブスクリプション、ネットワーク、権限などの境界"
+        },
+        {
+          "slot": "failure_if_missing",
+          "required": false,
+          "description_ja": "前提が欠けたときの不成立条件"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single_or_multi",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "対象機能の成立に必須の資源または設定だけを正解にします。",
+        "distractor_families": [
+          "同系統だが必須ではない資源",
+          "運用後に追加する任意機能",
+          "別レイヤの管理ツール",
+          "役割は近いが責務境界が異なる設定"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "前提資源",
+          "有効化条件",
+          "利用開始条件"
+        ]
+      },
+      "adaptation_rules": [
+        "required_resource は新規領域の前提原子から構成します。",
+        "前提と任意機能を混同させる誤答族を維持します。"
+      ],
+      "compatible_modifiers": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact",
+        "multi_panel_figure",
+        "multi_select",
+        "table_artifact"
+      ],
+      "supporting_question_count": 128,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題3",
+          "question_id": "140158381",
+          "question_text_excerpt": "Azure AI Foundry上でAzure OpenAIモデルを利用するには、前提としてどのリソースをプロビジョニングする必要がありますか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題25",
+          "question_id": "140158387",
+          "question_text_excerpt": "あなたはAzure OpenAIをアプリケーションに統合しています。同じモデルに対してデータセンター外での利用（エッジデバイス）も検討している場合、どのオプションを併用する必要がありますか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題38",
+          "question_id": "140158365",
+          "question_text_excerpt": "あなたは、Azure AI SearchをWebアプリと統合するプロジェクトを進めています。セキュリティ要件として、Azure AI Search に対するすべての通信は、インターネットを経由せずに行われる必要があります。 この要件を満たすために、どの接続方法を選択すべきですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題6",
+          "question_id": "140161069",
+          "question_text_excerpt": "あなたは、小売業者向けの在庫管理システムを開発しています。 このシステムでは、納品書や請求書の紙の書類をデジタル化するために、光学文字認識（OCR）を活用する必要があります。しかし、このデータは機密性が高いため、パブリッククラウドにはデプロイできません。 この要件を満たすために、どの方法を選択すべきですか。"
+        }
+      ]
+    },
+    {
+      "pattern_id": "best_fit_decision",
+      "name_ja": "最適解選択",
+      "intent": "choose_best_option",
+      "description_ja": "業務シナリオと制約から、最も適切なサービス・機能・ツール・モデルを 1 つ選ばせる問題型です。",
+      "mma_question_types": [
+        "decision",
+        "comparison"
+      ],
+      "stem_slots": [
+        {
+          "slot": "actor",
+          "required": false,
+          "description_ja": "利用者または開発者の役割"
+        },
+        {
+          "slot": "goal",
+          "required": true,
+          "description_ja": "達成したい機能または成果"
+        },
+        {
+          "slot": "environment",
+          "required": false,
+          "description_ja": "前提となる環境や既存構成"
+        },
+        {
+          "slot": "constraints",
+          "required": true,
+          "description_ja": "コスト・運用・精度・共有などの制約"
+        },
+        {
+          "slot": "decision_axis",
+          "required": true,
+          "description_ja": "何を選ばせる問題か"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "制約をすべて満たす唯一の選択肢を正解にします。",
+        "distractor_families": [
+          "隣接サービスだが責務が違う選択肢",
+          "できそうに見えるが前提条件を満たさない選択肢",
+          "運用レイヤが違う選択肢",
+          "旧方式または別製品系の選択肢"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "主要能力",
+          "制約条件",
+          "責務境界"
+        ]
+      },
+      "adaptation_rules": [
+        "製品名は固定せず、goal と constraints を新規領域の知識原子へ差し替えます。",
+        "誤答は新規領域の隣接機能から構成し、ランダム語句で埋めません。"
+      ],
+      "compatible_modifiers": [
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact",
+        "multi_panel_figure",
+        "multi_select"
+      ],
+      "supporting_question_count": 80,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題1",
+          "question_id": "140158377",
+          "question_text_excerpt": "あなたは既存の業務アプリにチャットボット機能を追加し、Azure上の大規模言語モデルを利用して自然な対話を実現したいと考えています。 複数の開発者が同じプロジェクトでプロンプトフローや評価を共有できるようにしたい場合、まず使用すべきポータルはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題2",
+          "question_id": "140158379",
+          "question_text_excerpt": "あなたは新しいAIアプリケーション向けにAzure AI Foundryを利用してPoCを作成しています。 まだ本番運用ではないため、コストを抑えながら複数のモデルやプロンプトフローを試したいと考えています。 この目的に最も適した作業場所はどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題6",
+          "question_id": "140158389",
+          "question_text_excerpt": "ある組織は、製品のコンセプト画像を素早く大量に作りたいという要件があります。 Azure AI Foundryで画像生成を行う際に利用するモデルはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題7",
+          "question_id": "140158391",
+          "question_text_excerpt": "あなたは生成AIソリューションを設計しています。 既存の業務システムと連携し、定期的にモデルを更新・再デプロイできるようにしたい場合、最も適切なアプローチはどれですか。"
+        }
+      ]
+    },
+    {
+      "pattern_id": "artifact_interpretation",
+      "name_ja": "成果物読解",
+      "intent": "interpret_code_json_or_response",
+      "description_ja": "コード、JSON、レスポンス、設定画面、OCR 結果などの成果物を読み、そこから意味や正解を導かせる問題型です。",
+      "mma_question_types": [
+        "setting",
+        "comparison",
+        "decision"
+      ],
+      "stem_slots": [
+        {
+          "slot": "artifact_kind",
+          "required": true,
+          "description_ja": "コード、JSON、表、レスポンスなどの種類"
+        },
+        {
+          "slot": "artifact_payload",
+          "required": true,
+          "description_ja": "読解対象の成果物"
+        },
+        {
+          "slot": "target_inference",
+          "required": true,
+          "description_ja": "成果物から何を読み取らせるか"
+        },
+        {
+          "slot": "domain_hint",
+          "required": false,
+          "description_ja": "対象ドメインの補助文脈"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single_or_multi",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "成果物内の根拠文字列・構造・設定値から直接導ける選択肢だけを正解にします。",
+        "distractor_families": [
+          "近いが別フィールド・別パラメータを指す選択肢",
+          "成果物外の一般論でしか支えられない選択肢",
+          "用語を知っていれば選びたくなるが構造が一致しない選択肢"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "成果物内の観測値",
+          "公式仕様",
+          "正解に必要な意味解釈"
+        ]
+      },
+      "adaptation_rules": [
+        "artifact_payload の形式を維持したまま、新規領域の成果物へ差し替えます。",
+        "成果物を見ずに解ける問題へ退化させません。"
+      ],
+      "compatible_modifiers": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact",
+        "multi_panel_figure",
+        "multi_select"
+      ],
+      "supporting_question_count": 43,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題4",
+          "question_id": "140158383",
+          "question_text_excerpt": "あなたは社内FAQボットで、自然な文章生成とコード例の提案の両方を行いたいと考えています。 Azure AI Foundryで使用するモデルのカテゴリとして、最も適切なものはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題5",
+          "question_id": "140158385",
+          "question_text_excerpt": "あなたはAzure OpenAI（Foundry Models）を使用してコード生成機能を持つ開発者向けチャットボットを実装しています。 ユーザーの自然言語入力からコードスニペットを生成するのに最も適したモデルの種類はどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題28",
+          "question_id": "140158353",
+          "question_text_excerpt": "複数のAzure AIサービス（Vision・Text Analytics・Languageなど）に一括でアクセスできるオールインワンのエンドポイントはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題31",
+          "question_id": "140158343",
+          "question_text_excerpt": "Azure AI Searchのエンリッチメント機能を利用し、OCRやテキスト抽出を行った後、その結果をJSON形式や表形式で格納できるストレージ機能はどれですか。"
+        }
+      ]
+    },
+    {
+      "pattern_id": "procedure_sequence",
+      "name_ja": "手順順序・補完",
+      "intent": "choose_or_complete_steps_in_order",
+      "description_ja": "正しい手順順序、欠落した設定手順、デプロイ順を問う問題型です。",
+      "mma_question_types": [
+        "order",
+        "decision"
+      ],
+      "stem_slots": [
+        {
+          "slot": "starting_state",
+          "required": true,
+          "description_ja": "開始時の状態"
+        },
+        {
+          "slot": "target_state",
+          "required": true,
+          "description_ja": "到達すべき状態"
+        },
+        {
+          "slot": "sequence_gap",
+          "required": true,
+          "description_ja": "補完または順序化の対象"
+        },
+        {
+          "slot": "constraints",
+          "required": false,
+          "description_ja": "守るべき条件"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single_or_multi",
+        "option_count": {
+          "min": 3,
+          "max": 6
+        },
+        "correct_option_rule": "公式手順の依存順序を壊さない選択肢だけを正解にします。",
+        "distractor_families": [
+          "順序は似ているが依存関係が逆転した選択肢",
+          "前提不足のまま次工程へ進む選択肢",
+          "不要工程を混ぜた選択肢"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "公式手順",
+          "依存順序",
+          "到達条件"
+        ]
+      },
+      "adaptation_rules": [
+        "順序の意味が変わらない範囲で、手順対象だけを新規領域へ差し替えます。",
+        "単なる暗記列ではなく、前提を壊すと失敗する構造を維持します。"
+      ],
+      "compatible_modifiers": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "multi_select"
+      ],
+      "supporting_question_count": 29,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題33",
+          "question_id": "140158345",
+          "question_text_excerpt": "あなたは、Azure AI SpeechのCustom Speech（カスタムスピーチ）機能を使って、自社専用の音声認識モデルを構築しようとしています。 その際に必要となる作業の流れ（ワークフロー）として、正しい順序はどれですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題21",
+          "question_id": "140161043",
+          "question_text_excerpt": "あなたの会社では、製品のセットアップを案内するチャットボットを開発しています。ユーザーが段階的に手順を進められるようにする必要があります。 この要件を満たすために、どのタイプのダイアログを使用するべきですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題38",
+          "question_id": "140161059",
+          "question_text_excerpt": "あなたの会社では、ブランドのオンラインモニタリングシステムを開発しており、動画コンテンツ内で特定のブランド名が言及された箇所を特定する必要があります。 この要件を満たすため、どのような手順が適切ですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題41",
+          "question_id": "140161061",
+          "question_text_excerpt": "あなたの会社では、製造業向けの品質検査システムを開発しており、Azure AI Custom Visionを使用して製品の不良を識別します。 開発環境 \"qcdev\" で学習済みの物体検出モデル \"defectDetector\" を、本番環境 \"qcprod\" に移行する必要があります。 移行に際し、適切な手順はどれですか。"
+        }
+      ]
+    },
+    {
+      "pattern_id": "configuration_tuning",
+      "name_ja": "設定値調整",
+      "intent": "choose_parameter_or_setting",
+      "description_ja": "品質・決定性・速度・ネットワーク・認証などを満たすために、どの設定値やパラメータを変更すべきかを問う問題型です。",
+      "mma_question_types": [
+        "setting",
+        "decision"
+      ],
+      "stem_slots": [
+        {
+          "slot": "observed_problem",
+          "required": true,
+          "description_ja": "現在起きている現象"
+        },
+        {
+          "slot": "control_surface",
+          "required": true,
+          "description_ja": "調整対象のパラメータ群"
+        },
+        {
+          "slot": "target_behavior",
+          "required": true,
+          "description_ja": "達成したい振る舞い"
+        },
+        {
+          "slot": "tradeoff",
+          "required": false,
+          "description_ja": "調整に伴うトレードオフ"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single_or_multi",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "観測された問題に対し、制御面が直接対応する設定だけを正解にします。",
+        "distractor_families": [
+          "見た目は近いが制御対象が違うパラメータ",
+          "値は変更できるが問題原因に直接関与しない設定",
+          "生成停止や上限など別目的の設定"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "設定の意味",
+          "期待される変化",
+          "別設定との境界"
+        ]
+      },
+      "adaptation_rules": [
+        "調整対象が UI パラメータでも API 引数でも、control_surface を保持します。",
+        "target_behavior と observed_problem を対で差し替えます。"
+      ],
+      "compatible_modifiers": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact",
+        "multi_select"
+      ],
+      "supporting_question_count": 16,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題8",
+          "question_id": "140158393",
+          "question_text_excerpt": "チャットボットが「同じ質問に対して毎回かなり違う回答を返してしまい」、一貫性が低いことが問題になっています。 Generative AIモデルの推論時に調整すべき代表的なパラメータはどれですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題2",
+          "question_id": "140161121",
+          "question_text_excerpt": "あなたの組織では、Azure AI Servicesの 音声認識（Speech-to-Text）サービスを利用しています。セキュリティ強化のため、この音声サービスがvnet1にあるリソースのみにアクセス可能 となるように設定する必要があります。 どの設定を行うべきですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題5",
+          "question_id": "140161131",
+          "question_text_excerpt": "あなたはAzure AI FoundryのChatプレイグラウンドを使って、顧客サポート用チャットボットの応答品質を調整しています。 現在の設定では、次のような問題が発生しています。 ・モデルが同じ文やフレーズを繰り返し生成し、読みにくい応答になることがある ・似たような質問に対して、毎回大きく異なる内容の回答が返ってしまい、一貫性に欠ける このため、応答の"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題48",
+          "question_id": "140161133",
+          "question_text_excerpt": "あなたは、オンライン旅行サービス企業の開発担当者として、Azure OpenAIのGPT-4モデルを利用した 予約サポート用チャットボットを設計しています。このボットは、ユーザーからの日付や人数、行き先などの入力をもとに、候補となる便や宿泊プランを提示します。社内テストの結果、同じ条件を入力しても表現や提案内容が毎回微妙に変化するため、回答の一貫性と正確性を"
+        }
+      ]
+    },
+    {
+      "pattern_id": "capability_constraint_filter",
+      "name_ja": "制約適合フィルタ",
+      "intent": "filter_supported_options_by_constraints",
+      "description_ja": "複数候補を、形式・サイズ・SKU・評価指標・サポート有無などの制約でふるいに掛ける問題型です。",
+      "mma_question_types": [
+        "comparison",
+        "decision",
+        "setting"
+      ],
+      "stem_slots": [
+        {
+          "slot": "candidate_matrix",
+          "required": true,
+          "description_ja": "候補一覧または表"
+        },
+        {
+          "slot": "constraint_set",
+          "required": true,
+          "description_ja": "適合判定に使う条件群"
+        },
+        {
+          "slot": "selection_cardinality",
+          "required": true,
+          "description_ja": "何件選ばせるか"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "multi",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "提示制約をすべて満たす候補だけを正解にします。",
+        "distractor_families": [
+          "形式は合うがサイズやSKUが不適合の候補",
+          "条件の一部だけ満たす候補",
+          "似た名称だがサポート外の候補"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "サポート条件",
+          "候補属性",
+          "選択件数"
+        ]
+      },
+      "adaptation_rules": [
+        "candidate_matrix を新規領域の候補表へ差し替えます。",
+        "選択件数を維持し、単一選択へ劣化させません。"
+      ],
+      "compatible_modifiers": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact",
+        "multi_select",
+        "table_artifact"
+      ],
+      "supporting_question_count": 12,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題37",
+          "question_id": "140158363",
+          "question_text_excerpt": "Azure AI Searchを使用した文書管理システムでは、適切な権限を持つユーザーのみに検索結果を表示させる必要があります。 そのためには、どのような対応が適切ですか。３つ選択してください。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題4",
+          "question_id": "140161067",
+          "question_text_excerpt": "あなたはAzure AI Custom Visionサービスを使用して、オンラインショッピングサイト向けの商品画像分類モデル を構築しています。このモデルは、衣類やアクセサリーの種類を自動で分類する ためにトレーニングされています。 トレーニングが完了した後、分類モデルの評価を行う必要があります。 どの評価指標を確認できますか。（２つ選択）"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題40",
+          "question_id": "140161101",
+          "question_text_excerpt": "あなたの Azure サブスクリプションには、Azure AI Document IntelligenceのS0 プラン（スタンダードプラン）のリソースが含まれており、次のファイルを分析しようとしています。 この環境で処理可能なファイルはどれですか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題14",
+          "question_id": "150410785",
+          "question_text_excerpt": "あなたは、Microsoft Bot Framework Composerを使用して顧客サポート向けに 3 つの異なるボットを作成しました。それぞれのボットは 返品処理、注文状況の確認、製品サポートを担当しています。 現在、ユーザーが 1 つのボットにアクセスすると、ユーザーの問い合わせ内容に応じて適切なボット（返品処理・注文状況確認・製品サポート）に自動で"
+        }
+      ]
+    },
+    {
+      "pattern_id": "error_resolution",
+      "name_ja": "障害原因・解消",
+      "intent": "diagnose_and_fix_failure",
+      "description_ja": "エラーや不正応答の原因を特定し、最も直接的な解消策を選ばせる問題型です。",
+      "mma_question_types": [
+        "error",
+        "decision"
+      ],
+      "stem_slots": [
+        {
+          "slot": "symptom",
+          "required": true,
+          "description_ja": "観測されたエラーまたは不具合"
+        },
+        {
+          "slot": "execution_context",
+          "required": false,
+          "description_ja": "発生環境や周辺条件"
+        },
+        {
+          "slot": "candidate_fix_axis",
+          "required": true,
+          "description_ja": "修正候補の軸"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single_or_multi",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "症状に対して最短で因果がつながる修正を正解にします。",
+        "distractor_families": [
+          "一般対策だが症状へ直結しない選択肢",
+          "別層の設定変更",
+          "結果は変わるが原因ではない操作"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "症状",
+          "原因",
+          "修正根拠"
+        ]
+      },
+      "adaptation_rules": [
+        "症状テキストを変えても、cause-to-fix の因果骨格は維持します。",
+        "原因推定なしに万能策を正解へ置きません。"
+      ],
+      "compatible_modifiers": [
+        "code_artifact",
+        "figure_evidence",
+        "multi_select"
+      ],
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題15",
+          "question_id": "150410719",
+          "question_text_excerpt": "あなたの会社では、OCR（光学文字認識）を活用した請求書管理システム を開発しています。このシステムでは、Azure AI Visionを使用して画像内の文字を自動的に抽出する必要があります。 ■生成したPythonコード 現在、システムのテスト中に、OCR処理が完了する前にGetReadResultAsyncメソッドが実行されてしまい、結果が正しく取得でき"
+        }
+      ]
+    },
+    {
+      "pattern_id": "span_localization",
+      "name_ja": "部分同定",
+      "intent": "locate_entity_or_value_span",
+      "description_ja": "発話、JSON、OCR テキストなどの中から、特定エンティティや値に該当する部分を同定させる問題型です。",
+      "mma_question_types": [
+        "definition",
+        "comparison"
+      ],
+      "stem_slots": [
+        {
+          "slot": "source_text",
+          "required": true,
+          "description_ja": "部分同定の対象テキスト"
+        },
+        {
+          "slot": "target_label",
+          "required": true,
+          "description_ja": "探させるエンティティまたは属性"
+        },
+        {
+          "slot": "candidate_spans",
+          "required": true,
+          "description_ja": "候補として提示する部分列"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single",
+        "option_count": {
+          "min": 4,
+          "max": 4
+        },
+        "correct_option_rule": "source_text 内で target_label に一致するスパンだけを正解にします。",
+        "distractor_families": [
+          "近傍語だがラベルが違うスパン",
+          "文法上は妥当だが対象エンティティではないスパン",
+          "単語境界を誤ったスパン"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "ラベル定義",
+          "テキストスパン",
+          "データ形式"
+        ]
+      },
+      "adaptation_rules": [
+        "source_text を別ドメインへ差し替えても、target_label と span の関係を保持します。",
+        "部分一致ではなく、公式定義に合う属性境界を使います。"
+      ],
+      "compatible_modifiers": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題20",
+          "question_id": "140161079",
+          "question_text_excerpt": "以下の JSON は、銀行のカスタマーサポートチャットボットの CLU モデルのデータです。 このデータでBanking.TimePeriodエンティティに該当する発話の部分はどれですか。"
+        }
+      ]
+    }
+  ],
+  "modifiers": [
+    {
+      "modifier_id": "code_artifact",
+      "name_ja": "コード断片依存",
+      "description_ja": "コード、関数呼び出し、SDK 使用例などを成果物として読ませます。",
+      "effect_on_generation": [
+        "コード断片を artifact として保持します。",
+        "一般論ではなく、関数・引数・戻り値に結び付けて作問します。"
+      ],
+      "supporting_question_count": 99,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題4",
+          "question_id": "140158383",
+          "question_text_excerpt": "あなたは社内FAQボットで、自然な文章生成とコード例の提案の両方を行いたいと考えています。 Azure AI Foundryで使用するモデルのカテゴリとして、最も適切なものはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題5",
+          "question_id": "140158385",
+          "question_text_excerpt": "あなたはAzure OpenAI（Foundry Models）を使用してコード生成機能を持つ開発者向けチャットボットを実装しています。 ユーザーの自然言語入力からコードスニペットを生成するのに最も適したモデルの種類はどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題28",
+          "question_id": "140158353",
+          "question_text_excerpt": "複数のAzure AIサービス（Vision・Text Analytics・Languageなど）に一括でアクセスできるオールインワンのエンドポイントはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題31",
+          "question_id": "140158343",
+          "question_text_excerpt": "Azure AI Searchのエンリッチメント機能を利用し、OCRやテキスト抽出を行った後、その結果をJSON形式や表形式で格納できるストレージ機能はどれですか。"
+        }
+      ]
+    },
+    {
+      "modifier_id": "figure_evidence",
+      "name_ja": "図依存",
+      "description_ja": "図・スクリーンショット・OCR 抽出テキストを見ないと解けない条件を持ちます。",
+      "effect_on_generation": [
+        "問題文だけで完結させず、図を正解根拠に組み込みます。",
+        "図の OCR 抽出テキストも根拠として保持します。"
+      ],
+      "supporting_question_count": 85,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題32",
+          "question_id": "140158355",
+          "question_text_excerpt": "医薬品の効果をまとめたレポートを自動解析するAIサービスを開発しています。このサービスに、論文内のキーワードを検出し、それに対応するWikipediaへのリンクを自動的に追加する機能を組み込みたいと考えています。 以下のコードは、Text AnalyticsのRecognizeLinkedEntitiesメソッドを使用し、文書内のエンティティを検出する一例で"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題5",
+          "question_id": "140161131",
+          "question_text_excerpt": "あなたはAzure AI FoundryのChatプレイグラウンドを使って、顧客サポート用チャットボットの応答品質を調整しています。 現在の設定では、次のような問題が発生しています。 ・モデルが同じ文やフレーズを繰り返し生成し、読みにくい応答になることがある ・似たような質問に対して、毎回大きく異なる内容の回答が返ってしまい、一貫性に欠ける このため、応答の"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題11",
+          "question_id": "140161123",
+          "question_text_excerpt": "あなたは、オンライン英会話教材の読み上げアプリを開発しています。 ユーザーのリスニング練習のために、若い女性の先生が丁寧に話すような音声が必要です。そのため、Custom Neural Voice と SSML を使って「話者のタイプ」と「話し方のスタイル」を定義します。 次のSSMLタグの記述の中で、適切な属性を選択してください。 ■選択肢 ① 値１ st"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題12",
+          "question_id": "140161115",
+          "question_text_excerpt": "あなたは、Azure AI Languageを使用して医療研究者向けのアプリケーションを開発しています。このアプリは、医療論文を分析し、重要な医学用語を識別してナレッジベースと関連付ける機能を提供します。 次のC#コードを使用して、医療論文のテキストを解析し、識別された医学用語を適切な情報源とリンクします。 このコードについて、どの記述が正しいですか。"
+        }
+      ]
+    },
+    {
+      "modifier_id": "compound_answer",
+      "name_ja": "複合回答",
+      "description_ja": "1 つの選択肢の中で複数の設問要素を同時に満たす必要があります。",
+      "effect_on_generation": [
+        "サブ設問の組み合わせ整合性を保持します。",
+        "片方だけ正しい複合誤答を作ります。"
+      ],
+      "supporting_question_count": 54,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題11",
+          "question_id": "140161123",
+          "question_text_excerpt": "あなたは、オンライン英会話教材の読み上げアプリを開発しています。 ユーザーのリスニング練習のために、若い女性の先生が丁寧に話すような音声が必要です。そのため、Custom Neural Voice と SSML を使って「話者のタイプ」と「話し方のスタイル」を定義します。 次のSSMLタグの記述の中で、適切な属性を選択してください。 ■選択肢 ① 値１ st"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題31",
+          "question_id": "140161109",
+          "question_text_excerpt": "あなたは、社内研修で使う手書きアンケート用紙をスキャンしてPDF化したファイルから、手書きコメントを抽出するアプリケーションを作成しています。Azureサブスクリプションには、Azure AI Document Intelligenceリソース「DI1」があり、そのリソースを使うPythonアプリ「App1」を実装しています。 App1は、PDF内に一定以上"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題35",
+          "question_id": "140161125",
+          "question_text_excerpt": "あなたは、Azure上で画像やPDFから情報を抽出するAIサービスを構築しています。リソースの自動化展開には、以下のARMテンプレートを使用しています。 このテンプレートでAzure AI Document Intelligenceリソースを正しく作成するには、クラスとリソースの種類に何を指定すべきですか。 ① クラス: Microsoft.Cognitiv"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題46",
+          "question_id": "140161111",
+          "question_text_excerpt": "あなたは、Microsoft Bot Framework SDK を使用して、ファッションアイテムの提案を行うチャットボットを開発しています。ボットは、ユーザーが欲しいアイテムを入力すると、おすすめの製品を表示します。 Microsoft Bot Framework Emulatorを使用して会話フローをテストする必要があります。 この.chatファイル内の"
+        }
+      ]
+    },
+    {
+      "modifier_id": "multi_select",
+      "name_ja": "複数選択",
+      "description_ja": "2 つ以上の正解を選ばせる cardinality 契約を持ちます。",
+      "effect_on_generation": [
+        "選択件数を問題契約として明示します。",
+        "正解数を曖昧にしません。"
+      ],
+      "supporting_question_count": 50,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題37",
+          "question_id": "140158363",
+          "question_text_excerpt": "Azure AI Searchを使用した文書管理システムでは、適切な権限を持つユーザーのみに検索結果を表示させる必要があります。 そのためには、どのような対応が適切ですか。３つ選択してください。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題40",
+          "question_id": "140158369",
+          "question_text_excerpt": "Azure AI Languageの会話言語理解（CLU: Conversational Language Understanding）モデルについて、デプロイ前に精度を評価するために適切な方法はどれですか。（３つ選択）"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題4",
+          "question_id": "140161067",
+          "question_text_excerpt": "あなたはAzure AI Custom Visionサービスを使用して、オンラインショッピングサイト向けの商品画像分類モデル を構築しています。このモデルは、衣類やアクセサリーの種類を自動で分類する ためにトレーニングされています。 トレーニングが完了した後、分類モデルの評価を行う必要があります。 どの評価指標を確認できますか。（２つ選択）"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題5",
+          "question_id": "140161131",
+          "question_text_excerpt": "あなたはAzure AI FoundryのChatプレイグラウンドを使って、顧客サポート用チャットボットの応答品質を調整しています。 現在の設定では、次のような問題が発生しています。 ・モデルが同じ文やフレーズを繰り返し生成し、読みにくい応答になることがある ・似たような質問に対して、毎回大きく異なる内容の回答が返ってしまい、一貫性に欠ける このため、応答の"
+        }
+      ]
+    },
+    {
+      "modifier_id": "json_artifact",
+      "name_ja": "JSON 依存",
+      "description_ja": "JSON、ARM、Bicep 由来の構造やフィールド値を根拠にします。",
+      "effect_on_generation": [
+        "フィールド名、値、入れ子構造を保持します。",
+        "JSON 外の憶測で正解を決めません。"
+      ],
+      "supporting_question_count": 28,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題31",
+          "question_id": "140158343",
+          "question_text_excerpt": "Azure AI Searchのエンリッチメント機能を利用し、OCRやテキスト抽出を行った後、その結果をJSON形式や表形式で格納できるストレージ機能はどれですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題5",
+          "question_id": "140161131",
+          "question_text_excerpt": "あなたはAzure AI FoundryのChatプレイグラウンドを使って、顧客サポート用チャットボットの応答品質を調整しています。 現在の設定では、次のような問題が発生しています。 ・モデルが同じ文やフレーズを繰り返し生成し、読みにくい応答になることがある ・似たような質問に対して、毎回大きく異なる内容の回答が返ってしまい、一貫性に欠ける このため、応答の"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題17",
+          "question_id": "140161039",
+          "question_text_excerpt": "あなたはオンラインストアの顧客レビューを分析し、感情分析を適用する AI ソリューションを開発しています。このソリューションでは、顧客のレビュー内容と感情分析の結果を構造化されたJSONデータとして保存し、アプリケーションで容易に取得・分析できるナレッジストアを構築する必要があります。 このナレッジストアの定義に含めるべき 2 つのフィールドはどれですか。（"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題20",
+          "question_id": "140161079",
+          "question_text_excerpt": "以下の JSON は、銀行のカスタマーサポートチャットボットの CLU モデルのデータです。 このデータでBanking.TimePeriodエンティティに該当する発話の部分はどれですか。"
+        }
+      ]
+    },
+    {
+      "modifier_id": "table_artifact",
+      "name_ja": "表・候補一覧依存",
+      "description_ja": "ファイル一覧、サイズ表、評価指標一覧などの表構造を使います。",
+      "effect_on_generation": [
+        "候補一覧と制約照合を行います。",
+        "表の列意味を壊さずに新規領域へ移植します。"
+      ],
+      "supporting_question_count": 10,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題40",
+          "question_id": "140161101",
+          "question_text_excerpt": "あなたの Azure サブスクリプションには、Azure AI Document IntelligenceのS0 プラン（スタンダードプラン）のリソースが含まれており、次のファイルを分析しようとしています。 この環境で処理可能なファイルはどれですか。"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題5",
+          "question_id": "143655299",
+          "question_text_excerpt": "あなたは Azure サブスクリプションを所有しており、S0プランのAzure AI Document Intelligenceリソースを使用しています。 以下のファイルを使用してカスタム抽出モデルをトレーニングする必要があります。 Azure AI Document Intelligence Studioにアップロードできるファイルはどれですか。"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題19",
+          "question_id": "143655279",
+          "question_text_excerpt": "あなたのチームは、大容量のビデオファイル（20GB以上）をAzure AI Video Indexerで処理する計画を立てています。Azure AI Video Indexerで直接アップロードできるファイルの最大サイズは2GBであるため、最適な方法を選択する必要があります。 最初に実行すべきアクションはどれですか。"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題23",
+          "question_id": "143655313",
+          "question_text_excerpt": "あなたの組織では、製品カタログの画像処理にAzure AI Servicesを使用しています。特定のエリアを自動的に検出し、異なるサイズの商品画像を作成する機能を導入する予定です。 適切なAPIエンドポイントを作成する必要があります。 最適なURLならびにAPIエンドポイントを選択してください。 ■選択肢: ① URL https://api.project"
+        }
+      ]
+    },
+    {
+      "modifier_id": "multi_panel_figure",
+      "name_ja": "複数図連結",
+      "description_ja": "1 問に複数枚の画像群が対応し、順序や比較が必要です。",
+      "effect_on_generation": [
+        "図を 1 枚に潰さず、複数図の関係を保持します。",
+        "順序や比較がある場合は図群全体を根拠にします。"
+      ],
+      "supporting_question_count": 7,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題3",
+          "question_id": "143655247",
+          "question_text_excerpt": "あなたは、レビュー分析システムを構築しています。Azure AI Languageのキーフレーズ抽出を使い、文章から重要語句を取り出してレポートに反映したいと考えています。 次のPython関数は、与えられた文章のキーフレーズを抽出して表示するものです。 あなたは以下のコードを実行しました。 このとき、「Key Phrases:」の後に表示されるキーフレーズ"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題43",
+          "question_id": "143655307",
+          "question_text_excerpt": "あなたの会社では、カスタマーサポートの問い合わせ内容を分析し、問い合わせの内容を簡潔にまとめるAIシステムを開発しています。問い合わせ内容の主要なポイントを抽出するために、Azure AI Languageのキーフレーズ抽出機能を使用しています。 以下のコードを開発しました。 このメソッドを次のコードで呼び出します。 このコードについて、正しい記述はどれです"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題28",
+          "question_id": "150410759",
+          "question_text_excerpt": "あなたは、レストランのレビューを分析するアプリを開発しています。レビューの中から、都市名やレストラン名 を特定する必要があります。 アプリには次の C# コードが含まれています。 現在、次のレビューを入力として関数を実行します。 このコードについて正しい記述はどれですか。（２つ選択）"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題9",
+          "question_id": "150410897",
+          "question_text_excerpt": "あなたの会社は、ホテル業界向けの請求書処理システムを開発しています。このシステムは、スキャンされた請求書から請求金額や宿泊者情報を自動抽出し、会計システムにデータを送信する機能を備えています。 Azure AIを使用し、スキャンされた請求書を処理するスタンダードプランのリソースを作成するにはどのようなメソッドが最適ですか。 ■リソースプロビジョニングのコード"
+        }
+      ]
+    }
+  ],
+  "composed_patterns": [
+    {
+      "composition_id": "best_fit_decision",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [],
+      "description_ja": "最適解選択",
+      "supporting_question_count": 62,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題1",
+          "question_id": "140158377",
+          "question_text_excerpt": "あなたは既存の業務アプリにチャットボット機能を追加し、Azure上の大規模言語モデルを利用して自然な対話を実現したいと考えています。 複数の開発者が同じプロジェクトでプロンプトフローや評価を共有できるようにしたい場合、まず使用すべきポータルはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題2",
+          "question_id": "140158379",
+          "question_text_excerpt": "あなたは新しいAIアプリケーション向けにAzure AI Foundryを利用してPoCを作成しています。 まだ本番運用ではないため、コストを抑えながら複数のモデルやプロンプトフローを試したいと考えています。 この目的に最も適した作業場所はどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題6",
+          "question_id": "140158389",
+          "question_text_excerpt": "ある組織は、製品のコンセプト画像を素早く大量に作りたいという要件があります。 Azure AI Foundryで画像生成を行う際に利用するモデルはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題7",
+          "question_id": "140158391",
+          "question_text_excerpt": "あなたは生成AIソリューションを設計しています。 既存の業務システムと連携し、定期的にモデルを更新・再デプロイできるようにしたい場合、最も適切なアプローチはどれですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [],
+      "description_ja": "前提資源・有効化判定",
+      "supporting_question_count": 59,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題3",
+          "question_id": "140158381",
+          "question_text_excerpt": "Azure AI Foundry上でAzure OpenAIモデルを利用するには、前提としてどのリソースをプロビジョニングする必要がありますか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題25",
+          "question_id": "140158387",
+          "question_text_excerpt": "あなたはAzure OpenAIをアプリケーションに統合しています。同じモデルに対してデータセンター外での利用（エッジデバイス）も検討している場合、どのオプションを併用する必要がありますか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題38",
+          "question_id": "140158365",
+          "question_text_excerpt": "あなたは、Azure AI SearchをWebアプリと統合するプロジェクトを進めています。セキュリティ要件として、Azure AI Search に対するすべての通信は、インターネットを経由せずに行われる必要があります。 この要件を満たすために、どの接続方法を選択すべきですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題6",
+          "question_id": "140161069",
+          "question_text_excerpt": "あなたは、小売業者向けの在庫管理システムを開発しています。 このシステムでは、納品書や請求書の紙の書類をデジタル化するために、光学文字認識（OCR）を活用する必要があります。しかし、このデータは機密性が高いため、パブリッククラウドにはデプロイできません。 この要件を満たすために、どの方法を選択すべきですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "procedure_sequence",
+      "base_pattern_id": "procedure_sequence",
+      "modifier_ids": [],
+      "description_ja": "手順順序・補完",
+      "supporting_question_count": 19,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題33",
+          "question_id": "140158345",
+          "question_text_excerpt": "あなたは、Azure AI SpeechのCustom Speech（カスタムスピーチ）機能を使って、自社専用の音声認識モデルを構築しようとしています。 その際に必要となる作業の流れ（ワークフロー）として、正しい順序はどれですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題21",
+          "question_id": "140161043",
+          "question_text_excerpt": "あなたの会社では、製品のセットアップを案内するチャットボットを開発しています。ユーザーが段階的に手順を進められるようにする必要があります。 この要件を満たすために、どのタイプのダイアログを使用するべきですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題38",
+          "question_id": "140161059",
+          "question_text_excerpt": "あなたの会社では、ブランドのオンラインモニタリングシステムを開発しており、動画コンテンツ内で特定のブランド名が言及された箇所を特定する必要があります。 この要件を満たすため、どのような手順が適切ですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題41",
+          "question_id": "140161061",
+          "question_text_excerpt": "あなたの会社では、製造業向けの品質検査システムを開発しており、Azure AI Custom Visionを使用して製品の不良を識別します。 開発環境 \"qcdev\" で学習済みの物体検出モデル \"defectDetector\" を、本番環境 \"qcprod\" に移行する必要があります。 移行に際し、適切な手順はどれですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__compound_answer",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "compound_answer"
+      ],
+      "description_ja": "前提資源・有効化判定 + 複合回答",
+      "supporting_question_count": 13,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題49",
+          "question_id": "140161099",
+          "question_text_excerpt": "あなたのチームは、Azure AI Document Intelligenceを使用して教育機関向けの文書管理システムを開発しています。このシステムでは、スキャンされた学費補助申請書や学生満足度調査を解析し、データベースに保存する機能を提供する必要があります。学費補助申請書と学生満足度調査はそれぞれ別のモデルを使用する予定です。 それぞれに適したAzure "
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題30",
+          "question_id": "143655285",
+          "question_text_excerpt": "あなたは、企業向けの従業員ヘルプデスクチャットボットを開発しています。このボットは以下の要件を満たす必要があります。 要件① 社員が送信したメッセージに個人情報（クレジットカード番号、メールアドレスなど）が含まれているかを識別する 要件② 社内で使用される特定のプロジェクト名を識別する この要件を満たす適切なAzure AI Languageの機能はそれぞれ"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題46",
+          "question_id": "143655265",
+          "question_text_excerpt": "あなたの会社では、オンライン医療予約システムを開発しており、会話言語理解（CLU）を使用して診察予約の意図を識別する機能を実装する必要があります。 以下の文章をインテントに登録しました。 [3月5日]までに東京から大阪までの[エコノミークラス往復チケット2枚]を予約し、customer@example.comに送信してください。 以下ラベルに適したエンティテ"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題16",
+          "question_id": "150410717",
+          "question_text_excerpt": "あなたの会社では、iOS向けの果物識別アプリを開発しており、Azure AI Custom Visionを使用して、画像内の果物が「リンゴ」「バナナ」「オレンジ」のいずれかに分類される機能を実装する必要があります。 適切なプロジェクト設定を選択してください。 ■選択肢 ①プロジェクトタイプ Classification Object Detection ②ド"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存",
+      "supporting_question_count": 11,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題13",
+          "question_id": "140161037",
+          "question_text_excerpt": "あなたは、Azure AI Languageを使用して商品レビューの自動分類システムを開発しています。このサービスは顧客のレビュー内容を自動的に分類し、感情分析（ポジティブ/ネガティブなど）を実行するために利用されます。現在、システムのREST APIを利用するためのエンドポイントURLを特定する必要があります。 Azureポータルのどのブレード（設定ページ"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題22",
+          "question_id": "140161103",
+          "question_text_excerpt": "あなたは、Azure AI Document Intelligenceを利用するアプリApp1を管理しています。このアプリは、身分証明書をスキャンするためにprebuilt-idDocument v2.1モデルを使用しています。現在、アプリApp1をQRコードを読み取れるようにアップグレード する必要があります。 管理の負担を最小限にするために、どのような対"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題45",
+          "question_id": "140161053",
+          "question_text_excerpt": "あなたの会社では、オンラインショッピング向けの音声アシスタントを開発しており、Azure AI Speech を使用してテキストを音声に変換する機能を実装する必要があります。システムは以下の要件を満たす必要があります。 ・最大350文字のメッセージをサポートする ・複数の音声オプションを提供する ・コストを最小限に抑える 利用可能な音声オプションを取得するた"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題14",
+          "question_id": "143655243",
+          "question_text_excerpt": "あなたは、ユーザーが商品画像をアップロードできるECサイトのアプリケーションを開発しています。このシステムでは、アップロードされた画像に対して自動的に代替テキスト（alt text）を生成する必要があります。 この要件を満たすために、どのAPI エンドポイントを使用するのが適切ですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact"
+      ],
+      "description_ja": "成果物読解 + コード断片依存",
+      "supporting_question_count": 9,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題4",
+          "question_id": "140158383",
+          "question_text_excerpt": "あなたは社内FAQボットで、自然な文章生成とコード例の提案の両方を行いたいと考えています。 Azure AI Foundryで使用するモデルのカテゴリとして、最も適切なものはどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題5",
+          "question_id": "140158385",
+          "question_text_excerpt": "あなたはAzure OpenAI（Foundry Models）を使用してコード生成機能を持つ開発者向けチャットボットを実装しています。 ユーザーの自然言語入力からコードスニペットを生成するのに最も適したモデルの種類はどれですか。"
+        },
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題28",
+          "question_id": "140158353",
+          "question_text_excerpt": "複数のAzure AIサービス（Vision・Text Analytics・Languageなど）に一括でアクセスできるオールインワンのエンドポイントはどれですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題3",
+          "question_id": "140161127",
+          "question_text_excerpt": "ある開発者が、Microsoft Bot Framework SDK を使用してFAQチャットボットを作成しました。現在、そのボットはローカル環境でホストされています。本番環境にデプロイする前に、チャットの動作をローカルでテストしたいと考えています。 その場合、どのツールの使用が適切ですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__compound_answer__figure_evidence",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 複合回答 + 図依存",
+      "supporting_question_count": 9,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題31",
+          "question_id": "140161109",
+          "question_text_excerpt": "あなたは、社内研修で使う手書きアンケート用紙をスキャンしてPDF化したファイルから、手書きコメントを抽出するアプリケーションを作成しています。Azureサブスクリプションには、Azure AI Document Intelligenceリソース「DI1」があり、そのリソースを使うPythonアプリ「App1」を実装しています。 App1は、PDF内に一定以上"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題37",
+          "question_id": "143655249",
+          "question_text_excerpt": "あなたは、国際会議の音声をリアルタイムで翻訳するアプリを開発しています。会議の進行は英語ですが、参加者向けにフランス語・ドイツ語・スペイン語の3言語へ同時翻訳する必要があります。 Azure AI SpeechのSpeech Translation APIを使用して、翻訳対象の言語と認識器を構成するコードを記述しています。 次のコード内の適切なオプションはそ"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題29",
+          "question_id": "150410791",
+          "question_text_excerpt": "あなたの組織では、Azure AI Servicesの テキスト分析（Text Analytics）コンテナーを利用して、感情分析を実施する計画があります。Azureにデプロイ済みのテキスト分析APIのエンドポイントURLはhttps://mycompany.cognitiveservices.azure.comです。 また、最新の感情分析コンテナー イメー"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題2",
+          "question_id": "150410883",
+          "question_text_excerpt": "あなたは、Azure AI Speechを使った翻訳アプリを開発しています。アプリは日本語の音声を認識し、リアルタイムでスペイン語に翻訳する必要があります。 下記コード内のメソッドは何を選択するのが適切ですか。 メソッド① SpeechRecognitionLanguage SpeechSynthesisLanguage メソッド② AddTargetLan"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__figure_evidence__multi_select",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "multi_select"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 図依存 + 複数選択",
+      "supporting_question_count": 8,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題14",
+          "question_id": "140161085",
+          "question_text_excerpt": "あなたは、商品ラベルのテキストを認識するアプリケーションを開発しています。このアプリでは、Azure AI Visionを使用して、画像内のテキストを抽出します。 以下の C# コードを使用してテストを行っている最中に、 GetReadResultAsync メソッドが OCR の読み取り処理が完了する前に実行されてしまう という問題を発見しました。 この問"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題36",
+          "question_id": "143655287",
+          "question_text_excerpt": "あなたは、Azure AI Visionのクライアントライブラリを使用して動物の画像を分析するアプリケーションを開発しています。 アプリには、以下のコードが含まれています。 このコードについて正しい記述はどれですか。（２つ選択）"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題18",
+          "question_id": "150410793",
+          "question_text_excerpt": "あなたの会社では、ソーシャルメディア上に投稿された商品写真のブランド分析 のために Azure Computer Vision API を使用しています。 API は画像内のブランドロゴを分析し、検出されたブランド名、信頼度スコア、ロゴの位置情報（長方形の座標）を返します。 上記コードについて正しい記述はどれですか。（２つ選択）"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題41",
+          "question_id": "150410797",
+          "question_text_excerpt": "あなたのチームでは、Text Analyticsコンテナーを使用して、ユーザーからの製品レビューを分析する仕組みを構築しています。コンテナーは次のようにDockerで起動されています。 このコードについて、正しいか記述はどれですか。（２つ選択）"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__multi_select",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "multi_select"
+      ],
+      "description_ja": "前提資源・有効化判定 + 複数選択",
+      "supporting_question_count": 8,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題23",
+          "question_id": "140161025",
+          "question_text_excerpt": "あなたは、新しい教育システムを開発しており、学生のデータを処理する予定です。このシステムは、学生の出席状況や成績評価のデータを分析し、管理者に通知を送る仕組みになっています。学生には、自身のデータがどのように処理されたかを通知する必要があります。 この対応は、どの責任あるAI（Responsible AI）の原則を満たすことに貢献しますか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題32",
+          "question_id": "140161089",
+          "question_text_excerpt": "あなたは Azure AI Speechを利用するアプリケーションを開発しています。 現在、Microsoft Entra ID のトークンを使用して認証する必要があります。 この要件を満たすために必要な対応はどれですか。（２つ選択）"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題53",
+          "question_id": "140161113",
+          "question_text_excerpt": "あなたは、Azure AI Speechを使用して銀行向けの音声対応AIボットを開発しています。このボットは、顧客が音声で問い合わせを行い、音声で回答を受け取ることができます。音声機能を有効にするために、適切な設定を行う必要があります。 どのアクションを実行すべきですか。（３つ選択）"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題22",
+          "question_id": "150410737",
+          "question_text_excerpt": "あなたは、多言語対応のオンラインストア向けチャットボットを開発しており、このチャットボットは、顧客からの問い合わせ内容に応じて適切な応答を提供する機能を持ちます。 特に、ポジティブなレビューには感謝のメッセージを、ネガティブなレビューにはお詫びのメッセージを自動で送信する必要があります。 この要件を満たすために、どのAzure AI Languageの機能を"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__multi_select",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "multi_select"
+      ],
+      "description_ja": "最適解選択 + 複数選択",
+      "supporting_question_count": 7,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題40",
+          "question_id": "140158369",
+          "question_text_excerpt": "Azure AI Languageの会話言語理解（CLU: Conversational Language Understanding）モデルについて、デプロイ前に精度を評価するために適切な方法はどれですか。（３つ選択）"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題25",
+          "question_id": "150410739",
+          "question_text_excerpt": "あなたは オンライン学習プラットフォームを運営しており、学生がコースや教材、講師の情報を検索できるようにAzure AI Searchを利用しています。 過去12か月間で、学生による検索数が着実に増加したため、最近、検索リクエストの一部が制限（スロットリング）され、検索結果が取得できない問題が発生していることが分かりました。 この問題を解決し、学生がスムーズ"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題44",
+          "question_id": "150410753",
+          "question_text_excerpt": "あなたは、Azure AI Video Indexerを使用して複数の動画ファイルを分析しようとしています。 以下の表の動画ファイルがローカルフォルダーに保存されています。 どのファイルをアップロードすることができますか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題52",
+          "question_id": "150410703",
+          "question_text_excerpt": "あなたは、新しい教育システムを開発中であり、一般向けのウェブサイトから動画やテキストを処理する予定です。この教育システムが、ユーザーの所在地や背景に関係なく、AIシステムがすべてのユーザーを均等に扱い、特定のグループや個人に対する不当な差別を避けることが重要です。 これらの要件を満たすために、どの責任あるAIの原則が指針を提供しますか。（２つ選択）"
+        }
+      ]
+    },
+    {
+      "composition_id": "configuration_tuning",
+      "base_pattern_id": "configuration_tuning",
+      "modifier_ids": [],
+      "description_ja": "設定値調整",
+      "supporting_question_count": 7,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題8",
+          "question_id": "140158393",
+          "question_text_excerpt": "チャットボットが「同じ質問に対して毎回かなり違う回答を返してしまい」、一貫性が低いことが問題になっています。 Generative AIモデルの推論時に調整すべき代表的なパラメータはどれですか。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題2",
+          "question_id": "140161121",
+          "question_text_excerpt": "あなたの組織では、Azure AI Servicesの 音声認識（Speech-to-Text）サービスを利用しています。セキュリティ強化のため、この音声サービスがvnet1にあるリソースのみにアクセス可能 となるように設定する必要があります。 どの設定を行うべきですか。"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題28",
+          "question_id": "143655245",
+          "question_text_excerpt": "あなたの会社は、店舗監視システムを開発しており、Azure AI Faceを使用してアップロードされた画像から人物の顔を検出する機能を実装しています。 しかし、ぼやけた画像や横向きの顔が検出されないことが判明しました。 この問題を解決するには、どの設定を変更すべきですか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題5",
+          "question_id": "150410741",
+          "question_text_excerpt": "あなたは、複数の販売管理アプリケーションでAzure AI Searchを利用しており、セキュリティを強化する必要があります。具体的には、各アプリケーションが特定の検索クエリのみ実行できるように制限する必要があります。 この要件を満たすためには、どの設定を行うべきですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__figure_evidence",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 図依存",
+      "supporting_question_count": 5,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題32",
+          "question_id": "140158355",
+          "question_text_excerpt": "医薬品の効果をまとめたレポートを自動解析するAIサービスを開発しています。このサービスに、論文内のキーワードを検出し、それに対応するWikipediaへのリンクを自動的に追加する機能を組み込みたいと考えています。 以下のコードは、Text AnalyticsのRecognizeLinkedEntitiesメソッドを使用し、文書内のエンティティを検出する一例で"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題12",
+          "question_id": "140161115",
+          "question_text_excerpt": "あなたは、Azure AI Languageを使用して医療研究者向けのアプリケーションを開発しています。このアプリは、医療論文を分析し、重要な医学用語を識別してナレッジベースと関連付ける機能を提供します。 次のC#コードを使用して、医療論文のテキストを解析し、識別された医学用語を適切な情報源とリンクします。 このコードについて、どの記述が正しいですか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題3",
+          "question_id": "150410787",
+          "question_text_excerpt": "あなたは、Azure AI Servicesを利用して、文章の感情を分析するAIシステムを開発しています。 以下のC#コードを使用して、Azureに適切なリソースをデプロイしなければなりません。 西日本（Japan West）で感情分析のための適切なリソースを作成するには、どのオプションを選択すべきですか。"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題34",
+          "question_id": "150410909",
+          "question_text_excerpt": "あなたは、Microsoft Bot Framework SDKを使用してMicrosoft Teamsでオンライン会議をサポートするボットを開発しています。 以下のコードを使用しています。 このコードについて、正しい記述はどれですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__json_artifact",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "json_artifact"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + JSON 依存",
+      "supporting_question_count": 5,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題31",
+          "question_id": "140158343",
+          "question_text_excerpt": "Azure AI Searchのエンリッチメント機能を利用し、OCRやテキスト抽出を行った後、その結果をJSON形式や表形式で格納できるストレージ機能はどれですか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題26",
+          "question_id": "150410713",
+          "question_text_excerpt": "あなたの会社では、製品マニュアルの検索システム を開発しており、Azure AI Searchを使用して データを強化するパイプライン を作成しました。ナレッジストアにはJSONデータが含まれています。 このデータタイプに最適なプロジェクションタイプはどれですか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題30",
+          "question_id": "150410783",
+          "question_text_excerpt": "あなたは、オンラインショッピング用のボットを開発しています。このボットは、ユーザーが商品を検索すると、ユーザーの名前を含むパーソナライズされたメッセージを表示するように設計されています。ボットは Language Generation (LG) ファイルを使用してレスポンスを生成します。 以下は、ボットの言語生成 (LG) ファイルの一部です。 この言語生成"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題46",
+          "question_id": "150410807",
+          "question_text_excerpt": "あなたの組織には、運用環境のAzureサブスクリプションにデプロイされたAzure OpenAIリソース「AOAI-Prod」があります。データサイエンスチームのメンバーであるユーザー「Dev1」は、顧客チャットログから作成した JSONL 形式のデータセットを使用して、既存のAzure OpenAIモデルをファインチューニングする担当者です。 Dev1には"
+        }
+      ]
+    },
+    {
+      "composition_id": "capability_constraint_filter__multi_select",
+      "base_pattern_id": "capability_constraint_filter",
+      "modifier_ids": [
+        "multi_select"
+      ],
+      "description_ja": "制約適合フィルタ + 複数選択",
+      "supporting_question_count": 5,
+      "representative_questions": [
+        {
+          "set_id": "set01",
+          "question_number": "set01：問題37",
+          "question_id": "140158363",
+          "question_text_excerpt": "Azure AI Searchを使用した文書管理システムでは、適切な権限を持つユーザーのみに検索結果を表示させる必要があります。 そのためには、どのような対応が適切ですか。３つ選択してください。"
+        },
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題4",
+          "question_id": "140161067",
+          "question_text_excerpt": "あなたはAzure AI Custom Visionサービスを使用して、オンラインショッピングサイト向けの商品画像分類モデル を構築しています。このモデルは、衣類やアクセサリーの種類を自動で分類する ためにトレーニングされています。 トレーニングが完了した後、分類モデルの評価を行う必要があります。 どの評価指標を確認できますか。（２つ選択）"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題3",
+          "question_id": "150410861",
+          "question_text_excerpt": "あなたは 社内の契約書やマニュアルを対象としたAzure AI Searchを活用する文書管理システムを開発しています。このシステムでは、各ユーザーがアクセス権を持つドキュメントのみを検索結果に表示する 必要があります。 ドキュメントレベルのフィルタリングを実装するために必要なアクションを選択してください。（３つ選択）"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題21",
+          "question_id": "150410837",
+          "question_text_excerpt": "あなたは、オンラインショッピングサイトのカスタマーサポートチャットボット に組み込むConversational Language Understanding（CLU）モデルをトレーニングしました。このモデルは、ユーザーの自然言語での問い合わせを理解し、適切に対応できるようにする ことを目的としています。モデルを本番環境にデプロイする前に、その精度を評価する"
+        }
+      ]
+    },
+    {
+      "composition_id": "procedure_sequence__figure_evidence",
+      "base_pattern_id": "procedure_sequence",
+      "modifier_ids": [
+        "figure_evidence"
+      ],
+      "description_ja": "手順順序・補完 + 図依存",
+      "supporting_question_count": 5,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題44",
+          "question_id": "140161093",
+          "question_text_excerpt": "ある企業は、Azure AI Custom Visionを利用して自動車の種類を識別するシステムを運用しています。現在、新しい車種を追加するために、モデルを更新する必要があります。 どの手順を順番に実行するべきですか。 手順３～５までの手順で適切な選択肢を選んでください。"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題39",
+          "question_id": "143655235",
+          "question_text_excerpt": "あなたは、大量のニュース記事をAzure AI Searchで検索できるようにするプロジェクトを担当しています。記事本文を読み取り、AIモデルにより 感情スコア（ポジティブ／ネガティブ） を付与してインデックスを強化したいと考えています。 この要件のため、Azure Machine Learningで独自の感情分析モデルを作成し、そのモデルをカスタムスキルと"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題39",
+          "question_id": "150410855",
+          "question_text_excerpt": "あなたの会社では、Azure AI SpeechのSpeech-to-Textを使用して専門技術セミナーの録音を自動で文字起こしするシステムを開発しています。 現在のシステムでは、技術用語の認識精度が低いことが課題となっています。 音声認識の精度を向上させるには、どのアクションを順番に実行する必要がありますか。手順１～手順３のアクションを選択してください。"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題44",
+          "question_id": "150410899",
+          "question_text_excerpt": "あなたは、Azure サブスクリプション内に ストレージアカウントとAzure AI Document Intelligence リソースを持っています。現在、Azure AI Document Intelligence (S0 プラン) を使用して、カスタム抽出モデルをトレーニングすることになりました。 プロジェクトの設定手順として正しい選択肢はどれですか"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__compound_answer__figure_evidence",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 複合回答 + 図依存",
+      "supporting_question_count": 4,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題11",
+          "question_id": "140161123",
+          "question_text_excerpt": "あなたは、オンライン英会話教材の読み上げアプリを開発しています。 ユーザーのリスニング練習のために、若い女性の先生が丁寧に話すような音声が必要です。そのため、Custom Neural Voice と SSML を使って「話者のタイプ」と「話し方のスタイル」を定義します。 次のSSMLタグの記述の中で、適切な属性を選択してください。 ■選択肢 ① 値１ st"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題4",
+          "question_id": "150410795",
+          "question_text_excerpt": "あなたの会社では、社員の顔写真を使って本人確認を行うシステムを構築しています。このシステムでは、社員のトレーニングデータを登録するために、顔写真フォルダから画像を一括で追加したいと考えています。Azure AI Faceを利用して、各社員の顔画像をPerson Groupに登録し、入退室管理に活用する予定です。 以下のコードは、各社員の複数の顔画像を一括で登"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題33",
+          "question_id": "150410799",
+          "question_text_excerpt": "あなたの会社では、カスタマーサポート用のチャットボットを運用しています。ユーザーが10分以上操作しなかった場合、会話履歴をリセットし「 セッションが期限切れになりました。もう一度注文内容を入力してください。」というメッセージを送信する仕様にしたいと考えています。 上記コード内のメソッドは何を選択するのが適切ですか。 ■選択肢 ① メソッド１ on_send_"
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題23",
+          "question_id": "138647311",
+          "question_text_excerpt": "あなたは、自社ナレッジ記事の類似検索機能をAzure OpenAIを使って実装しようとしています。Azureサブスクリプションには、次の情報を持つAzure OpenAIリソースが存在します。 ・Azure OpenAI リソース名: freiheitopenai ・主キー (Primary API key): abcdabcdabcdabcdabcdabc"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__compound_answer__figure_evidence__json_artifact",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 複合回答 + 図依存 + JSON 依存",
+      "supporting_question_count": 4,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題35",
+          "question_id": "140161125",
+          "question_text_excerpt": "あなたは、Azure上で画像やPDFから情報を抽出するAIサービスを構築しています。リソースの自動化展開には、以下のARMテンプレートを使用しています。 このテンプレートでAzure AI Document Intelligenceリソースを正しく作成するには、クラスとリソースの種類に何を指定すべきですか。 ① クラス: Microsoft.Cognitiv"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題24",
+          "question_id": "143655317",
+          "question_text_excerpt": "ある国際的なイベントで、現地ボランティアが入力した文章をリアルタイムで英語に翻訳するシステムを構築しています。 要件は以下の通りです。 ・入力される文章は複数言語で記述される可能性がある ・翻訳されたテキストは 英語（en） に統一される必要がある ・すべての処理はアメリカ地域の Azure AI Services上で行う必要がある Azure Transl"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題37",
+          "question_id": "150410769",
+          "question_text_excerpt": "あなたの会社では、契約書のデータを自動抽出し、契約内容をデータベースに保存するシステムを開発しています。このシステムでは、Azure AI Document Intelligenceを使用して契約書の情報を解析する予定です。 以下のARMテンプレートを使用してデプロイを行います。この中のリソースタイプとサービスの種類はどれですか。 ■選択肢 ① リソースタイ"
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題3",
+          "question_id": "138647325",
+          "question_text_excerpt": "あなたはニュース記事を対象にした検索システムをAzure AI Searchで構築しています。記事本文から「人名・場所・組織名」を自動抽出し、検索結果画面でハイライト表示できるようにするため、スキルセットにエンティティ認識スキルを定義することにしました。 以下のJSONは、そのスキル定義の一部です。 このスキルでは英語テキストを入力とし、最小精度0.7以上の"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__figure_evidence",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "figure_evidence"
+      ],
+      "description_ja": "最適解選択 + 図依存",
+      "supporting_question_count": 4,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題47",
+          "question_id": "143655269",
+          "question_text_excerpt": "あなたは、Azure AI Languageを使用して、レストランのレビューを分析するアプリケーションを開発しています。 以下のレビューをこのアプリケーションで解析しました。 ■解析対象の文章: We had a great dinner at Olive Garden in New York last Saturday. （先週の土曜日、ニューヨークのオリ"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題27",
+          "question_id": "150410725",
+          "question_text_excerpt": "あなたはオンライン書店の販売データ管理システムを運営しています。システムでは、Azure AI Servicesを利用して、顧客のレビュー分析を行っています。ある日、セキュリティ強化のためにAPIキーを再生成する必要があり、以下のHTTPリクエストを正常に実行しました。 このリクエストを実行すると、Azure AI ServicesのAPIキーにどのような影"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題53",
+          "question_id": "150410745",
+          "question_text_excerpt": "Azure AI Bot Serviceで構築したボットにて、以下の画像が生成されました。 これは、どのカードのタイプに該当しますか。"
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題32",
+          "question_id": "138647359",
+          "question_text_excerpt": "あなたはAzureサブスクリプション内に、Azure AI Content Safetyリソース「CF1」を所有しています。 人物や文字、暴力的な表現を一切含まない、青空と雲のみが写った風景写真を1枚用意し、以下のcurlコマンドとペイロードを使ってCF1に送信しました。 このとき、Content Safety APIからはどのような出力が返されると予想され"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__compound_answer__figure_evidence",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "compound_answer",
+        "figure_evidence"
+      ],
+      "description_ja": "前提資源・有効化判定 + 複合回答 + 図依存",
+      "supporting_question_count": 4,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題20",
+          "question_id": "143655297",
+          "question_text_excerpt": "あなたのチームは、国際会議のリアルタイム翻訳システムを開発しています。 システムは、英語のスピーチをリアルタイムで聞き取り、ドイツ語に翻訳し、参加者に表示する機能を提供する必要があります。 この機能を正しく設定するために、SpeechTranslationConfig の値①と値②に適切な値を選択してください。 ■選択肢 ■値①: speech_synthe"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題50",
+          "question_id": "143655309",
+          "question_text_excerpt": "あなたは観光案内所のために、観光情報を多言語で提供するチャットボットを開発しています。 PDF形式のパンフレットやスキャン画像から情報を取得し、それを英語・スペイン語・フランス語に翻訳して保存する必要があります。 PDFの内容を検索結果に含められるようにスキルセットを構成するには、各ステージにどのサービスを利用すればよいですか。 ■選択肢 Custom Vi"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題17",
+          "question_id": "150410801",
+          "question_text_excerpt": "あなたの会社では、病院向けの医療画像診断支援システムを開発しています。このシステムでは、Azure AI Servicesを使用して、医療画像から異常を検出する機能を提供する必要があります。また、OCR（光学文字認識）を活用して、スキャンされた診断書の情報をデジタル化し、患者のカルテと統合する機能も搭載する予定です。 ■システムの構成: ・サブスクリプション"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題52",
+          "question_id": "150410895",
+          "question_text_excerpt": "あなたは、マーケティング部門向けのキャンペーン文・商品紹介文を自動生成する社内ツールを設計しています。このツールはAzure OpenAI（Azure AI Foundry Models リソース）を使用し、プロンプトに基づいて自然な文章を生成します。 コンプライアンス要件として、生成処理に関連して保存されるデータ（ログやメタデータなど）は、必ず顧客管理キー"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__figure_evidence__multi_panel_figure",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "multi_panel_figure"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 図依存 + 複数図連結",
+      "supporting_question_count": 3,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題3",
+          "question_id": "143655247",
+          "question_text_excerpt": "あなたは、レビュー分析システムを構築しています。Azure AI Languageのキーフレーズ抽出を使い、文章から重要語句を取り出してレポートに反映したいと考えています。 次のPython関数は、与えられた文章のキーフレーズを抽出して表示するものです。 あなたは以下のコードを実行しました。 このとき、「Key Phrases:」の後に表示されるキーフレーズ"
+        },
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題43",
+          "question_id": "143655307",
+          "question_text_excerpt": "あなたの会社では、カスタマーサポートの問い合わせ内容を分析し、問い合わせの内容を簡潔にまとめるAIシステムを開発しています。問い合わせ内容の主要なポイントを抽出するために、Azure AI Languageのキーフレーズ抽出機能を使用しています。 以下のコードを開発しました。 このメソッドを次のコードで呼び出します。 このコードについて、正しい記述はどれです"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題41",
+          "question_id": "150410839",
+          "question_text_excerpt": "あなたは、Azure AI Languageを使ってレビュー文章から要点となる語句を自動抽出するシステムを開発しています。 次のPythonコードを利用してキーフレーズ抽出を行います。 次のように関数を実行しました。 この関数について正しい記述はどれですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__compound_answer__figure_evidence__json_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 複合回答 + 図依存 + JSON 依存",
+      "supporting_question_count": 3,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題46",
+          "question_id": "140161111",
+          "question_text_excerpt": "あなたは、Microsoft Bot Framework SDK を使用して、ファッションアイテムの提案を行うチャットボットを開発しています。ボットは、ユーザーが欲しいアイテムを入力すると、おすすめの製品を表示します。 Microsoft Bot Framework Emulatorを使用して会話フローをテストする必要があります。 この.chatファイル内の"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題14",
+          "question_id": "150410911",
+          "question_text_excerpt": "あなたの会社は、国際的なビジネス文書を翻訳するアプリケーションを開発しています。 このアプリは、英語、日本語、フランス語の文書を取得し、英語に翻訳する機能を提供します。 データはアメリカのAzureデータセンターに保存される必要があります。 適切なAPIとリクエストエンドポイントはどれですか。 ■選択肢 ① 値１（APIエンドポイント） \"api.cogni"
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題37",
+          "question_id": "138647323",
+          "question_text_excerpt": "あなたは、グローバル対応のECサイト向けショッピング チャットボットを開発しています。 ボットはアダプティブカード（Adaptive Card）を使って、ユーザーの言語に応じた商品名・在庫状況・商品画像を表示する必要があります。次のJSONは、商品詳細を表示するためのアダプティブカードの抜粋です。 値①～③として適切な選択肢はどれですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__figure_evidence",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 図依存",
+      "supporting_question_count": 3,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題34",
+          "question_id": "140161097",
+          "question_text_excerpt": "あなたのチームは、SNS投稿の感情分析を行い、現在のトレンドを分析するツールを開発しています。 このツールは、投稿されたテキストの感情をリアルタイムで分類し、ポジティブ・ネガティブ・ニュートラルの傾向を可視化します。 現在、この機能をAzureでホストするために、適切なリソースを東日本（japaneast）リージョンにデプロイする必要があります。 ​この目的"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題19",
+          "question_id": "150410771",
+          "question_text_excerpt": "あなたのチームは、カスタマーレビューの分析を行うAIツールを開発しています。 レビューの中から、重要なフレーズを抽出し、商品の特徴や評判を分析する必要があります。 次のコードを使用して、キーフレーズを抽出します。 その後、以下のコードで関数を実行しました。 実行後、出力されるキーフレーズはどれですか。"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題26",
+          "question_id": "150410875",
+          "question_text_excerpt": "あなたのチームは、Azure AI ServicesのComputer Vision APIを使用して、リソースをデプロイするプロジェクトを担当しています。 以下の C# メソッドを使用して、新しいリソースを作成する必要があります。 ■要件: ・japaneastリージョンに Computer Vision API の無料プランをデプロイする必要がある ・リ"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__figure_evidence",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "figure_evidence"
+      ],
+      "description_ja": "前提資源・有効化判定 + 図依存",
+      "supporting_question_count": 3,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題4",
+          "question_id": "143655283",
+          "question_text_excerpt": "あなたのチームは、Azure OpenAI の推論リクエストを 500 リクエスト/分（RPM）処理できるようにするために、ARM テンプレートを使ってスケール設定を行う必要があります。 以下は、Azure OpenAI サービスのデプロイメントを作成するAzure Resource Manager (ARM) テンプレート の一部です。 この要件を満たす適"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題42",
+          "question_id": "150410755",
+          "question_text_excerpt": "AI1という名前のAzure OpenAIリソースがあります。AI1には、用途別に最適化されたGPT-4モデルの5つのデプロイメントがあります。あなたは5つのアプリをデプロイする予定です。各アプリはREST APIを使用してAI1にアクセスし、API 呼び出し時に指定するデプロイメントによって使い分けます。このソリューションでは、アプリのみが AI1 にアク"
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題22",
+          "question_id": "138647355",
+          "question_text_excerpt": "あなたはMicrosoft Bot Framework Composerを使用して、ユーザーからフィードバックコメントを収集するチャットボットを作成しています。 このボットには「CollectFeedback」というダイアログがあり、その中でユーザーにコメント（意見・要望）を入力させるための「TextInputコントロール」を使用しています。ユーザーが入力し"
+        }
+      ]
+    },
+    {
+      "composition_id": "procedure_sequence__code_artifact__compound_answer__figure_evidence",
+      "base_pattern_id": "procedure_sequence",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence"
+      ],
+      "description_ja": "手順順序・補完 + コード断片依存 + 複合回答 + 図依存",
+      "supporting_question_count": 3,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題2",
+          "question_id": "143655271",
+          "question_text_excerpt": "あなたのチームは、ポッドキャストの音声を自動で文字起こしし、字幕データを生成するサービスを開発しています。音声データはMP3形式で提供され、Azure AI Speechを利用して文字起こしされています。 次のコードをどのように完成させるべきですか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題9",
+          "question_id": "150410803",
+          "question_text_excerpt": "あなたの会社では、社内の問い合わせ対応を自動化するFAQチャットボットを２０種類運用しています。各部門ごとに独自の会話言語理解（CLU）モデル を持っていますが、新しいフレーズを頻繁に追加する必要があります。 現在、あなたは、すべての部門のCLUモデルに対して、プログラムを使って一括でフレーズリストを追加したいと考えており、そのために、以下のC#コードを完成"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題20",
+          "question_id": "150410921",
+          "question_text_excerpt": "あなたは、音声ストリーミングデータをリアルタイムで文字起こしするアプリケーションを開発しています。MP3フォーマットの音声データを使って、Azure Speech SDK による音声認識を実装する必要があります。 以下のコードは、MP3形式の音声を読み取り、テキストに変換するための処理です。 このコードを正しく完成させるには、どのメソッドとクラスを使用するべ"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__figure_evidence__json_artifact__multi_select",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact",
+        "multi_select"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 図依存 + JSON 依存 + 複数選択",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題13",
+          "question_id": "143655315",
+          "question_text_excerpt": "あなたの会社では、オフィスの入退室管理 に Azure Face API を利用しています。各社員の顔を事前に登録し、カメラで顔を認識することでオフィスの入退室を管理します。 以下のコードは、特定の社員の顔を認識システムに登録するためのものです。 このコードについて正しい記述はどれですか。（３つ選択）"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題8",
+          "question_id": "150410781",
+          "question_text_excerpt": "あなたは、Azure AI Document Intelligenceを使って処方箋を解析し、患者に適切な薬の情報を提供するアプリを開発しました。 アプリにリクエストを送信すると、以下のJSONレスポンスが返ってきました。 この結果について、正しい記述はどれですか。（２つ選択）"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__compound_answer",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "compound_answer"
+      ],
+      "description_ja": "最適解選択 + 複合回答",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題26",
+          "question_id": "143655329",
+          "question_text_excerpt": "あなたは、マーケティングチーム向けの自動レポート生成ツールを開発しています。 社外向けニュースリリースが多数PDFで蓄積されており、これらから文章を抽出し、記事内容が ポジティブかネガティブか を自動判別して可視化したいと考えています。 次のタスクを行う際に、使用すべきAzureサービスとして最適な組み合わせはどれですか。 ① PDF からテキストを抽出する"
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題10",
+          "question_id": "138647343",
+          "question_text_excerpt": "あなたは、Azure AI Languageサービスを利用して、映画レビューサイトのテキストを解析するアプリケーションを開発しています。レビュー本文の中から「Star Wars」「The Lord of the Rings」などの映画タイトルを検出し、それぞれを既知のエンティティ（例: 公開知識ベース上の作品情報）に対応付けて扱いたいと考えています。カスタム"
+        }
+      ]
+    },
+    {
+      "composition_id": "capability_constraint_filter__figure_evidence__multi_select__table_artifact",
+      "base_pattern_id": "capability_constraint_filter",
+      "modifier_ids": [
+        "figure_evidence",
+        "multi_select",
+        "table_artifact"
+      ],
+      "description_ja": "制約適合フィルタ + 図依存 + 複数選択 + 表・候補一覧依存",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題40",
+          "question_id": "140161101",
+          "question_text_excerpt": "あなたの Azure サブスクリプションには、Azure AI Document IntelligenceのS0 プラン（スタンダードプラン）のリソースが含まれており、次のファイルを分析しようとしています。 この環境で処理可能なファイルはどれですか。"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題32",
+          "question_id": "150410877",
+          "question_text_excerpt": "あなたのチームは、Azure AI Document Intelligenceのカスタムモデル を使用して 領収書のスキャン画像 からデータを抽出するプロジェクトを担当しています。 次の表に、トレーニングデータとして提供されたファイルを示します。 どのファイルがトレーニングデートとして使用できますか。（３つ選択）"
+        }
+      ]
+    },
+    {
+      "composition_id": "configuration_tuning__code_artifact",
+      "base_pattern_id": "configuration_tuning",
+      "modifier_ids": [
+        "code_artifact"
+      ],
+      "description_ja": "設定値調整 + コード断片依存",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題48",
+          "question_id": "140161133",
+          "question_text_excerpt": "あなたは、オンライン旅行サービス企業の開発担当者として、Azure OpenAIのGPT-4モデルを利用した 予約サポート用チャットボットを設計しています。このボットは、ユーザーからの日付や人数、行き先などの入力をもとに、候補となる便や宿泊プランを提示します。社内テストの結果、同じ条件を入力しても表現や提案内容が毎回微妙に変化するため、回答の一貫性と正確性を"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題47",
+          "question_id": "150410907",
+          "question_text_excerpt": "あなたは Azure AI Languageのリソースを使用して、顧客の問い合わせ内容を分析するシステム を開発しています。このシステムでは、以下の機能を提供しています。 • 感情分析（Sentiment Analysis）：顧客の問い合わせが肯定的・否定的・中立のどれに分類されるかを分析する • 固有表現認識（Named Entity Recognitio"
+        }
+      ]
+    },
+    {
+      "composition_id": "configuration_tuning__code_artifact__compound_answer__figure_evidence",
+      "base_pattern_id": "configuration_tuning",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence"
+      ],
+      "description_ja": "設定値調整 + コード断片依存 + 複合回答 + 図依存",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題23",
+          "question_id": "150410809",
+          "question_text_excerpt": "あなたは、FAQサイト向けのチャットボットをAzure OpenAIを使って構築しています。Azureサブスクリプションには、すでにAzure OpenAIリソース「AO1」が作成されており、このリソースを用いてGPT-3.5ベースのチャットボットが稼働しています。プロトタイプの評価では、回答内容は概ね正確であるものの、表現が毎回ほぼ同じで、マーケティング用"
+        },
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題37",
+          "question_id": "150410937",
+          "question_text_excerpt": "あなたは Azure OpenAI リソース「AO1」を利用して、製品紹介サイト向けのチャットボットを実装しています。このボットは製品機能に関する質問に答えますが、「説明が堅くてつまらない」というフィードバックを受けました。そこで、C#のSDKを用いて、応答をもう少し創造的で多様な表現になるようにパラメーターを調整することにしました。 以下のコードにおいて応"
+        }
+      ]
+    },
+    {
+      "composition_id": "configuration_tuning__code_artifact__figure_evidence__json_artifact__multi_select",
+      "base_pattern_id": "configuration_tuning",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact",
+        "multi_select"
+      ],
+      "description_ja": "設定値調整 + コード断片依存 + 図依存 + JSON 依存 + 複数選択",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題5",
+          "question_id": "140161131",
+          "question_text_excerpt": "あなたはAzure AI FoundryのChatプレイグラウンドを使って、顧客サポート用チャットボットの応答品質を調整しています。 現在の設定では、次のような問題が発生しています。 ・モデルが同じ文やフレーズを繰り返し生成し、読みにくい応答になることがある ・似たような質問に対して、毎回大きく異なる内容の回答が返ってしまい、一貫性に欠ける このため、応答の"
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題45",
+          "question_id": "138647293",
+          "question_text_excerpt": "あなたはAzure AI FoundryのChatプレイグラウンドで、顧客向けのFAQチャットボットをプロトタイピングしています。このボットは請求・契約に関する定型的な問い合わせに回答するため、毎回ほぼ同じ回答内容が返ってくることが望ましい状況です。 しかし、現在の設定では同じ質問に対して表現が大きく変わったり、余計な言い回しが追加されたりしており、社内レビ"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__json_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "json_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + JSON 依存",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題45",
+          "question_id": "143655325",
+          "question_text_excerpt": "あなたはAzure DevOpsの検証用パイプライン「Validate-AI」を作成しています。 このパイプラインは、IaC（Bicep/ARMテンプレート）でデプロイした直後のAzure AI servicesアカウントについて、エンドポイントURLと 場所（location） を取得し、期待値と一致するかを自動で確認する必要があります。 どのAzure "
+        },
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題25",
+          "question_id": "138647329",
+          "question_text_excerpt": "あなたは、グローバルに展開しているSaaS製品のオンラインヘルプ・FAQサイトをAzure AI Searchを用いて再構築しています。ヘルプ記事の本文は、開発チームによってAzure Cosmos DBにテキスト（JSONドキュメント）として保存されており、記事の言語は英語・フランス語・ポルトガル語が混在しています。 今後は以下の要件を満たした検索ソリュー"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__table_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "table_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + 表・候補一覧依存",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題19",
+          "question_id": "143655279",
+          "question_text_excerpt": "あなたのチームは、大容量のビデオファイル（20GB以上）をAzure AI Video Indexerで処理する計画を立てています。Azure AI Video Indexerで直接アップロードできるファイルの最大サイズは2GBであるため、最適な方法を選択する必要があります。 最初に実行すべきアクションはどれですか。"
+        },
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題12",
+          "question_id": "150410767",
+          "question_text_excerpt": "あなたは、コンビニエンスストアのレシートを自動で整理し、支出を管理するアプリを開発しています。アプリは、スキャンしたレシートから以下の情報を自動的に抽出する必要があります。 ・店舗名 ・購入日時 ・購入した商品の一覧と価格 ・消費税 ・合計金額 最も開発工数を削減できる Azure AI Document Intelligence モデルはどれですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__figure_evidence__json_artifact",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 図依存 + JSON 依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題24",
+          "question_id": "138647271",
+          "question_text_excerpt": "以下のJSONは、会話言語理解（CLU）モデルを使用してレストランの予約に関するユーザーの発話を解析した結果です。 この処理では、ユーザーのリクエストに基づいて、どのような情報を抽出し、どのような対応を行いますか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__figure_evidence__json_artifact__multi_panel_figure__multi_select",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact",
+        "multi_panel_figure",
+        "multi_select"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 図依存 + JSON 依存 + 複数図連結 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題25",
+          "question_id": "150410919",
+          "question_text_excerpt": "あなたの組織では、イベント参加者の顔写真を撮影し、データベースに登録するシステムを導入しています。Azure Face APIを利用して、各参加者の顔を検出し、品質を評価しています。以下のHTTPリクエストを実行し、結果を取得しました。 ■HTTPリクエスト: ■JSONレスポンス: このHTTPリクエストならびにJSONレスポンスについて正しい記述はどれで"
+        }
+      ]
+    },
+    {
+      "composition_id": "artifact_interpretation__code_artifact__multi_select",
+      "base_pattern_id": "artifact_interpretation",
+      "modifier_ids": [
+        "code_artifact",
+        "multi_select"
+      ],
+      "description_ja": "成果物読解 + コード断片依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題17",
+          "question_id": "143655311",
+          "question_text_excerpt": "あなたの組織では、各部門から提出される月次レポートを自動的に処理するシステムを構築しています。これらのレポートには以下の特徴があります。 ・ページ数は20ページ未満 ・PDFまたはJPEG形式 ・部門ごとに異なるフォーマット レポートからテキストや表を抽出し、分析に利用したいと考えています。どのAPIエンドポイントを使用すべきですか。（２つ選択）"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__compound_answer__figure_evidence",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "compound_answer",
+        "figure_evidence"
+      ],
+      "description_ja": "最適解選択 + 複合回答 + 図依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題7",
+          "question_id": "138647269",
+          "question_text_excerpt": "以下のコマンドはAzure AI Servicesのコンテナーを取得し、実行するためのものです。 コマンド内の下記の値はそれぞれ何を指していますか。 ・mcr.microsoft.com/azure-cognitive-services/textanalytics/sentiment:3.0-en ・https://mycompany-ai.cognitiv"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__compound_answer__figure_evidence__json_artifact",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "description_ja": "最適解選択 + 複合回答 + 図依存 + JSON 依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題31",
+          "question_id": "143655295",
+          "question_text_excerpt": "あなたの会社では、スキャンした請求書から表形式のデータ（商品名、単価、数量、小計）を自動抽出するシステムを開発しています。 Azure AI Document Intelligenceを使用して、スキャンされたPDFファイル を解析し、表の情報を取得したいと考えています。 どのAPIモデルと認証キーを指定してリクエストを送信するべきですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__compound_answer__figure_evidence__multi_panel_figure",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "compound_answer",
+        "figure_evidence",
+        "multi_panel_figure"
+      ],
+      "description_ja": "最適解選択 + 複合回答 + 図依存 + 複数図連結",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題50",
+          "question_id": "150410871",
+          "question_text_excerpt": "あなたは、Azure AI Faceを使用して、ショッピングモールの監視カメラシステムを開発しています。このシステムは、過去に問題を起こした人物の顔写真を基に、リアルタイムで監視カメラの映像から類似した顔を検索する機能を持っています。 システムが特定の顔と一致するかどうかを判定するために、Face APIの\"似た顔の検索\"機能 を使用することにしました。 こ"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__compound_answer__figure_evidence__multi_select",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "compound_answer",
+        "figure_evidence",
+        "multi_select"
+      ],
+      "description_ja": "最適解選択 + 複合回答 + 図依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題33",
+          "question_id": "138647357",
+          "question_text_excerpt": "以下の図は、Microsoft Bot Framework Composerを使って航空券予約ボットを作成している際の設定画面です。「FlightBotDialog」の中に「BookFlight」というダイアログ（トリガー）があり、ユーザーの発話を処理しています。 この構成において、次の設問に対する適切な答えはそれぞれ何ですか。 設問①：ユーザーが「book"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__figure_evidence__multi_select",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "figure_evidence",
+        "multi_select"
+      ],
+      "description_ja": "最適解選択 + 図依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題26",
+          "question_id": "138647333",
+          "question_text_excerpt": "あなたは、外部顧客向けのFAQチャットボットを開発しています。ボットはクラウド上にホストされており、ユーザーはOAuthによるサインインを行ってから問い合わせを送信する設計です。 現在、ローカル開発マシンからBot Framework Emulatorを使い、インターネット経由でボットに接続して、サインイン時に資格情報の入力が求められることを確認したいと考え"
+        }
+      ]
+    },
+    {
+      "composition_id": "capability_constraint_filter__code_artifact__figure_evidence__json_artifact__multi_select__table_artifact",
+      "base_pattern_id": "capability_constraint_filter",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact",
+        "multi_select",
+        "table_artifact"
+      ],
+      "description_ja": "制約適合フィルタ + コード断片依存 + 図依存 + JSON 依存 + 複数選択 + 表・候補一覧依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題28",
+          "question_id": "138647287",
+          "question_text_excerpt": "あなたはAzure OpenAIを用いて、自社FAQに特化したカスタムモデル（ファインチューニング済みモデル）を作成するプロジェクトを担当しています。 現在、トレーニングデータ候補として、次の4つのファイルが用意されています。 OpenAI CLIのデータ準備ツール（data preparation tool） を使って、これらのファイルからファインチューニ"
+        }
+      ]
+    },
+    {
+      "composition_id": "capability_constraint_filter__code_artifact__figure_evidence__multi_select",
+      "base_pattern_id": "capability_constraint_filter",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "multi_select"
+      ],
+      "description_ja": "制約適合フィルタ + コード断片依存 + 図依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題46",
+          "question_id": "150410903",
+          "question_text_excerpt": "あなたは、Microsoft Bot Framework SDKを使用してヘルプデスクボット(HelpDeskBot)を開発しています。 ■要件: ・SupportUser オブジェクトを使用して、サポートを受けるユーザーの情報を保存する ・SessionData オブジェクトを使用して、現在の会話のコンテキスト（問い合わせ内容など）を保存する ボットはメモ"
+        }
+      ]
+    },
+    {
+      "composition_id": "capability_constraint_filter__code_artifact__multi_select",
+      "base_pattern_id": "capability_constraint_filter",
+      "modifier_ids": [
+        "code_artifact",
+        "multi_select"
+      ],
+      "description_ja": "制約適合フィルタ + コード断片依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題12",
+          "question_id": "138647309",
+          "question_text_excerpt": "あなたの会社では、カスタマーサポート用のチャットボットを開発しており、Azure Bot Framework SDKとAzure AI Bot Serviceを使用して、ボットをAzureにデプロイする予定です。 ボットをAzureに登録する際に必要な値を選択してください。（２つ選択）"
+        }
+      ]
+    },
+    {
+      "composition_id": "capability_constraint_filter__compound_answer__multi_select",
+      "base_pattern_id": "capability_constraint_filter",
+      "modifier_ids": [
+        "compound_answer",
+        "multi_select"
+      ],
+      "description_ja": "制約適合フィルタ + 複合回答 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題14",
+          "question_id": "150410785",
+          "question_text_excerpt": "あなたは、Microsoft Bot Framework Composerを使用して顧客サポート向けに 3 つの異なるボットを作成しました。それぞれのボットは 返品処理、注文状況の確認、製品サポートを担当しています。 現在、ユーザーが 1 つのボットにアクセスすると、ユーザーの問い合わせ内容に応じて適切なボット（返品処理・注文状況確認・製品サポート）に自動で"
+        }
+      ]
+    },
+    {
+      "composition_id": "capability_constraint_filter__multi_select__table_artifact",
+      "base_pattern_id": "capability_constraint_filter",
+      "modifier_ids": [
+        "multi_select",
+        "table_artifact"
+      ],
+      "description_ja": "制約適合フィルタ + 複数選択 + 表・候補一覧依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題41",
+          "question_id": "138647275",
+          "question_text_excerpt": "Azure AI Document Intelligenceを利用してカスタムモデルをトレーニングする際、トレーニングデータとして使用可能なファイル形式とデータサイズの制限はどれですか。 ファイル形式とサイズ制限で１つずつ選択してください。"
+        }
+      ]
+    },
+    {
+      "composition_id": "configuration_tuning__code_artifact__figure_evidence",
+      "base_pattern_id": "configuration_tuning",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence"
+      ],
+      "description_ja": "設定値調整 + コード断片依存 + 図依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題10",
+          "question_id": "150410763",
+          "question_text_excerpt": "あなたは、ニュース動画を解析するAIシステムを開発しています。このシステムでは、ニュース内で表示される企業のブランドロゴを自動認識し、タグ付けします。ただし、特定の企業のブランド名は検出されないようにする必要があります。 これら要件を満たすため、上記コードにおいて、どの設定を適用すべきですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "configuration_tuning__code_artifact__figure_evidence__json_artifact",
+      "base_pattern_id": "configuration_tuning",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "description_ja": "設定値調整 + コード断片依存 + 図依存 + JSON 依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題30",
+          "question_id": "138647319",
+          "question_text_excerpt": "あなたはAzure OpenAIを利用して、社内向けの質問応答チャットボットを開発しています。AzureサブスクリプションにはAzure OpenAIリソースが存在し、次のパラメーターでモデルを構成しました。 ・Temperature: 1 ・Top probabilities（Top P）: 0.5 ・Max response tokens: 100 この"
+        }
+      ]
+    },
+    {
+      "composition_id": "configuration_tuning__code_artifact__multi_select",
+      "base_pattern_id": "configuration_tuning",
+      "modifier_ids": [
+        "code_artifact",
+        "multi_select"
+      ],
+      "description_ja": "設定値調整 + コード断片依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題55",
+          "question_id": "150410851",
+          "question_text_excerpt": "あなたは Azure AI Translatorを使用して、オンラインショッピングサイトの商品説明を翻訳するアプリケーションのメソッドを開発しています。 このメソッドでは、商品説明をフランス語（fr）に翻訳し、さらにローマ字表記（transliteration）も含める必要があります。 以下の URI を使用する必要があります。 https://api.co"
+        }
+      ]
+    },
+    {
+      "composition_id": "error_resolution__code_artifact__figure_evidence__multi_select",
+      "base_pattern_id": "error_resolution",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "multi_select"
+      ],
+      "description_ja": "障害原因・解消 + コード断片依存 + 図依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題15",
+          "question_id": "150410719",
+          "question_text_excerpt": "あなたの会社では、OCR（光学文字認識）を活用した請求書管理システム を開発しています。このシステムでは、Azure AI Visionを使用して画像内の文字を自動的に抽出する必要があります。 ■生成したPythonコード 現在、システムのテスト中に、OCR処理が完了する前にGetReadResultAsyncメソッドが実行されてしまい、結果が正しく取得でき"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__compound_answer",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 複合回答",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題50",
+          "question_id": "140161065",
+          "question_text_excerpt": "あなたの会社は、ECサイトの注文管理システムで利用する領収書データをクラウド上のURLから取得し、自動処理 する必要があります。 Azure AI Document Intelligence の事前構築済みモデル を使用して、領収書から情報を抽出するには、どのクライアントとメソッドの組み合わせを使用するべきですか。 ■選択肢 ①クライアント FormReco"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__compound_answer__figure_evidence__json_artifact__table_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "json_artifact",
+        "table_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 複合回答 + 図依存 + JSON 依存 + 表・候補一覧依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題23",
+          "question_id": "143655313",
+          "question_text_excerpt": "あなたの組織では、製品カタログの画像処理にAzure AI Servicesを使用しています。特定のエリアを自動的に検出し、異なるサイズの商品画像を作成する機能を導入する予定です。 適切なAPIエンドポイントを作成する必要があります。 最適なURLならびにAPIエンドポイントを選択してください。 ■選択肢: ① URL https://api.project"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__compound_answer__figure_evidence__multi_panel_figure",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "multi_panel_figure"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 複合回答 + 図依存 + 複数図連結",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題9",
+          "question_id": "150410897",
+          "question_text_excerpt": "あなたの会社は、ホテル業界向けの請求書処理システムを開発しています。このシステムは、スキャンされた請求書から請求金額や宿泊者情報を自動抽出し、会計システムにデータを送信する機能を備えています。 Azure AIを使用し、スキャンされた請求書を処理するスタンダードプランのリソースを作成するにはどのようなメソッドが最適ですか。 ■リソースプロビジョニングのコード"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__compound_answer__json_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "json_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 複合回答 + JSON 依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題53",
+          "question_id": "143655241",
+          "question_text_excerpt": "あなたの会社では、商品画像の識別システムを開発しており、画像を「実物写真」「手書きイラスト」「デジタルイラスト」のいずれかに分類する必要があります。 どのサービスエンドポイントとレスポンスプロパティを使用すべきですか。 ■ 選択肢 ①サービスエンドポイント: Azure AI Vision analyze images Azure AI Vision obj"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__figure_evidence__json_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 図依存 + JSON 依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題18",
+          "question_id": "150410933",
+          "question_text_excerpt": "あなたの組織では、ユーザーが投稿するレビュー内容を分析し、不適切な表現（例：ヘイト表現）が含まれていないかをAzure AI Content Safetyリソース”CS1”を利用してチェックする仕組みを構築しています。 次の REST API を用いて CS1 にテキスト分析リクエストを送信する必要があります。 以下のコードを使用してRESTで呼び出す場合、"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__figure_evidence__multi_panel_figure__multi_select",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "multi_panel_figure",
+        "multi_select"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 図依存 + 複数図連結 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題28",
+          "question_id": "150410759",
+          "question_text_excerpt": "あなたは、レストランのレビューを分析するアプリを開発しています。レビューの中から、都市名やレストラン名 を特定する必要があります。 アプリには次の C# コードが含まれています。 現在、次のレビューを入力として関数を実行します。 このコードについて正しい記述はどれですか。（２つ選択）"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__json_artifact__multi_select",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "json_artifact",
+        "multi_select"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + JSON 依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題17",
+          "question_id": "140161039",
+          "question_text_excerpt": "あなたはオンラインストアの顧客レビューを分析し、感情分析を適用する AI ソリューションを開発しています。このソリューションでは、顧客のレビュー内容と感情分析の結果を構造化されたJSONデータとして保存し、アプリケーションで容易に取得・分析できるナレッジストアを構築する必要があります。 このナレッジストアの定義に含めるべき 2 つのフィールドはどれですか。（"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__multi_select",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "multi_select"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題36",
+          "question_id": "138647327",
+          "question_text_excerpt": "あなたは銀行向けのローン審査システムの一部として、ドキュメント処理ワークフローを開発しています。申込者はWebポータルから、次のようなドキュメントをアップロードします。 ・支店ごとにフォーマットが決められた財務諸表（PDF 形式、20ページ未満） ・店舗で発行されたレシート画像（JPEG 形式） ドキュメント処理ソリューションには、次の要件があります。 １．"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__code_artifact__table_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "code_artifact",
+        "table_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + コード断片依存 + 表・候補一覧依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題8",
+          "question_id": "138647281",
+          "question_text_excerpt": "あなたはAzureサブスクリプションにAzure OpenAIリソース「AI1」を保持しています。ユーザー「User1」に、Azure AI Studioを利用して次の操作を行えるようにする必要があります。 ・リソースのエンドポイントを参照する ・デプロイ可能なモデル一覧を確認する ・デプロイ済みモデルを使用してテキスト生成や画像生成を行う また、権限は 最"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__figure_evidence__table_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "figure_evidence",
+        "table_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + 図依存 + 表・候補一覧依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set03",
+          "question_number": "set03：問題5",
+          "question_id": "143655299",
+          "question_text_excerpt": "あなたは Azure サブスクリプションを所有しており、S0プランのAzure AI Document Intelligenceリソースを使用しています。 以下のファイルを使用してカスタム抽出モデルをトレーニングする必要があります。 Azure AI Document Intelligence Studioにアップロードできるファイルはどれですか。"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement__multi_select__table_artifact",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [
+        "multi_select",
+        "table_artifact"
+      ],
+      "description_ja": "前提資源・有効化判定 + 複数選択 + 表・候補一覧依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set04",
+          "question_number": "set04：問題7",
+          "question_id": "150410743",
+          "question_text_excerpt": "あなたはAzure AI Searchを利用して、オンラインショップの問い合わせ履歴を検索できるシステムを開発しています。このシステムでは、Azure SQL Databaseに保存されたユーザーの問い合わせ内容を全文検索し、検索結果をユーザーに表示する必要があります。 Azure SQL Databaseには、問い合わせ内容を保存する\"CustomerQu"
+        }
+      ]
+    },
+    {
+      "composition_id": "procedure_sequence__code_artifact",
+      "base_pattern_id": "procedure_sequence",
+      "modifier_ids": [
+        "code_artifact"
+      ],
+      "description_ja": "手順順序・補完 + コード断片依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set06",
+          "question_number": "set06：問題40",
+          "question_id": "138647297",
+          "question_text_excerpt": "あなたはマーケティング部門と協力して、新製品の紹介文やキャンペーン告知文を自動生成するWebアプリをAzure上に構築しています。Azureサブスクリプションには、OpenAIリソース「AO1」がすでに作成されています。 開発チームは、「コードを極力書かずに、Azure AI Foundryの画面操作だけで文章生成ボットをWeb公開したい」と考えています。ま"
+        }
+      ]
+    },
+    {
+      "composition_id": "procedure_sequence__code_artifact__compound_answer__figure_evidence__multi_select",
+      "base_pattern_id": "procedure_sequence",
+      "modifier_ids": [
+        "code_artifact",
+        "compound_answer",
+        "figure_evidence",
+        "multi_select"
+      ],
+      "description_ja": "手順順序・補完 + コード断片依存 + 複合回答 + 図依存 + 複数選択",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set05",
+          "question_number": "set05：問題15",
+          "question_id": "150410873",
+          "question_text_excerpt": "あなたは、新しいAzureのリソースを作成し、感情分析（Sentiment Analysis）と光学式文字認識（OCR）を実行できるようにしたいと考えています。このリソースは次の要件を満たす必要があります。 ・1つのキーとエンドポイントで、複数のAzure AIサービスにアクセスできること ・将来的にComputer Visionを利用できること ・将来利用"
+        }
+      ]
+    },
+    {
+      "composition_id": "span_localization__code_artifact__figure_evidence__json_artifact",
+      "base_pattern_id": "span_localization",
+      "modifier_ids": [
+        "code_artifact",
+        "figure_evidence",
+        "json_artifact"
+      ],
+      "description_ja": "部分同定 + コード断片依存 + 図依存 + JSON 依存",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "set02",
+          "question_number": "set02：問題20",
+          "question_id": "140161079",
+          "question_text_excerpt": "以下の JSON は、銀行のカスタマーサポートチャットボットの CLU モデルのデータです。 このデータでBanking.TimePeriodエンティティに該当する発話の部分はどれですか。"
+        }
+      ]
+    }
+  ]
+}

@@ -179,7 +179,7 @@ def main() -> None:
         "input": {"name": "inkRaster", "dtype": "float16", "shape": [1, 1, 64, 64],
                   "contract": "HinotoriStrokeSetInput.buildRasterOnly; canonical isotropic scale; binary ink; fixed 3x3 dilation"},
         "output": {"name": "typesetLogits", "dtype": "float16", "shape": [1, 222],
-                   "ranking": "descending auxiliary-head logits; scores are not merged with Fold-07 or ViT scores"},
+                   "ranking": "descending raw typeset logits; calibrated and probability-fused with the handwritten classifier by HinotoriSymbolCandidateEnsemble"},
         "vocabulary": {"file": args.output_vocabulary.name, "sha256": sha256(args.output_vocabulary), "supportedLabels": 222, "baseLabels": 229},
         "developmentEvidence": {"metricsFile": "runs/hinotori-typeset-auxiliary-head-strokeset-verified-20261105/metrics.json",
                                 "heldOutFontTop1": 0.8710575103759766, "heldOutFontTop5": 0.9965986609458923,

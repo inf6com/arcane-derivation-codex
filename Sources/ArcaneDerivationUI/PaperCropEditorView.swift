@@ -3,6 +3,7 @@ import PDFKit
 import UIKit
 
 struct PaperCropEditorView: View {
+    let language: InterfaceLanguage
     let rootPath: String
     let paper: PaperRecord
     let onSaved: (PaperCrop) -> Void
@@ -21,13 +22,19 @@ struct PaperCropEditorView: View {
     @State private var recognitionMessage: String?
     @State private var recognitionBusy = false
 
+    private var isJapanese: Bool { language == .japanese }
+
+    private func text(_ japanese: String, _ english: String) -> String {
+        isJapanese ? japanese : english
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     Text(paper.title).font(.headline).textSelection(.enabled)
                     if let pageImage {
-                        Button("画像を拡大表示") { showReadablePreview = true }
+                        Button(text("画像を拡大表示", "Enlarge page")) { showReadablePreview = true }
                             .buttonStyle(.bordered)
                         GeometryReader { proxy in
                             let frame = imageFrame(in: proxy.size)
@@ -56,33 +63,27 @@ struct PaperCropEditorView: View {
                         }
                         .aspectRatio(pageImage.size.width / max(pageImage.size.height, 1), contentMode: .fit)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                    } else {
-                        Group {
-                            if let message {
-                                Text(message).textSelection(.enabled)
-                                    .foregroundStyle(.red)
-                                    .textSelection(.enabled)
-                                    .frame(maxWidth: .infinity, minHeight: 240)
-                            } else {
-                                ProgressView("ページを読み込んでいます…")
-                                    .frame(maxWidth: .infinity, minHeight: 240)
-                            }
+                    } else if message == nil {
+                        ProgressView(text("ページを読み込んでいます…", "Loading page…"))
+                            .frame(maxWidth: .infinity, minHeight: 240)
+                    }
+                    if pageCount > 0 {
+                        HStack {
+                            Button(text("前のページ", "Previous page")) { page = max(1, page - 1); loadPage() }
+                                .disabled(page <= 1)
+                            Text(text("ページ \(page) / \(pageCount)", "Page \(page) of \(pageCount)"))
+                                .textSelection(.enabled)
+                            Button(text("次のページ", "Next page")) { page = min(pageCount, page + 1); loadPage() }
+                                .disabled(page >= pageCount)
                         }
                     }
-                    HStack {
-                        Button("前のページ") { page = max(1, page - 1); loadPage() }
-                            .disabled(page <= 1)
-                        Text("ページ \(page) / \(pageCount)").textSelection(.enabled)
-                        Button("次のページ") { page = min(pageCount, page + 1); loadPage() }
-                            .disabled(pageCount == 0 || page >= pageCount)
-                    }
-                    Picker("種類", selection: $kind) {
+                    Picker(text("種類", "Type"), selection: $kind) {
                         ForEach(CropKind.allCases, id: \.self) { Text(kindName($0)).tag($0) }
                     }
-                    TextField("タイトル", text: $title)
+                    TextField(text("タイトル", "Title"), text: $title)
                         .textFieldStyle(.roundedBorder)
                     if kind == .equation {
-                        Button("クロップした数式をMathMLへ変換") { recognizeCrop() }
+                        Button(text("クロップした数式をMathMLへ変換", "Convert cropped equation to MathML")) { recognizeCrop() }
                             .buttonStyle(.borderedProminent)
                             .disabled(pageImage == nil || recognitionBusy)
                         if recognitionBusy { ProgressView() }
@@ -94,24 +95,33 @@ struct PaperCropEditorView: View {
                         }
                     }
                     if let message { Text(message).foregroundStyle(.red).textSelection(.enabled) }
-                    Button("クロップを保存") { save() }
+                    Button(text("クロップを保存", "Save crop")) { save() }
                         .buttonStyle(.borderedProminent)
-                        .disabled(pageImage == nil || title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        .disabled(pageImage == nil
+                                  || crop.isNull
+                                  || crop.width <= 0
+                                  || crop.height <= 0
+                                  || title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
                 .padding()
             }
-            .navigationTitle("原典クロップ")
+            .navigationTitle(text("原典クロップ", "Source crop"))
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("閉じる") { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(text("閉じる", "Close")) { dismiss() }
+                }
             }
             .onAppear { loadPage() }
             .navigationDestination(isPresented: $showReadablePreview) {
                 if let pageImage {
                     ReadableImageView(image: pageImage)
-                        .navigationTitle("原典画像")
+                        .navigationTitle(text("原典画像", "Source page"))
                         .toolbarTitleDisplayMode(.inline)
                 } else {
-                    ContentUnavailableView("画像を表示できません", systemImage: "exclamationmark.triangle")
+                    ContentUnavailableView(
+                        text("画像を表示できません", "Image unavailable"),
+                        systemImage: "exclamationmark.triangle"
+                    )
                 }
             }
         }
@@ -128,19 +138,19 @@ struct PaperCropEditorView: View {
         guard let pdfURL else {
             pageCount = 0
             pageImage = nil
-            message = "登録済みPDFが見つかりません。論文原典PDFを再登録してください。"
+            message = text("登録済みPDFが見つかりません。論文原典PDFを再登録してください。", "The registered PDF is missing. Register the source PDF again.")
             return
         }
         guard let document = PDFDocument(url: pdfURL) else {
             pageCount = 0
             pageImage = nil
-            message = "登録済みPDFを読み込めません。PDFを再登録してください。"
+            message = text("登録済みPDFを読み込めません。PDFを再登録してください。", "The registered PDF could not be opened. Register the PDF again.")
             return
         }
         guard document.pageCount > 0 else {
             pageCount = 0
             pageImage = nil
-            message = "登録済みPDFにページがありません。別のPDFを登録してください。"
+            message = text("登録済みPDFにページがありません。別のPDFを登録してください。", "The registered PDF has no pages. Register another PDF.")
             return
         }
         message = nil
@@ -148,7 +158,7 @@ struct PaperCropEditorView: View {
         page = min(max(page, 1), pageCount)
         guard let pdfPage = document.page(at: page - 1) else {
             pageImage = nil
-            message = "指定したページを読み込めません。PDFを再登録してください。"
+            message = text("指定したページを読み込めません。PDFを再登録してください。", "The selected page could not be loaded. Register the PDF again.")
             return
         }
         let bounds = pdfPage.bounds(for: .mediaBox)
@@ -172,21 +182,31 @@ struct PaperCropEditorView: View {
     }
 
     private func kindName(_ kind: CropKind) -> String {
-        switch kind { case .figure: "図"; case .table: "表"; case .equation: "数式" }
+        switch kind {
+        case .figure: text("図", "Figure")
+        case .table: text("表", "Table")
+        case .equation: text("数式", "Equation")
+        }
     }
 
     private func save() {
         do {
+            guard let pdfURL else {
+                throw CocoaError(.fileNoSuchFile, userInfo: [NSLocalizedDescriptionKey: text(
+                    "登録済みPDFが見つかりません。論文原典PDFを再登録してください。",
+                    "The registered PDF is missing. Register the source PDF again."
+                )])
+            }
             let workspace = try WorkspaceStore(root: URL(fileURLWithPath: rootPath))
-            let crop = try PDFCropService(root: workspace).createCrop(paperID: paper.id, pdfURL: pdfURL!, kind: kind, page: page, title: title, normalizedRect: crop)
-            onSaved(crop)
+            let savedCrop = try PDFCropService(root: workspace).createCrop(paperID: paper.id, pdfURL: pdfURL, kind: kind, page: page, title: title, normalizedRect: crop)
+            onSaved(savedCrop)
             dismiss()
         } catch { message = error.localizedDescription }
     }
 
     private func recognizeCrop() {
         guard let pageImage, let cgImage = pageImage.cgImage else {
-            recognitionMessage = "数式画像を読み込めません。"
+            recognitionMessage = text("数式画像を読み込めません。", "The equation image could not be loaded.")
             return
         }
         let imageWidth = CGFloat(cgImage.width)
@@ -196,7 +216,7 @@ struct PaperCropEditorView: View {
                           width: crop.width * imageWidth,
                           height: crop.height * imageHeight).integral
         guard let cropped = cgImage.cropping(to: rect), let data = UIImage(cgImage: cropped).pngData() else {
-            recognitionMessage = "クロップ画像を生成できません。"
+            recognitionMessage = text("クロップ画像を生成できません。", "The cropped image could not be created.")
             return
         }
         recognitionBusy = true

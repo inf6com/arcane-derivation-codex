@@ -46,13 +46,20 @@ struct PaperDiscoveryView: View {
         }
         .navigationTitle(isJapanese ? "論文取得" : "Retrieve paper")
         .navigationDestination(item: $cropPaper) { paper in
-            PaperCropEditorView(rootPath: rootPath, paper: paper) { crop in
+            PaperCropEditorView(language: language, rootPath: rootPath, paper: paper) { crop in
                 chatCrop = crop
                 cropPaper = nil
             }
         }
         .navigationDestination(item: $chatCrop) { crop in
-            FormulaChatView(language: language, rootPath: rootPath, sourceTitle: crop.title, sourceLocator: "page \(crop.page)", sourceEvidenceID: crop.evidence.id, sourceImageRelativePath: crop.imageRelativePath)
+            FormulaChatView(
+                language: language,
+                rootPath: rootPath,
+                sourceTitle: crop.title,
+                sourceLocator: isJapanese ? "ページ \(crop.page)" : "page \(crop.page)",
+                sourceEvidenceID: crop.evidence.id,
+                sourceImageRelativePath: crop.imageRelativePath
+            )
         }
     }
 

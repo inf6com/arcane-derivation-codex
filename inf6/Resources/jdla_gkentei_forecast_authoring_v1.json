@@ -1,0 +1,995 @@
+{
+  "schema_id": "inf6.forecast-authoring.v1",
+  "source_family": "jdla_gkentei",
+  "official_resources": {
+    "certification_home_url": "https://www.jdla.org/certificate/general/",
+    "learning_start_url": "https://www.jdla.org/certificate/general/start/",
+    "issues_url": "https://www.jdla.org/certificate/general/issues/",
+    "latest_syllabus_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/",
+    "previous_syllabus_url": "https://www.jdla.org/download/g-syllabus_2021/"
+  },
+  "common_generation_logic": {
+    "shared_contract": "TrendSignal + QuestionPatternLibrary + CoverageTarget",
+    "applies_to": [
+      "G検定",
+      "Microsoft Learn"
+    ],
+    "steps": [
+      "公式資料から current snapshot を抽出する",
+      "公式差分から TrendSignal を抽出する",
+      "QuestionPatternLibrary から reasoning 形を選ぶ",
+      "TrendSignal に応じて slot を新規領域の知識原子で埋める"
+    ]
+  },
+  "versioned_syllabus_snapshot": {
+    "previous": {
+      "label": "G検定シラバス2021_修正 2021.07.09",
+      "format": "legacy_table",
+      "official_url": "https://www.jdla.org/download/g-syllabus_2021/",
+      "pdf_path": "/Users/decopin/Library/Mobile Documents/com~apple~CloudDocs/inf6.com/jdla/syllabus_pdfs/JDLA_G_E3_82_B7_E3_83_A9_E3_83_90_E3_82_B9_20210709.pdf",
+      "structured_outline_available": false
+    },
+    "current": {
+      "label": "2024年11月試験（G2024#6）より適用",
+      "version": "1.4",
+      "official_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/",
+      "pdf_path": "/Users/decopin/Library/Mobile Documents/com~apple~CloudDocs/inf6.com/jdla/syllabus_pdfs/JDLA_G_E6_A4_9C_E5_AE_9A_E3_82_B7_E3_83_A9_E3_83_90_E3_82_B92024_v1.4.pdf",
+      "structured_outline_available": true,
+      "outline": [
+        {
+          "number": 1,
+          "title": "人工知能の定義",
+          "id": "gkentei_01"
+        },
+        {
+          "number": 2,
+          "title": "人工知能分野で議論される問題",
+          "id": "gkentei_02"
+        },
+        {
+          "number": 3,
+          "title": "探索・推論",
+          "id": "gkentei_03"
+        },
+        {
+          "number": 4,
+          "title": "知識表現とエキスパートシステム",
+          "id": "gkentei_04"
+        },
+        {
+          "number": 5,
+          "title": "機械学習",
+          "id": "gkentei_05"
+        },
+        {
+          "number": 6,
+          "title": "ディープラーニング",
+          "id": "gkentei_06"
+        },
+        {
+          "number": 7,
+          "title": "教師あり学習",
+          "id": "gkentei_07"
+        },
+        {
+          "number": 8,
+          "title": "教師なし学習",
+          "id": "gkentei_08"
+        },
+        {
+          "number": 9,
+          "title": "強化学習",
+          "id": "gkentei_09"
+        },
+        {
+          "number": 10,
+          "title": "モデルの選択・評価",
+          "id": "gkentei_10"
+        },
+        {
+          "number": 11,
+          "title": "ニューラルネットワークとディープラーニング",
+          "id": "gkentei_11"
+        },
+        {
+          "number": 12,
+          "title": "活性化関数",
+          "id": "gkentei_12"
+        },
+        {
+          "number": 13,
+          "title": "誤差関数",
+          "id": "gkentei_13"
+        },
+        {
+          "number": 14,
+          "title": "正則化",
+          "id": "gkentei_14"
+        },
+        {
+          "number": 15,
+          "title": "誤差逆伝播法",
+          "id": "gkentei_15"
+        },
+        {
+          "number": 16,
+          "title": "最適化手法",
+          "id": "gkentei_16"
+        },
+        {
+          "number": 17,
+          "title": "全結合層",
+          "id": "gkentei_17"
+        },
+        {
+          "number": 18,
+          "title": "畳み込み層",
+          "id": "gkentei_18"
+        },
+        {
+          "number": 19,
+          "title": "正規化層",
+          "id": "gkentei_19"
+        },
+        {
+          "number": 20,
+          "title": "プーリング層",
+          "id": "gkentei_20"
+        },
+        {
+          "number": 21,
+          "title": "スキップ結合",
+          "id": "gkentei_21"
+        },
+        {
+          "number": 22,
+          "title": "回帰結合層",
+          "id": "gkentei_22"
+        },
+        {
+          "number": 23,
+          "title": "Attention",
+          "id": "gkentei_23"
+        },
+        {
+          "number": 24,
+          "title": "オートエンコーダ",
+          "id": "gkentei_24"
+        },
+        {
+          "number": 25,
+          "title": "データ拡張",
+          "id": "gkentei_25"
+        },
+        {
+          "number": 26,
+          "title": "画像認識",
+          "id": "gkentei_26"
+        },
+        {
+          "number": 27,
+          "title": "自然言語処理",
+          "id": "gkentei_27"
+        },
+        {
+          "number": 28,
+          "title": "音声処理",
+          "id": "gkentei_28"
+        },
+        {
+          "number": 29,
+          "title": "深層強化学習",
+          "id": "gkentei_29"
+        },
+        {
+          "number": 30,
+          "title": "データ生成",
+          "id": "gkentei_30"
+        },
+        {
+          "number": 31,
+          "title": "転移学習・ファインチューニング",
+          "id": "gkentei_31"
+        },
+        {
+          "number": 32,
+          "title": "マルチモーダル",
+          "id": "gkentei_32"
+        },
+        {
+          "number": 33,
+          "title": "モデルの解釈性",
+          "id": "gkentei_33"
+        },
+        {
+          "number": 34,
+          "title": "モデルの軽量化",
+          "id": "gkentei_34"
+        },
+        {
+          "number": 35,
+          "title": "AI プロジェクトの進め方",
+          "id": "gkentei_35"
+        },
+        {
+          "number": 36,
+          "title": "データの収集・加工・分析・学習",
+          "id": "gkentei_36"
+        },
+        {
+          "number": 37,
+          "title": "AI に必要な数理・統計知識",
+          "id": "gkentei_37"
+        },
+        {
+          "number": 1,
+          "title": "個人情報保護法",
+          "id": "gkentei_01"
+        },
+        {
+          "number": 2,
+          "title": "著作権法",
+          "id": "gkentei_02"
+        },
+        {
+          "number": 3,
+          "title": "特許法",
+          "id": "gkentei_03"
+        },
+        {
+          "number": 4,
+          "title": "不正競争防止法",
+          "id": "gkentei_04"
+        },
+        {
+          "number": 5,
+          "title": "独占禁止法",
+          "id": "gkentei_05"
+        },
+        {
+          "number": 6,
+          "title": "AI開発委託契約",
+          "id": "gkentei_06"
+        },
+        {
+          "number": 7,
+          "title": "AIサービス提供契約",
+          "id": "gkentei_07"
+        },
+        {
+          "number": 8,
+          "title": "国内外のガイドライン",
+          "id": "gkentei_08"
+        },
+        {
+          "number": 9,
+          "title": "プライバシー",
+          "id": "gkentei_09"
+        },
+        {
+          "number": 10,
+          "title": "公平性",
+          "id": "gkentei_10"
+        },
+        {
+          "number": 11,
+          "title": "安全性とセキュリティ",
+          "id": "gkentei_11"
+        },
+        {
+          "number": 12,
+          "title": "悪用",
+          "id": "gkentei_12"
+        },
+        {
+          "number": 13,
+          "title": "透明性",
+          "id": "gkentei_13"
+        },
+        {
+          "number": 14,
+          "title": "民主主義",
+          "id": "gkentei_14"
+        },
+        {
+          "number": 15,
+          "title": "環境保護",
+          "id": "gkentei_15"
+        },
+        {
+          "number": 16,
+          "title": "労働政策",
+          "id": "gkentei_16"
+        },
+        {
+          "number": 17,
+          "title": "その他の重要な価値",
+          "id": "gkentei_17"
+        },
+        {
+          "number": 18,
+          "title": "AIガバナンス",
+          "id": "gkentei_18"
+        }
+      ]
+    }
+  },
+  "pattern_library_ref": {
+    "path": "Resources/jdla_gkentei_question_pattern_library_v1.json",
+    "pattern_support_counts": {
+      "best_fit_decision": 19,
+      "prerequisite_enablement": 1
+    }
+  },
+  "trend_signal_source": {
+    "method": "official_revision_history_normalization",
+    "entry_count": 29
+  },
+  "trend_signals": [
+    {
+      "signal_id": "gkentei.generative_ai_and_foundation_models",
+      "title_ja": "生成AI・基盤モデル系の比重上昇",
+      "category": "emerging_topic",
+      "importance": "high",
+      "priority_rank": 1,
+      "summary_ja": "生成AIまわりの新出用語、役割差、旧来手法との差分を問う予想問題を優先生成します。",
+      "matched_keywords": [
+        "LLM (大規模言語モデル)",
+        "Multi-Head Attention",
+        "VQ-VAE・info VAE・β-VAE",
+        "RLHF",
+        "Diffusion Model",
+        "NeRF",
+        "自己教師あり学習",
+        "生成 AI"
+      ],
+      "change_breakdown": {
+        "addition": 1,
+        "change": 1
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 19
+        },
+        {
+          "pattern_id": "capability_constraint_filter",
+          "observed_supporting_question_count": 0
+        },
+        {
+          "pattern_id": "artifact_interpretation",
+          "observed_supporting_question_count": 0
+        }
+      ],
+      "stem_axes": [
+        "新出用語と近縁用語の境界を選ばせる",
+        "Transformer/Attention 系の役割差を比較させる",
+        "生成モデル族の違いを誤答比較で見抜かせる"
+      ],
+      "distractor_directives": [
+        "旧シラバス側の古い生成モデル語や周辺概念を誤答へ混ぜます。",
+        "Attention 系と RNN 系を混同しやすい並びにします。"
+      ],
+      "evidence": [
+        {
+          "version": "1.0",
+          "effective_date": "2024-05-14",
+          "domain": "旧シラバスとの差分",
+          "topic_number": null,
+          "topic_title": "Gシラバス2024のキーワード差分",
+          "change_type": "addition",
+          "summary": "Gシラバス2024へのキーワード追加例",
+          "keywords": [
+            "LLM (大規模言語モデル)",
+            "MSE・RMSE・MAE",
+            "Contrastive Loss",
+            "カルバック・ライブラー情報量 (KL)",
+            "連鎖律",
+            "レイヤー正規化",
+            "エルマンネットワーク",
+            "教師強制",
+            "Multi-Head Attention",
+            "VQ-VAE・info VAE・β-VAE",
+            "話者識別",
+            "RLHF",
+            "Diffusion Model",
+            "NeRF",
+            "自己教師あり学習",
+            "破壊的忘却"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.4",
+          "effective_date": "2025-05-25",
+          "domain": "人工知能をめぐる動向",
+          "topic_number": 6,
+          "topic_title": "ディープラーニング",
+          "change_type": "change",
+          "summary": "変更（変更前 LLM (大規模言語モデル)）",
+          "keywords": [
+            "生成 AI"
+          ],
+          "before_value": "LLM (大規模言語モデル",
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        }
+      ]
+    },
+    {
+      "signal_id": "gkentei.evaluation_metrics_and_loss_functions",
+      "title_ja": "評価指標・損失関数の現代化",
+      "category": "expanded_topic",
+      "importance": "high",
+      "priority_rank": 2,
+      "summary_ja": "評価指標・損失関数・混同行列の選択判断を問う予想問題を優先生成します。",
+      "matched_keywords": [
+        "MSE・RMSE・MAE",
+        "Contrastive Loss",
+        "カルバック・ライブラー情報量 (KL)",
+        "真陽性・真陰性",
+        "平均二乗誤差関数"
+      ],
+      "change_breakdown": {
+        "addition": 2,
+        "change": 1
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 19
+        },
+        {
+          "pattern_id": "capability_constraint_filter",
+          "observed_supporting_question_count": 0
+        }
+      ],
+      "stem_axes": [
+        "問題設定に対して適切な評価指標を選ばせる",
+        "損失関数の用途差を比較させる",
+        "真陽性・真陰性を含む判定表を読ませる"
+      ],
+      "distractor_directives": [
+        "分類問題と回帰問題の評価指標を交差させて誤答を作ります。",
+        "名前は近いが用途が異なる損失関数を混ぜます。"
+      ],
+      "evidence": [
+        {
+          "version": "1.0",
+          "effective_date": "2024-05-14",
+          "domain": "旧シラバスとの差分",
+          "topic_number": null,
+          "topic_title": "Gシラバス2024のキーワード差分",
+          "change_type": "addition",
+          "summary": "Gシラバス2024へのキーワード追加例",
+          "keywords": [
+            "LLM (大規模言語モデル)",
+            "MSE・RMSE・MAE",
+            "Contrastive Loss",
+            "カルバック・ライブラー情報量 (KL)",
+            "連鎖律",
+            "レイヤー正規化",
+            "エルマンネットワーク",
+            "教師強制",
+            "Multi-Head Attention",
+            "VQ-VAE・info VAE・β-VAE",
+            "話者識別",
+            "RLHF",
+            "Diffusion Model",
+            "NeRF",
+            "自己教師あり学習",
+            "破壊的忘却"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.4",
+          "effective_date": null,
+          "domain": "機械学習の概要",
+          "topic_number": 10,
+          "topic_title": "モデルの選択・評価",
+          "change_type": "addition",
+          "summary": "追加",
+          "keywords": [
+            "真陽性・真陰性"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.4",
+          "effective_date": null,
+          "domain": "ディープラーニングの概要",
+          "topic_number": 13,
+          "topic_title": "誤差関数",
+          "change_type": "change",
+          "summary": "変更（変更前 平均二乗誤差）",
+          "keywords": [
+            "平均二乗誤差関数"
+          ],
+          "before_value": "平均二乗誤差）",
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        }
+      ]
+    },
+    {
+      "signal_id": "gkentei.modern_nlp_and_speech",
+      "title_ja": "自然言語処理・音声処理の刷新",
+      "category": "expanded_topic",
+      "importance": "high",
+      "priority_rank": 3,
+      "summary_ja": "NLP・音声の系列モデル、学習補助手法、評価/認識構成の違いを問う予想問題を優先生成します。",
+      "matched_keywords": [
+        "統計的機械翻訳",
+        "エルマンネットワーク",
+        "教師強制",
+        "話者識別",
+        "CTC",
+        "統計的自然言語処理"
+      ],
+      "change_breakdown": {
+        "addition": 4,
+        "removal": 1
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 19
+        },
+        {
+          "pattern_id": "artifact_interpretation",
+          "observed_supporting_question_count": 0
+        }
+      ],
+      "stem_axes": [
+        "系列データ処理で使う要素技術を選ばせる",
+        "音声処理の学習・認識補助語を見分けさせる",
+        "統計的自然言語処理と深層学習側の用語を比較させる"
+      ],
+      "distractor_directives": [
+        "画像処理系の用語を紛れ込ませて誤答を作ります。",
+        "翻訳・音声・系列学習の役割が近い語を横並びにします。"
+      ],
+      "evidence": [
+        {
+          "version": "1.0",
+          "effective_date": "2024-05-14",
+          "domain": "旧シラバスとの差分",
+          "topic_number": null,
+          "topic_title": "Gシラバス2024のキーワード差分",
+          "change_type": "addition",
+          "summary": "Gシラバス2024へのキーワード追加例",
+          "keywords": [
+            "LLM (大規模言語モデル)",
+            "MSE・RMSE・MAE",
+            "Contrastive Loss",
+            "カルバック・ライブラー情報量 (KL)",
+            "連鎖律",
+            "レイヤー正規化",
+            "エルマンネットワーク",
+            "教師強制",
+            "Multi-Head Attention",
+            "VQ-VAE・info VAE・β-VAE",
+            "話者識別",
+            "RLHF",
+            "Diffusion Model",
+            "NeRF",
+            "自己教師あり学習",
+            "破壊的忘却"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.1",
+          "effective_date": "2024-09-06",
+          "domain": "人工知能をめぐる動向",
+          "topic_number": 5,
+          "topic_title": "機械学習",
+          "change_type": "removal",
+          "summary": "削除（掲載箇所変更）",
+          "keywords": [
+            "統計的機械翻訳"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.1",
+          "effective_date": "2024-09-20",
+          "domain": "ディープラーニングの応用例",
+          "topic_number": 27,
+          "topic_title": "自然言語処理",
+          "change_type": "addition",
+          "summary": "追加（掲載箇所変更）",
+          "keywords": [
+            "統計的機械翻訳"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.2",
+          "effective_date": "2024-09-20",
+          "domain": "ディープラーニングの要素技術",
+          "topic_number": 28,
+          "topic_title": "音声処理",
+          "change_type": "addition",
+          "summary": "追加（掲載箇所変更）",
+          "keywords": [
+            "CTC"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.4",
+          "effective_date": "2025-05-25",
+          "domain": "人工知能をめぐる動向",
+          "topic_number": 5,
+          "topic_title": "機械学習",
+          "change_type": "addition",
+          "summary": "追加",
+          "keywords": [
+            "統計的自然言語処理"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        }
+      ]
+    },
+    {
+      "signal_id": "gkentei.reinforcement_learning_detail_shift",
+      "title_ja": "強化学習の詳細化",
+      "category": "expanded_topic",
+      "importance": "medium",
+      "priority_rank": 4,
+      "summary_ja": "強化学習の代表手法差分とマルチエージェント化を問う予想問題を優先生成します。",
+      "matched_keywords": [
+        "SARSA",
+        "マルチエージェント強化学習 (MARL)"
+      ],
+      "change_breakdown": {
+        "addition": 1,
+        "change": 1
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 19
+        },
+        {
+          "pattern_id": "prerequisite_enablement",
+          "observed_supporting_question_count": 1
+        }
+      ],
+      "stem_axes": [
+        "価値関数系と方策系の違いを選ばせる",
+        "単一エージェントとマルチエージェントの差分を選ばせる"
+      ],
+      "distractor_directives": [
+        "教師あり学習や探索アルゴリズムの用語を混ぜます。",
+        "Q学習と SARSA の差分を曖昧にする誤答を入れます。"
+      ],
+      "evidence": [
+        {
+          "version": "1.4",
+          "effective_date": null,
+          "domain": "機械学習の概要",
+          "topic_number": 9,
+          "topic_title": "強化学習",
+          "change_type": "addition",
+          "summary": "追加",
+          "keywords": [
+            "SARSA"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.4",
+          "effective_date": null,
+          "domain": "ディープラーニングの応用例",
+          "topic_number": 29,
+          "topic_title": "深層強化学習",
+          "change_type": "change",
+          "summary": "変更（変更前 マルチエージェント, 強化学習）",
+          "keywords": [
+            "マルチエージェント強化学習 (MARL)"
+          ],
+          "before_value": "マルチエージェント, 強化学習）",
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        }
+      ]
+    },
+    {
+      "signal_id": "gkentei.legacy_topic_deemphasis",
+      "title_ja": "旧来論点の比重低下",
+      "category": "deemphasized_topic",
+      "importance": "medium",
+      "priority_rank": 5,
+      "summary_ja": "旧来論点を主役にせず、新規論点の誤答候補や比較対象として使うための制約信号です。",
+      "matched_keywords": [
+        "IoT",
+        "エニアック (ENIAC)",
+        "ロジック・セオリスト",
+        "第五世代コンピュータ",
+        "深層信念ネットワーク",
+        "OCR",
+        "クラスタ分析",
+        "制限付きボルツマンマシン",
+        "Parts Affinity Fields",
+        "シリアス・ゲーム"
+      ],
+      "change_breakdown": {
+        "removal": 2
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 19
+        }
+      ],
+      "stem_axes": [
+        "新規論点と旧来論点を比較させる"
+      ],
+      "distractor_directives": [
+        "比重低下語は正解ではなく誤答候補へ寄せます。"
+      ],
+      "evidence": [
+        {
+          "version": "1.0",
+          "effective_date": "2024-05-14",
+          "domain": "旧シラバスとの差分",
+          "topic_number": null,
+          "topic_title": "Gシラバス2024のキーワード差分",
+          "change_type": "removal",
+          "summary": "Gシラバス2024からキーワード削除例",
+          "keywords": [
+            "エニアック (ENIAC)",
+            "ロジック・セオリスト",
+            "第五世代コンピュータ",
+            "深層信念ネットワーク",
+            "パターン認識",
+            "OCR",
+            "IoT",
+            "クラスタ分析",
+            "制限付きボルツマンマシン",
+            "プラトー",
+            "ジェネレータ",
+            "ディスクリミネータ",
+            "Parts Affinity Fields",
+            "シリアス・ゲーム"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        },
+        {
+          "version": "1.1",
+          "effective_date": "2024-09-20",
+          "domain": "AIの社会実装に向けて",
+          "topic_number": 35,
+          "topic_title": "AIプロジェクトの進め方",
+          "change_type": "removal",
+          "summary": "削除",
+          "keywords": [
+            "IoT"
+          ],
+          "before_value": null,
+          "source_url": "https://www.jdla.org/download/g%e6%a4%9c%e5%ae%9a%e3%81%ae%e8%a9%a6%e9%a8%93%e5%87%ba%e9%a1%8c%e7%af%84%e5%9b%b2-%ef%bc%88%e3%82%b7%e3%83%a9%e3%83%90%e3%82%b9%ef%bc%89g20246%ef%bd%9ev1-4/"
+        }
+      ]
+    }
+  ],
+  "forecast_blueprints": [
+    {
+      "blueprint_id": "forecast.generative_ai_and_foundation_models",
+      "title_ja": "生成AI・基盤モデル系の比重上昇",
+      "priority_rank": 1,
+      "trend_signal_ids": [
+        "gkentei.generative_ai_and_foundation_models"
+      ],
+      "objective_ja": "生成AIまわりの新出用語、役割差、旧来手法との差分を問う予想問題を優先生成します。",
+      "required_keyword_focus": [
+        "LLM (大規模言語モデル)",
+        "Multi-Head Attention",
+        "VQ-VAE・info VAE・β-VAE",
+        "RLHF",
+        "Diffusion Model",
+        "NeRF",
+        "自己教師あり学習",
+        "生成 AI"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "capability_constraint_filter",
+        "artifact_interpretation"
+      ],
+      "stem_axes": [
+        "新出用語と近縁用語の境界を選ばせる",
+        "Transformer/Attention 系の役割差を比較させる",
+        "生成モデル族の違いを誤答比較で見抜かせる"
+      ],
+      "distractor_directives": [
+        "旧シラバス側の古い生成モデル語や周辺概念を誤答へ混ぜます。",
+        "Attention 系と RNN 系を混同しやすい並びにします。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "latest_syllabus_pdf",
+          "official_revision_history",
+          "jdla_official_examples"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.evaluation_metrics_and_loss_functions",
+      "title_ja": "評価指標・損失関数の現代化",
+      "priority_rank": 2,
+      "trend_signal_ids": [
+        "gkentei.evaluation_metrics_and_loss_functions"
+      ],
+      "objective_ja": "評価指標・損失関数・混同行列の選択判断を問う予想問題を優先生成します。",
+      "required_keyword_focus": [
+        "MSE・RMSE・MAE",
+        "Contrastive Loss",
+        "カルバック・ライブラー情報量 (KL)",
+        "真陽性・真陰性",
+        "平均二乗誤差関数"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "capability_constraint_filter"
+      ],
+      "stem_axes": [
+        "問題設定に対して適切な評価指標を選ばせる",
+        "損失関数の用途差を比較させる",
+        "真陽性・真陰性を含む判定表を読ませる"
+      ],
+      "distractor_directives": [
+        "分類問題と回帰問題の評価指標を交差させて誤答を作ります。",
+        "名前は近いが用途が異なる損失関数を混ぜます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "latest_syllabus_pdf",
+          "official_revision_history",
+          "jdla_official_examples"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.modern_nlp_and_speech",
+      "title_ja": "自然言語処理・音声処理の刷新",
+      "priority_rank": 3,
+      "trend_signal_ids": [
+        "gkentei.modern_nlp_and_speech"
+      ],
+      "objective_ja": "NLP・音声の系列モデル、学習補助手法、評価/認識構成の違いを問う予想問題を優先生成します。",
+      "required_keyword_focus": [
+        "統計的機械翻訳",
+        "エルマンネットワーク",
+        "教師強制",
+        "話者識別",
+        "CTC",
+        "統計的自然言語処理"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "artifact_interpretation"
+      ],
+      "stem_axes": [
+        "系列データ処理で使う要素技術を選ばせる",
+        "音声処理の学習・認識補助語を見分けさせる",
+        "統計的自然言語処理と深層学習側の用語を比較させる"
+      ],
+      "distractor_directives": [
+        "画像処理系の用語を紛れ込ませて誤答を作ります。",
+        "翻訳・音声・系列学習の役割が近い語を横並びにします。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "latest_syllabus_pdf",
+          "official_revision_history",
+          "jdla_official_examples"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.reinforcement_learning_detail_shift",
+      "title_ja": "強化学習の詳細化",
+      "priority_rank": 4,
+      "trend_signal_ids": [
+        "gkentei.reinforcement_learning_detail_shift"
+      ],
+      "objective_ja": "強化学習の代表手法差分とマルチエージェント化を問う予想問題を優先生成します。",
+      "required_keyword_focus": [
+        "SARSA",
+        "マルチエージェント強化学習 (MARL)"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "prerequisite_enablement"
+      ],
+      "stem_axes": [
+        "価値関数系と方策系の違いを選ばせる",
+        "単一エージェントとマルチエージェントの差分を選ばせる"
+      ],
+      "distractor_directives": [
+        "教師あり学習や探索アルゴリズムの用語を混ぜます。",
+        "Q学習と SARSA の差分を曖昧にする誤答を入れます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "latest_syllabus_pdf",
+          "official_revision_history",
+          "jdla_official_examples"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.legacy_topic_deemphasis",
+      "title_ja": "旧来論点の比重低下",
+      "priority_rank": 5,
+      "trend_signal_ids": [
+        "gkentei.legacy_topic_deemphasis"
+      ],
+      "objective_ja": "旧来論点を主役にせず、新規論点の誤答候補や比較対象として使うための制約信号です。",
+      "required_keyword_focus": [
+        "IoT",
+        "エニアック (ENIAC)",
+        "ロジック・セオリスト",
+        "第五世代コンピュータ",
+        "深層信念ネットワーク",
+        "OCR",
+        "クラスタ分析",
+        "制限付きボルツマンマシン",
+        "Parts Affinity Fields",
+        "シリアス・ゲーム"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision"
+      ],
+      "stem_axes": [
+        "新規論点と旧来論点を比較させる"
+      ],
+      "distractor_directives": [
+        "比重低下語は正解ではなく誤答候補へ寄せます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "latest_syllabus_pdf",
+          "official_revision_history",
+          "jdla_official_examples"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": false
+      },
+      "deemphasized_keywords": [
+        "IoT",
+        "エニアック (ENIAC)",
+        "ロジック・セオリスト",
+        "第五世代コンピュータ",
+        "深層信念ネットワーク",
+        "OCR",
+        "クラスタ分析",
+        "制限付きボルツマンマシン",
+        "Parts Affinity Fields",
+        "シリアス・ゲーム"
+      ]
+    }
+  ]
+}

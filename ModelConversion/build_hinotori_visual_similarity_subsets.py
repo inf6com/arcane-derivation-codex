@@ -330,7 +330,7 @@ def main() -> None:
         raise RuntimeError("generated subsets do not form a disjoint complete partition of all 229 labels")
 
     result = {
-        "schema": "firebird-vit-font-and-handwriting-confusion-subsets-v4",
+        "schema": "hinotori-vit-visual-similarity-subsets-v1",
         "task": f"partition all 229 labels by ViT confusion on held-out font glyphs and source-disjoint handwritten {args.handwriting_split} teachers",
         "groupingRule": f"an undirected pair is linked when either font-heldout or handwritten-{args.handwriting_split} images produce at least {args.minimum_confusions_in_either_direction} confusion(s) in either direction at a rate of at least {args.confusion_rate_threshold:.6f}; both directional counts/rates are retained; deterministic strongest-edge-first complete-link merging prevents unsupported transitive membership",
         "confusionRateThreshold": args.confusion_rate_threshold,

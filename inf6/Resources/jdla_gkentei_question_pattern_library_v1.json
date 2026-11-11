@@ -1,0 +1,296 @@
+{
+  "$schema": "../schemas/question_pattern_library.schema.json",
+  "library_id": "inf6.question-pattern-library.jdla-gkentei.v1",
+  "version": 1,
+  "created_at": "2026-04-26T10:09:27Z",
+  "classification_method": "heuristic_regex_v1",
+  "source_corpus": {
+    "source_json_file": "jdla_gkentei_official_example_corpus_v1.json",
+    "source_images_archive": "",
+    "set_count": 10,
+    "question_count": 20,
+    "choice_count_distribution": {
+      "4": 20
+    },
+    "image_question_count": 0,
+    "zip_image_group_count": 0,
+    "zip_image_group_size_distribution": {}
+  },
+  "generation_contract": {
+    "store_pattern_not_instance": true,
+    "preserve_answer_cardinality": true,
+    "preserve_figure_dependency": true,
+    "regenerate_explanation_from_official_sources": true,
+    "forbid_copying_concrete_question_text": true
+  },
+  "new_domain_adaptation_rules": [
+    "新規領域では、pattern の reasoning 形を保持し、製品名やサービス名だけを置換して済ませません。",
+    "CoverageTarget は新規領域の知識原子・経脈から供給し、pattern 側は出題型のみを提供します。",
+    "artifact や figure を使う pattern は、新規領域でも同じ種類の成果物を用意できる場合にだけ適用します。",
+    "複数選択問題は cardinality を保持し、単一選択へ劣化させません。",
+    "解説本文は新規生成でよいですが、公式根拠 URL と論理順は pattern 契約を守ります。"
+  ],
+  "base_patterns": [
+    {
+      "pattern_id": "best_fit_decision",
+      "name_ja": "最適解選択",
+      "intent": "choose_best_option",
+      "description_ja": "業務シナリオと制約から、最も適切なサービス・機能・ツール・モデルを 1 つ選ばせる問題型です。",
+      "mma_question_types": [
+        "decision",
+        "comparison"
+      ],
+      "stem_slots": [
+        {
+          "slot": "actor",
+          "required": false,
+          "description_ja": "利用者または開発者の役割"
+        },
+        {
+          "slot": "goal",
+          "required": true,
+          "description_ja": "達成したい機能または成果"
+        },
+        {
+          "slot": "environment",
+          "required": false,
+          "description_ja": "前提となる環境や既存構成"
+        },
+        {
+          "slot": "constraints",
+          "required": true,
+          "description_ja": "コスト・運用・精度・共有などの制約"
+        },
+        {
+          "slot": "decision_axis",
+          "required": true,
+          "description_ja": "何を選ばせる問題か"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "制約をすべて満たす唯一の選択肢を正解にします。",
+        "distractor_families": [
+          "隣接サービスだが責務が違う選択肢",
+          "できそうに見えるが前提条件を満たさない選択肢",
+          "運用レイヤが違う選択肢",
+          "旧方式または別製品系の選択肢"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "主要能力",
+          "制約条件",
+          "責務境界"
+        ]
+      },
+      "adaptation_rules": [
+        "製品名は固定せず、goal と constraints を新規領域の知識原子へ差し替えます。",
+        "誤答は新規領域の隣接機能から構成し、ランダム語句で埋めません。"
+      ],
+      "compatible_modifiers": [
+        "compound_answer"
+      ],
+      "supporting_question_count": 19,
+      "representative_questions": [
+        {
+          "set_id": "g-issues_No01",
+          "question_number": "Q1",
+          "question_id": "jdla-gkentei-example-q01",
+          "question_text_excerpt": "以下の文章を読み、空欄に最もよく当てはまる選択肢を1つ選べ 人工知能は有限の処理能力しかないため、現実に起こりうる問題すべてに対処することができない ( ) がある"
+        },
+        {
+          "set_id": "g-issues_No02",
+          "question_number": "Q2",
+          "question_id": "jdla-gkentei-example-q02",
+          "question_text_excerpt": "AI研究には過去に2度のブームが起こり、現実的な進展が周囲の過剰な期待に追いつかず、それらのブームは終焉を迎えた。第2次AIブームで登場し、第1次AIブームの時代に比べて適用範囲は広がったものの、知識を明示的な形で記述することの難しさがネックとなってしまったものとして、最も適切な選択肢を1つ選べ"
+        },
+        {
+          "set_id": "g-issues_No02",
+          "question_number": "Q3",
+          "question_id": "jdla-gkentei-example-q03",
+          "question_text_excerpt": "コンピュータによる画像中の物体認識の精度を競う国際コンテスト ILSVRC にて、2015年にMicrosoft社が開発し、人間に勝るとも劣らない認識率を示したと報告され大きな話題となったスキップ結合を特徴とするモデルとして、最も適切な選択肢を1つ選べ"
+        },
+        {
+          "set_id": "g-issues_No03",
+          "question_number": "Q4",
+          "question_id": "jdla-gkentei-example-q04",
+          "question_text_excerpt": "重回帰分析の例として、最も適切な選択肢を1つ選べ"
+        }
+      ]
+    },
+    {
+      "pattern_id": "prerequisite_enablement",
+      "name_ja": "前提資源・有効化判定",
+      "intent": "identify_required_resource_or_permission",
+      "description_ja": "機能を使う前に必要なリソース、認可、デプロイ前提、ネットワーク条件を問う問題型です。",
+      "mma_question_types": [
+        "prereq",
+        "setting",
+        "decision"
+      ],
+      "stem_slots": [
+        {
+          "slot": "target_capability",
+          "required": true,
+          "description_ja": "最終的に使いたい機能"
+        },
+        {
+          "slot": "required_resource",
+          "required": true,
+          "description_ja": "必要な資源や有効化対象"
+        },
+        {
+          "slot": "boundary",
+          "required": false,
+          "description_ja": "サブスクリプション、ネットワーク、権限などの境界"
+        },
+        {
+          "slot": "failure_if_missing",
+          "required": false,
+          "description_ja": "前提が欠けたときの不成立条件"
+        }
+      ],
+      "choice_design": {
+        "answer_cardinality": "single_or_multi",
+        "option_count": {
+          "min": 4,
+          "max": 6
+        },
+        "correct_option_rule": "対象機能の成立に必須の資源または設定だけを正解にします。",
+        "distractor_families": [
+          "同系統だが必須ではない資源",
+          "運用後に追加する任意機能",
+          "別レイヤの管理ツール",
+          "役割は近いが責務境界が異なる設定"
+        ]
+      },
+      "grounding_requirements": {
+        "min_source_urls": 2,
+        "must_bind": [
+          "前提資源",
+          "有効化条件",
+          "利用開始条件"
+        ]
+      },
+      "adaptation_rules": [
+        "required_resource は新規領域の前提原子から構成します。",
+        "前提と任意機能を混同させる誤答族を維持します。"
+      ],
+      "compatible_modifiers": [],
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "g-issues_No06",
+          "question_number": "Q11",
+          "question_id": "jdla-gkentei-example-q11",
+          "question_text_excerpt": "ChatGPTのベースとなるGPTは、大規模なデータセットを用いることでモデルを大規模化できている。この前提となる法則として、最も適切な選択肢を1つ選べ"
+        }
+      ]
+    }
+  ],
+  "modifiers": [
+    {
+      "modifier_id": "compound_answer",
+      "name_ja": "複合回答",
+      "description_ja": "1 つの選択肢の中で複数の設問要素を同時に満たす必要があります。",
+      "effect_on_generation": [
+        "サブ設問の組み合わせ整合性を保持します。",
+        "片方だけ正しい複合誤答を作ります。"
+      ],
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "g-issues_No06",
+          "question_number": "Q12",
+          "question_id": "jdla-gkentei-example-q12",
+          "question_text_excerpt": "以下の文章を読み、空欄に最もよく当てはまる選択肢を1つ選べ エッジデバイスで深層学習モデルを動かすため、しばしば ( ) と呼ばれる、モデルの重みそれぞれをより少ないバイト数で表現するためのプロセスが取られることがある"
+        },
+        {
+          "set_id": "g-issues_No09",
+          "question_number": "Q18",
+          "question_id": "jdla-gkentei-example-q18",
+          "question_text_excerpt": "AIの開発契約において留意しなければならないこととして、最も不適切な選択肢を1つ選べ"
+        }
+      ]
+    }
+  ],
+  "composed_patterns": [
+    {
+      "composition_id": "best_fit_decision",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [],
+      "description_ja": "最適解選択",
+      "supporting_question_count": 17,
+      "representative_questions": [
+        {
+          "set_id": "g-issues_No01",
+          "question_number": "Q1",
+          "question_id": "jdla-gkentei-example-q01",
+          "question_text_excerpt": "以下の文章を読み、空欄に最もよく当てはまる選択肢を1つ選べ 人工知能は有限の処理能力しかないため、現実に起こりうる問題すべてに対処することができない ( ) がある"
+        },
+        {
+          "set_id": "g-issues_No02",
+          "question_number": "Q2",
+          "question_id": "jdla-gkentei-example-q02",
+          "question_text_excerpt": "AI研究には過去に2度のブームが起こり、現実的な進展が周囲の過剰な期待に追いつかず、それらのブームは終焉を迎えた。第2次AIブームで登場し、第1次AIブームの時代に比べて適用範囲は広がったものの、知識を明示的な形で記述することの難しさがネックとなってしまったものとして、最も適切な選択肢を1つ選べ"
+        },
+        {
+          "set_id": "g-issues_No02",
+          "question_number": "Q3",
+          "question_id": "jdla-gkentei-example-q03",
+          "question_text_excerpt": "コンピュータによる画像中の物体認識の精度を競う国際コンテスト ILSVRC にて、2015年にMicrosoft社が開発し、人間に勝るとも劣らない認識率を示したと報告され大きな話題となったスキップ結合を特徴とするモデルとして、最も適切な選択肢を1つ選べ"
+        },
+        {
+          "set_id": "g-issues_No03",
+          "question_number": "Q4",
+          "question_id": "jdla-gkentei-example-q04",
+          "question_text_excerpt": "重回帰分析の例として、最も適切な選択肢を1つ選べ"
+        }
+      ]
+    },
+    {
+      "composition_id": "best_fit_decision__compound_answer",
+      "base_pattern_id": "best_fit_decision",
+      "modifier_ids": [
+        "compound_answer"
+      ],
+      "description_ja": "最適解選択 + 複合回答",
+      "supporting_question_count": 2,
+      "representative_questions": [
+        {
+          "set_id": "g-issues_No06",
+          "question_number": "Q12",
+          "question_id": "jdla-gkentei-example-q12",
+          "question_text_excerpt": "以下の文章を読み、空欄に最もよく当てはまる選択肢を1つ選べ エッジデバイスで深層学習モデルを動かすため、しばしば ( ) と呼ばれる、モデルの重みそれぞれをより少ないバイト数で表現するためのプロセスが取られることがある"
+        },
+        {
+          "set_id": "g-issues_No09",
+          "question_number": "Q18",
+          "question_id": "jdla-gkentei-example-q18",
+          "question_text_excerpt": "AIの開発契約において留意しなければならないこととして、最も不適切な選択肢を1つ選べ"
+        }
+      ]
+    },
+    {
+      "composition_id": "prerequisite_enablement",
+      "base_pattern_id": "prerequisite_enablement",
+      "modifier_ids": [],
+      "description_ja": "前提資源・有効化判定",
+      "supporting_question_count": 1,
+      "representative_questions": [
+        {
+          "set_id": "g-issues_No06",
+          "question_number": "Q11",
+          "question_id": "jdla-gkentei-example-q11",
+          "question_text_excerpt": "ChatGPTのベースとなるGPTは、大規模なデータセットを用いることでモデルを大規模化できている。この前提となる法則として、最も適切な選択肢を1つ選べ"
+        }
+      ]
+    }
+  ]
+}

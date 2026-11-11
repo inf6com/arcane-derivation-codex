@@ -1,0 +1,268 @@
+outline:
+  # 技術分野
+  - key: gk_ai_definition
+    title: 人工知能とは
+    title_en: Artificial Intelligence
+    depth: 0
+  - key: gk_ai_definition_def
+    title: 人工知能の定義
+    title_en: Definition of AI
+    depth: 1
+  - key: gk_ai_definition_issues
+    title: 人工知能分野で議論される問題
+    title_en: Issues Discussed in AI
+    depth: 1
+
+  - key: gk_ai_trends
+    title: 人工知能をめぐる動向
+    title_en: Trends in Artificial Intelligence
+    depth: 0
+  - key: gk_ai_trends_search
+    title: 探索・推論
+    title_en: Search and Reasoning
+    depth: 1
+  - key: gk_ai_trends_knowledge
+    title: 知識表現とエキスパートシステム
+    title_en: Knowledge Representation and Expert Systems
+    depth: 1
+  - key: gk_ai_trends_ml
+    title: 機械学習
+    title_en: Machine Learning
+    depth: 1
+  - key: gk_ai_trends_dl
+    title: ディープラーニング
+    title_en: Deep Learning
+    depth: 1
+
+  - key: gk_ml_overview
+    title: 機械学習の概要
+    title_en: Machine Learning Overview
+    depth: 0
+  - key: gk_ml_supervised
+    title: 教師あり学習
+    title_en: Supervised Learning
+    depth: 1
+  - key: gk_ml_unsupervised
+    title: 教師なし学習
+    title_en: Unsupervised Learning
+    depth: 1
+  - key: gk_ml_reinforcement
+    title: 強化学習
+    title_en: Reinforcement Learning
+    depth: 1
+  - key: gk_ml_eval
+    title: モデルの選択・評価
+    title_en: Model Selection and Evaluation
+    depth: 1
+
+  - key: gk_dl_overview
+    title: ディープラーニングの概要
+    title_en: Deep Learning Overview
+    depth: 0
+  - key: gk_dl_nn
+    title: ニューラルネットワークとディープラーニング
+    title_en: Neural Networks and Deep Learning
+    depth: 1
+  - key: gk_dl_activation
+    title: 活性化関数
+    title_en: Activation Functions
+    depth: 1
+  - key: gk_dl_loss
+    title: 誤差関数
+    title_en: Loss Functions
+    depth: 1
+  - key: gk_dl_regularization
+    title: 正則化
+    title_en: Regularization
+    depth: 1
+  - key: gk_dl_backprop
+    title: 誤差逆伝播法
+    title_en: Backpropagation
+    depth: 1
+  - key: gk_dl_optim
+    title: 最適化手法
+    title_en: Optimization Methods
+    depth: 1
+
+  - key: gk_dl_elements
+    title: ディープラーニングの要素技術
+    title_en: Deep Learning Components
+    depth: 0
+  - key: gk_dl_fc
+    title: 全結合層
+    title_en: Fully Connected Layers
+    depth: 1
+  - key: gk_dl_conv
+    title: 畳み込み層
+    title_en: Convolutional Layers
+    depth: 1
+  - key: gk_dl_norm
+    title: 正規化層
+    title_en: Normalization Layers
+    depth: 1
+  - key: gk_dl_pool
+    title: プーリング層
+    title_en: Pooling Layers
+    depth: 1
+  - key: gk_dl_skip
+    title: スキップ結合
+    title_en: Skip Connections
+    depth: 1
+  - key: gk_dl_recurrent
+    title: 回帰結合層
+    title_en: Recurrent Layers
+    depth: 1
+  - key: gk_dl_attention
+    title: Attention
+    title_en: Attention
+    depth: 1
+  - key: gk_dl_autoencoder
+    title: オートエンコーダ
+    title_en: Autoencoders
+    depth: 1
+  - key: gk_dl_augmentation
+    title: データ拡張
+    title_en: Data Augmentation
+    depth: 1
+
+  - key: gk_dl_applications
+    title: ディープラーニングの応用例
+    title_en: Deep Learning Applications
+    depth: 0
+  - key: gk_dl_app_vision
+    title: 画像認識
+    title_en: Image Recognition
+    depth: 1
+  - key: gk_dl_app_nlp
+    title: 自然言語処理
+    title_en: Natural Language Processing
+    depth: 1
+  - key: gk_dl_app_speech
+    title: 音声処理
+    title_en: Speech Processing
+    depth: 1
+  - key: gk_dl_app_drl
+    title: 深層強化学習
+    title_en: Deep Reinforcement Learning
+    depth: 1
+  - key: gk_dl_app_generation
+    title: データ生成
+    title_en: Data Generation
+    depth: 1
+  - key: gk_dl_app_transfer
+    title: 転移学習・ファインチューニング
+    title_en: Transfer Learning and Fine-Tuning
+    depth: 1
+  - key: gk_dl_app_multimodal
+    title: マルチモーダル
+    title_en: Multimodal
+    depth: 1
+  - key: gk_dl_app_interpret
+    title: モデルの解釈性
+    title_en: Model Interpretability
+    depth: 1
+  - key: gk_dl_app_lightweight
+    title: モデルの軽量化
+    title_en: Model Compression
+    depth: 1
+
+  - key: gk_social_impl
+    title: AIの社会実装に向けて
+    title_en: Social Implementation of AI
+    depth: 0
+  - key: gk_social_project
+    title: AIプロジェクトの進め方
+    title_en: Managing AI Projects
+    depth: 1
+  - key: gk_social_data
+    title: データの収集・加工・分析・学習
+    title_en: Data Collection, Processing, Analysis, and Training
+    depth: 1
+
+  - key: gk_math
+    title: AIに必要な数理・統計知識
+    title_en: Mathematics and Statistics for AI
+    depth: 0
+
+  # 法律・倫理分野
+  - key: gk_law
+    title: AIに関する法律と契約
+    title_en: Laws and Contracts Related to AI
+    depth: 0
+  - key: gk_law_privacy
+    title: 個人情報保護法
+    title_en: Personal Information Protection Act
+    depth: 1
+  - key: gk_law_copyright
+    title: 著作権法
+    title_en: Copyright Act
+    depth: 1
+  - key: gk_law_patent
+    title: 特許法
+    title_en: Patent Act
+    depth: 1
+  - key: gk_law_unfair
+    title: 不正競争防止法
+    title_en: Unfair Competition Prevention Act
+    depth: 1
+  - key: gk_law_antitrust
+    title: 独占禁止法
+    title_en: Antimonopoly Act
+    depth: 1
+  - key: gk_law_dev_contract
+    title: AI開発委託契約
+    title_en: AI Development Contracts
+    depth: 1
+  - key: gk_law_service_contract
+    title: AIサービス提供契約
+    title_en: AI Service Contracts
+    depth: 1
+
+  - key: gk_ethics
+    title: AI倫理・AIガバナンス
+    title_en: AI Ethics and AI Governance
+    depth: 0
+  - key: gk_ethics_guidelines
+    title: 国内外のガイドライン
+    title_en: Domestic and International Guidelines
+    depth: 1
+  - key: gk_ethics_privacy
+    title: プライバシー
+    title_en: Privacy
+    depth: 1
+  - key: gk_ethics_fairness
+    title: 公平性
+    title_en: Fairness
+    depth: 1
+  - key: gk_ethics_safety
+    title: 安全性とセキュリティ
+    title_en: Safety and Security
+    depth: 1
+  - key: gk_ethics_misuse
+    title: 悪用
+    title_en: Misuse
+    depth: 1
+  - key: gk_ethics_transparency
+    title: 透明性
+    title_en: Transparency
+    depth: 1
+  - key: gk_ethics_democracy
+    title: 民主主義
+    title_en: Democracy
+    depth: 1
+  - key: gk_ethics_environment
+    title: 環境保護
+    title_en: Environmental Protection
+    depth: 1
+  - key: gk_ethics_labor
+    title: 労働政策
+    title_en: Labor Policy
+    depth: 1
+  - key: gk_ethics_values
+    title: その他の重要な価値
+    title_en: Other Important Values
+    depth: 1
+  - key: gk_ethics_governance
+    title: AIガバナンス
+    title_en: AI Governance
+    depth: 1

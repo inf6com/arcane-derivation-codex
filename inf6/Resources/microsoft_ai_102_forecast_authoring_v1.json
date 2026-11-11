@@ -1,0 +1,893 @@
+{
+  "schema_id": "inf6.forecast-authoring.v1",
+  "source_family": "microsoft_ai_102",
+  "official_resources": {
+    "exam_page_url": "https://learn.microsoft.com/en-us/credentials/certifications/exams/ai-102",
+    "study_guide_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102",
+    "course_url": "https://learn.microsoft.com/en-us/training/courses/ai-102t00",
+    "trend_sources": [
+      "https://learn.microsoft.com/en-us/azure/foundry/whats-new-foundry",
+      "https://learn.microsoft.com/en-us/azure/ai-services/language-service/whats-new",
+      "https://learn.microsoft.com/en-us/azure/ai-services/openai/whats-new",
+      "https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview",
+      "https://learn.microsoft.com/en-us/azure/ai-services/content-safety/whats-new",
+      "https://learn.microsoft.com/en-us/azure/search/whats-new",
+      "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+      "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/whats-new?view=doc-intel-4.0.0",
+      "https://techcommunity.microsoft.com/blog/skills-hub-blog/the-ai-job-boom-is-here-are-you-ready-to-showcase-your-skills/4494128"
+    ]
+  },
+  "common_generation_logic": {
+    "shared_contract": "TrendSignal + QuestionPatternLibrary + CoverageTarget",
+    "applies_to": [
+      "AI-102",
+      "G検定",
+      "E資格"
+    ],
+    "steps": [
+      "公式の current scope を固定する",
+      "公式の what's new / overview から TrendSignal を抽出する",
+      "QuestionPatternLibrary から reasoning 形を選ぶ",
+      "TrendSignal と弱点分野を掛け合わせて予想問題を生成する"
+    ]
+  },
+  "versioned_syllabus_snapshot": {
+    "current": {
+      "label": "AI-102 Study Guide",
+      "effective_date": "2025-12-23",
+      "official_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102",
+      "skills_at_a_glance": [
+        "Plan and manage an Azure AI solution (20-25%)",
+        "Implement generative AI solutions (15-20%)",
+        "Implement an agentic solution (5-10%)",
+        "Implement computer vision solutions (10-15%)",
+        "Implement natural language processing solutions (15-20%)",
+        "Implement knowledge mining and information extraction solutions (15-20%)"
+      ]
+    }
+  },
+  "trend_signals": [
+    {
+      "signal_id": "ai102.agentic_solution_and_foundry_agents",
+      "title_ja": "Agentic solution と Foundry Agent Service の出題圧上昇",
+      "category": "emerging_topic",
+      "importance": "high",
+      "priority_rank": 1,
+      "summary_ja": "AI-102 では agentic solution が独立領域となり、Foundry Agent Service、複雑エージェント、複数ユーザー・マルチエージェント・自律実行まで問う方向へ移っています。",
+      "matched_keywords": [
+        "agentic solution",
+        "custom agents",
+        "Microsoft Foundry Agent Service",
+        "multi-agent orchestration",
+        "memory",
+        "tool invocation",
+        "MCP"
+      ],
+      "change_breakdown": {
+        "addition": 3
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 80
+        },
+        {
+          "pattern_id": "capability_constraint_filter",
+          "observed_supporting_question_count": 12
+        },
+        {
+          "pattern_id": "procedure_sequence",
+          "observed_supporting_question_count": 29
+        }
+      ],
+      "stem_axes": [
+        "どの agent 構成なら要件を満たすかを選ばせる",
+        "single-agent と multi-agent の境界を比較させる",
+        "memory・tool・orchestration の責務差を問う"
+      ],
+      "distractor_directives": [
+        "単純な prompt flow で代替できるように見せる誤答を混ぜます。",
+        "agent service とモデルデプロイだけの構成を混同させる誤答を入れます。"
+      ],
+      "evidence": [
+        {
+          "version": "2025-12-23",
+          "effective_date": "2025-12-23",
+          "domain": "skills_measured",
+          "topic_number": null,
+          "topic_title": "Implement an agentic solution (5-10%)",
+          "change_type": "addition",
+          "summary": "AI-102 skills measured に Implement an agentic solution が独立領域として含まれ、Microsoft Foundry Agent Service、複雑エージェント、マルチエージェントのオーケストレーションが明示されました。",
+          "keywords": [
+            "Implement an agentic solution",
+            "Microsoft Foundry Agent Service",
+            "custom agents",
+            "multi-agent solution"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102"
+        },
+        {
+          "version": "2026-04-30",
+          "effective_date": "2026-04-30",
+          "domain": "foundry_whats_new",
+          "topic_number": null,
+          "topic_title": "Multimodal Content Understanding in Foundry Agent Service",
+          "change_type": "addition",
+          "summary": "Foundry Agent Service で multimodal な Content Understanding が使えるようになり、agent workflow で文書・画像・音声・動画の理解を直接扱えるようになりました。",
+          "keywords": [
+            "Foundry Agent Service",
+            "multimodal",
+            "Content Understanding"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/foundry/whats-new-foundry"
+        },
+        {
+          "version": "2026-03-27",
+          "effective_date": "2026-03-27",
+          "domain": "foundry_whats_new",
+          "topic_number": null,
+          "topic_title": "Agent memory support",
+          "change_type": "addition",
+          "summary": "Agent Service に memory のサポートが追加され、会話や作業履歴を前提にした agent 設計が試験上も現実味を帯びています。",
+          "keywords": [
+            "agent memory",
+            "Foundry Agent Service"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/foundry/whats-new-foundry"
+        }
+      ]
+    },
+    {
+      "signal_id": "ai102.content_safety_and_guardrails",
+      "title_ja": "Content Safety・Guardrails・Responsible AI の実装強化",
+      "category": "expanded_topic",
+      "importance": "high",
+      "priority_rank": 2,
+      "summary_ja": "Content Safety は moderation だけでなく、content filters、blocklists、prompt shields、groundedness、task adherence まで広がっています。AI-102 では責務差と介入点を問う問題が増えるべきです。",
+      "matched_keywords": [
+        "content safety",
+        "content filters",
+        "blocklists",
+        "prompt shields",
+        "groundedness detection",
+        "task adherence",
+        "responsible AI governance"
+      ],
+      "change_breakdown": {
+        "change": 1,
+        "addition": 2
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 80
+        },
+        {
+          "pattern_id": "capability_constraint_filter",
+          "observed_supporting_question_count": 12
+        },
+        {
+          "pattern_id": "configuration_tuning",
+          "observed_supporting_question_count": 16
+        }
+      ],
+      "stem_axes": [
+        "どの safety control をどの介入点で使うかを選ばせる",
+        "prompt shield と一般有害判定の責務差を見抜かせる",
+        "groundedness と task adherence の違いを比較させる"
+      ],
+      "distractor_directives": [
+        "content filters と blocklists を同義に見せる誤答を混ぜます。",
+        "groundedness と hallucination 一般論だけで済ませる誤答を入れます。"
+      ],
+      "evidence": [
+        {
+          "version": "2025-12-23",
+          "effective_date": "2025-12-23",
+          "domain": "skills_measured",
+          "topic_number": null,
+          "topic_title": "Implement AI solutions responsibly",
+          "change_type": "change",
+          "summary": "AI-102 study guide では content moderation、content safety、content filters and blocklists、prompt shields and harm detection、responsible AI governance framework が明示されています。",
+          "keywords": [
+            "content moderation",
+            "content safety",
+            "content filters",
+            "blocklists",
+            "prompt shields",
+            "responsible AI governance"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102"
+        },
+        {
+          "version": "2025-11-11",
+          "effective_date": "2025-11-11",
+          "domain": "content_safety_whats_new",
+          "topic_number": null,
+          "topic_title": "Task Adherence public preview",
+          "change_type": "addition",
+          "summary": "Task Adherence は tool invocation や tool input/output のずれを検出し、ブロックや人手介入につなげる機能として追加されました。",
+          "keywords": [
+            "Task Adherence",
+            "tool invocations",
+            "misaligned actions"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/content-safety/whats-new"
+        },
+        {
+          "version": "2025-11-01",
+          "effective_date": "2025-11-01",
+          "domain": "content_safety_overview",
+          "topic_number": null,
+          "topic_title": "Content Safety feature set",
+          "change_type": "addition",
+          "summary": "Content Safety overview では Prompt Shields、Groundedness detection、Protected material、Task adherence、Custom categories が 1 つの guardrail 群として並んでいます。",
+          "keywords": [
+            "Prompt Shields",
+            "Groundedness detection",
+            "Protected material",
+            "Task adherence",
+            "Custom categories"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview"
+        }
+      ]
+    },
+    {
+      "signal_id": "ai102.content_understanding_and_agentic_retrieval",
+      "title_ja": "Content Understanding・Agentic Retrieval・Foundry IQ の新規性",
+      "category": "emerging_topic",
+      "importance": "high",
+      "priority_rank": 3,
+      "summary_ja": "Knowledge mining は従来の indexer だけではなく、Content Understanding、knowledge bases、agentic retrieval、Foundry IQ を含む構成へ広がっています。要件に対しどの retrieval 構成を取るかが重要です。",
+      "matched_keywords": [
+        "Content Understanding",
+        "knowledge bases",
+        "knowledge sources",
+        "agentic retrieval",
+        "Foundry IQ",
+        "multimodal RAG"
+      ],
+      "change_breakdown": {
+        "addition": 4
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 80
+        },
+        {
+          "pattern_id": "artifact_interpretation",
+          "observed_supporting_question_count": 43
+        },
+        {
+          "pattern_id": "capability_constraint_filter",
+          "observed_supporting_question_count": 12
+        }
+      ],
+      "stem_axes": [
+        "どの retrieval 構成なら要件を満たすかを選ばせる",
+        "Azure AI Search と Content Understanding の役割差を比較させる",
+        "knowledge base / knowledge source / Foundry IQ の責務を分解させる"
+      ],
+      "distractor_directives": [
+        "単純な semantic/vector search だけで足りるように見せる誤答を混ぜます。",
+        "Content Understanding と Document Intelligence を完全同義に見せる誤答を入れます。"
+      ],
+      "evidence": [
+        {
+          "version": "2025-12-23",
+          "effective_date": "2025-12-23",
+          "domain": "skills_measured",
+          "topic_number": null,
+          "topic_title": "Extract information with Azure Content Understanding in Foundry Tools",
+          "change_type": "addition",
+          "summary": "AI-102 study guide では Azure Content Understanding in Foundry Tools が知識マイニングと情報抽出の独立論点として明示されています。",
+          "keywords": [
+            "Azure Content Understanding in Foundry Tools",
+            "OCR pipeline",
+            "summarize",
+            "classify",
+            "ingest documents, images, videos, and audio"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102"
+        },
+        {
+          "version": "2026-03-01-preview",
+          "effective_date": "2026-03-01",
+          "domain": "search_whats_new",
+          "topic_number": null,
+          "topic_title": "Portal support for agentic retrieval and knowledge sources",
+          "change_type": "addition",
+          "summary": "Azure AI Search では knowledge bases / knowledge sources / agentic retrieval が拡張され、Azure Content Understanding skill や multimodal RAG の構成が前提になっています。",
+          "keywords": [
+            "knowledge bases",
+            "knowledge sources",
+            "agentic retrieval",
+            "Azure Content Understanding skill",
+            "multimodal RAG"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/whats-new"
+        },
+        {
+          "version": "2025-11-01",
+          "effective_date": "2025-11-01",
+          "domain": "search_whats_new",
+          "topic_number": null,
+          "topic_title": "Foundry IQ integration",
+          "change_type": "addition",
+          "summary": "Foundry IQ は Foundry Agent Service から knowledge bases を呼び出す統合であり、citation-backed response を前提とした agentic retrieval を強化しています。",
+          "keywords": [
+            "Foundry IQ",
+            "knowledge bases",
+            "citation-backed responses"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/search/whats-new"
+        },
+        {
+          "version": "2025-11-01",
+          "effective_date": "2025-11-01",
+          "domain": "content_understanding_overview",
+          "topic_number": null,
+          "topic_title": "Content Understanding GA",
+          "change_type": "addition",
+          "summary": "Content Understanding は GA となり、文書・画像・動画・音声を構造化データへ変換し、agentic applications 向けの標準化入力を作る役割が明示されています。",
+          "keywords": [
+            "GA",
+            "agentic applications",
+            "structured data",
+            "documents",
+            "images",
+            "video",
+            "audio"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview"
+        }
+      ]
+    },
+    {
+      "signal_id": "ai102.language_foundry_orchestration",
+      "title_ja": "Azure AI Language の Foundry 統合と orchestration workflow",
+      "category": "expanded_topic",
+      "importance": "medium",
+      "priority_rank": 4,
+      "summary_ja": "Azure AI Language は Foundry 統合が進み、orchestration workflow と Language Studio 廃止を前提に、どの UI と API で運用すべきかの判断が重要になっています。",
+      "matched_keywords": [
+        "Azure AI Language",
+        "Microsoft Foundry",
+        "orchestration workflow",
+        "Language Studio",
+        "retirement"
+      ],
+      "change_breakdown": {
+        "change": 2,
+        "addition": 1
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 80
+        },
+        {
+          "pattern_id": "procedure_sequence",
+          "observed_supporting_question_count": 29
+        },
+        {
+          "pattern_id": "configuration_tuning",
+          "observed_supporting_question_count": 16
+        }
+      ],
+      "stem_axes": [
+        "Foundry と Language Studio の移行先を選ばせる",
+        "orchestration workflow の適用場面を判断させる",
+        "NLP サービス選定と運用 UI の整合を問う"
+      ],
+      "distractor_directives": [
+        "古い Language Studio 固定運用を正解らしく見せる誤答を混ぜます。",
+        "orchestration workflow を単なる prompt flow と混同させます。"
+      ],
+      "evidence": [
+        {
+          "version": "2025-12-23",
+          "effective_date": "2025-12-23",
+          "domain": "skills_measured",
+          "topic_number": null,
+          "topic_title": "Implement natural language processing solutions",
+          "change_type": "change",
+          "summary": "AI-102 study guide は Azure AI Language / Translator / Speech を Foundry Tools の文脈で扱い、サービス選定と統合が問われる構造です。",
+          "keywords": [
+            "natural language processing",
+            "Azure AI Language",
+            "Azure Translator in Foundry Tools",
+            "Azure Speech in Foundry Tools"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102"
+        },
+        {
+          "version": "2026-01-16",
+          "effective_date": "2026-01-16",
+          "domain": "language_whats_new",
+          "topic_number": null,
+          "topic_title": "Orchestration workflow in Microsoft Foundry",
+          "change_type": "addition",
+          "summary": "Azure AI Language の new features として orchestration workflow が Microsoft Foundry で使えるようになりました。",
+          "keywords": [
+            "orchestration workflow",
+            "Microsoft Foundry"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/language-service/whats-new"
+        },
+        {
+          "version": "2026-01-16",
+          "effective_date": "2026-01-16",
+          "domain": "language_whats_new",
+          "topic_number": null,
+          "topic_title": "Azure AI Language features in Foundry and Language Studio retirement",
+          "change_type": "change",
+          "summary": "Azure AI Language の主要機能が Microsoft Foundry に入った一方で、Azure AI Language Studio は 2026-08-31 に廃止予定とされています。",
+          "keywords": [
+            "Azure AI Language Studio retirement",
+            "Microsoft Foundry",
+            "custom text classification",
+            "custom question answering"
+          ],
+          "before_value": "Azure AI Language Studio",
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/language-service/whats-new"
+        }
+      ]
+    },
+    {
+      "signal_id": "ai102.azure_openai_model_router_and_gpt5",
+      "title_ja": "Azure OpenAI の GPT-5・model router・運用制御",
+      "category": "expanded_topic",
+      "importance": "medium",
+      "priority_rank": 5,
+      "summary_ja": "Azure OpenAI 側は GPT-5 系、model router、PTU、spillover、Responses API などの運用論点が増えています。モデル選定・デプロイ選択・運用制御を比較させる問題が必要です。",
+      "matched_keywords": [
+        "gpt-5",
+        "gpt-5-chat",
+        "model router",
+        "PTU",
+        "spillover",
+        "Responses API",
+        "reasoning models"
+      ],
+      "change_breakdown": {
+        "change": 1,
+        "addition": 2
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 80
+        },
+        {
+          "pattern_id": "configuration_tuning",
+          "observed_supporting_question_count": 16
+        },
+        {
+          "pattern_id": "procedure_sequence",
+          "observed_supporting_question_count": 29
+        }
+      ],
+      "stem_axes": [
+        "どのモデル・デプロイ方式を選ぶべきかを判断させる",
+        "model router の適用場面を他方式と比較させる",
+        "PTU と spillover の役割差を問う"
+      ],
+      "distractor_directives": [
+        "単一モデル固定で十分に見せる誤答を混ぜます。",
+        "Responses API と Chat Completions API の違いを曖昧にする誤答を入れます。"
+      ],
+      "evidence": [
+        {
+          "version": "2025-12-23",
+          "effective_date": "2025-12-23",
+          "domain": "skills_measured",
+          "topic_number": null,
+          "topic_title": "Use Azure OpenAI in Foundry Models to generate content",
+          "change_type": "change",
+          "summary": "AI-102 study guide は Azure OpenAI model の選択・デプロイ・アプリ統合・multimodal 利用を generative AI 実装の中心に置いています。",
+          "keywords": [
+            "Azure OpenAI",
+            "select and deploy an Azure OpenAI model",
+            "large multimodal models"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102"
+        },
+        {
+          "version": "2025-08",
+          "effective_date": "2025-08-01",
+          "domain": "openai_whats_new",
+          "topic_number": null,
+          "topic_title": "GPT-5 models available and model router update",
+          "change_type": "addition",
+          "summary": "GPT-5 / gpt-5-mini / gpt-5-nano / gpt-5-chat が使えるようになり、model router も GPT-5 系をサポートしました。PTU と spillover の運用判断も同時に重要になっています。",
+          "keywords": [
+            "gpt-5",
+            "gpt-5-chat",
+            "model router",
+            "PTU",
+            "spillover"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/openai/whats-new"
+        },
+        {
+          "version": "2025-03",
+          "effective_date": "2025-03-01",
+          "domain": "openai_whats_new",
+          "topic_number": null,
+          "topic_title": "Responses API",
+          "change_type": "addition",
+          "summary": "Responses API は stateful API として chat completions と assistants の機能を統合し、computer-use-preview も含む新経路になりました。",
+          "keywords": [
+            "Responses API",
+            "computer-use-preview",
+            "stateful API"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/openai/whats-new"
+        }
+      ]
+    },
+    {
+      "signal_id": "ai102.document_intelligence_searchable_pdf_and_layout",
+      "title_ja": "Document Intelligence の searchable PDF と layout 強化",
+      "category": "expanded_topic",
+      "importance": "medium",
+      "priority_rank": 6,
+      "summary_ja": "Document Intelligence は v4.0 GA と searchable PDF、layout/figure extraction の強化が進んでいます。情報抽出・検索・RAG の入口としてどこまで担えるかを問う問題が必要です。",
+      "matched_keywords": [
+        "Document Intelligence",
+        "searchable PDF",
+        "layout",
+        "figure detection",
+        "2024-11-30 (GA)",
+        "batch API"
+      ],
+      "change_breakdown": {
+        "change": 1,
+        "addition": 2
+      },
+      "recommended_patterns": [
+        {
+          "pattern_id": "best_fit_decision",
+          "observed_supporting_question_count": 80
+        },
+        {
+          "pattern_id": "artifact_interpretation",
+          "observed_supporting_question_count": 43
+        },
+        {
+          "pattern_id": "procedure_sequence",
+          "observed_supporting_question_count": 29
+        }
+      ],
+      "stem_axes": [
+        "Document Intelligence に何を任せるかを判断させる",
+        "searchable PDF と構造抽出の用途差を比較させる",
+        "layout / figure detection / batch API の選択を問う"
+      ],
+      "distractor_directives": [
+        "古い Form Recognizer 名称だけで考えさせる誤答を混ぜます。",
+        "Document Intelligence と Content Understanding の責務を逆転させる誤答を入れます。"
+      ],
+      "evidence": [
+        {
+          "version": "2025-12-23",
+          "effective_date": "2025-12-23",
+          "domain": "skills_measured",
+          "topic_number": null,
+          "topic_title": "Implement an Azure Document Intelligence in Foundry Tools solution",
+          "change_type": "change",
+          "summary": "AI-102 study guide では Document Intelligence in Foundry Tools が独立見出しで、prebuilt / custom / composed model まで問う構成です。",
+          "keywords": [
+            "Document Intelligence in Foundry Tools",
+            "prebuilt models",
+            "custom document intelligence model",
+            "composed document intelligence model"
+          ],
+          "before_value": "Azure AI Document Intelligence solution",
+          "source_url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-102"
+        },
+        {
+          "version": "2025-06",
+          "effective_date": "2025-06-01",
+          "domain": "document_intelligence_whats_new",
+          "topic_number": null,
+          "topic_title": "Read container with searchable PDF",
+          "change_type": "addition",
+          "summary": "Document Intelligence v4.0 Read container で searchable PDF が利用可能になり、検索コピーや後段検索フローへの接続が強化されました。",
+          "keywords": [
+            "Read container",
+            "searchable PDF",
+            "v4.0"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/whats-new?view=doc-intel-4.0.0"
+        },
+        {
+          "version": "2024-11-30 (GA)",
+          "effective_date": "2024-11-30",
+          "domain": "document_intelligence_whats_new",
+          "topic_number": null,
+          "topic_title": "v4.0 REST API GA",
+          "change_type": "addition",
+          "summary": "Document Intelligence v4.0 REST API では searchable PDF、Batch API、custom classification incremental training などが GA として整理されました。",
+          "keywords": [
+            "2024-11-30 (GA)",
+            "searchable PDF",
+            "Batch API",
+            "custom classification model"
+          ],
+          "before_value": null,
+          "source_url": "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/whats-new?view=doc-intel-4.0.0"
+        }
+      ]
+    }
+  ],
+  "forecast_blueprints": [
+    {
+      "blueprint_id": "forecast.agentic_solution_and_foundry_agents",
+      "title_ja": "Agentic solution と Foundry Agent Service の出題圧上昇",
+      "priority_rank": 1,
+      "trend_signal_ids": [
+        "ai102.agentic_solution_and_foundry_agents"
+      ],
+      "objective_ja": "AI-102 では agentic solution が独立領域となり、Foundry Agent Service、複雑エージェント、複数ユーザー・マルチエージェント・自律実行まで問う方向へ移っています。",
+      "required_keyword_focus": [
+        "agentic solution",
+        "custom agents",
+        "Microsoft Foundry Agent Service",
+        "multi-agent orchestration",
+        "memory",
+        "tool invocation",
+        "MCP"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "capability_constraint_filter",
+        "procedure_sequence"
+      ],
+      "stem_axes": [
+        "どの agent 構成なら要件を満たすかを選ばせる",
+        "single-agent と multi-agent の境界を比較させる",
+        "memory・tool・orchestration の責務差を問う"
+      ],
+      "distractor_directives": [
+        "単純な prompt flow で代替できるように見せる誤答を混ぜます。",
+        "agent service とモデルデプロイだけの構成を混同させる誤答を入れます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "study_guide",
+          "microsoft_learn_whats_new",
+          "official_service_overview"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.content_safety_and_guardrails",
+      "title_ja": "Content Safety・Guardrails・Responsible AI の実装強化",
+      "priority_rank": 2,
+      "trend_signal_ids": [
+        "ai102.content_safety_and_guardrails"
+      ],
+      "objective_ja": "Content Safety は moderation だけでなく、content filters、blocklists、prompt shields、groundedness、task adherence まで広がっています。AI-102 では責務差と介入点を問う問題が増えるべきです。",
+      "required_keyword_focus": [
+        "content safety",
+        "content filters",
+        "blocklists",
+        "prompt shields",
+        "groundedness detection",
+        "task adherence",
+        "responsible AI governance"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "capability_constraint_filter",
+        "configuration_tuning"
+      ],
+      "stem_axes": [
+        "どの safety control をどの介入点で使うかを選ばせる",
+        "prompt shield と一般有害判定の責務差を見抜かせる",
+        "groundedness と task adherence の違いを比較させる"
+      ],
+      "distractor_directives": [
+        "content filters と blocklists を同義に見せる誤答を混ぜます。",
+        "groundedness と hallucination 一般論だけで済ませる誤答を入れます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "study_guide",
+          "microsoft_learn_whats_new",
+          "official_service_overview"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.content_understanding_and_agentic_retrieval",
+      "title_ja": "Content Understanding・Agentic Retrieval・Foundry IQ の新規性",
+      "priority_rank": 3,
+      "trend_signal_ids": [
+        "ai102.content_understanding_and_agentic_retrieval"
+      ],
+      "objective_ja": "Knowledge mining は従来の indexer だけではなく、Content Understanding、knowledge bases、agentic retrieval、Foundry IQ を含む構成へ広がっています。要件に対しどの retrieval 構成を取るかが重要です。",
+      "required_keyword_focus": [
+        "Content Understanding",
+        "knowledge bases",
+        "knowledge sources",
+        "agentic retrieval",
+        "Foundry IQ",
+        "multimodal RAG"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "artifact_interpretation",
+        "capability_constraint_filter"
+      ],
+      "stem_axes": [
+        "どの retrieval 構成なら要件を満たすかを選ばせる",
+        "Azure AI Search と Content Understanding の役割差を比較させる",
+        "knowledge base / knowledge source / Foundry IQ の責務を分解させる"
+      ],
+      "distractor_directives": [
+        "単純な semantic/vector search だけで足りるように見せる誤答を混ぜます。",
+        "Content Understanding と Document Intelligence を完全同義に見せる誤答を入れます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "study_guide",
+          "microsoft_learn_whats_new",
+          "official_service_overview"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.language_foundry_orchestration",
+      "title_ja": "Azure AI Language の Foundry 統合と orchestration workflow",
+      "priority_rank": 4,
+      "trend_signal_ids": [
+        "ai102.language_foundry_orchestration"
+      ],
+      "objective_ja": "Azure AI Language は Foundry 統合が進み、orchestration workflow と Language Studio 廃止を前提に、どの UI と API で運用すべきかの判断が重要になっています。",
+      "required_keyword_focus": [
+        "Azure AI Language",
+        "Microsoft Foundry",
+        "orchestration workflow",
+        "Language Studio",
+        "retirement"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "procedure_sequence",
+        "configuration_tuning"
+      ],
+      "stem_axes": [
+        "Foundry と Language Studio の移行先を選ばせる",
+        "orchestration workflow の適用場面を判断させる",
+        "NLP サービス選定と運用 UI の整合を問う"
+      ],
+      "distractor_directives": [
+        "古い Language Studio 固定運用を正解らしく見せる誤答を混ぜます。",
+        "orchestration workflow を単なる prompt flow と混同させます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "study_guide",
+          "microsoft_learn_whats_new",
+          "official_service_overview"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.azure_openai_model_router_and_gpt5",
+      "title_ja": "Azure OpenAI の GPT-5・model router・運用制御",
+      "priority_rank": 5,
+      "trend_signal_ids": [
+        "ai102.azure_openai_model_router_and_gpt5"
+      ],
+      "objective_ja": "Azure OpenAI 側は GPT-5 系、model router、PTU、spillover、Responses API などの運用論点が増えています。モデル選定・デプロイ選択・運用制御を比較させる問題が必要です。",
+      "required_keyword_focus": [
+        "gpt-5",
+        "gpt-5-chat",
+        "model router",
+        "PTU",
+        "spillover",
+        "Responses API",
+        "reasoning models"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "configuration_tuning",
+        "procedure_sequence"
+      ],
+      "stem_axes": [
+        "どのモデル・デプロイ方式を選ぶべきかを判断させる",
+        "model router の適用場面を他方式と比較させる",
+        "PTU と spillover の役割差を問う"
+      ],
+      "distractor_directives": [
+        "単一モデル固定で十分に見せる誤答を混ぜます。",
+        "Responses API と Chat Completions API の違いを曖昧にする誤答を入れます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "study_guide",
+          "microsoft_learn_whats_new",
+          "official_service_overview"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    },
+    {
+      "blueprint_id": "forecast.document_intelligence_searchable_pdf_and_layout",
+      "title_ja": "Document Intelligence の searchable PDF と layout 強化",
+      "priority_rank": 6,
+      "trend_signal_ids": [
+        "ai102.document_intelligence_searchable_pdf_and_layout"
+      ],
+      "objective_ja": "Document Intelligence は v4.0 GA と searchable PDF、layout/figure extraction の強化が進んでいます。情報抽出・検索・RAG の入口としてどこまで担えるかを問う問題が必要です。",
+      "required_keyword_focus": [
+        "Document Intelligence",
+        "searchable PDF",
+        "layout",
+        "figure detection",
+        "2024-11-30 (GA)",
+        "batch API"
+      ],
+      "recommended_pattern_ids": [
+        "best_fit_decision",
+        "artifact_interpretation",
+        "procedure_sequence"
+      ],
+      "stem_axes": [
+        "Document Intelligence に何を任せるかを判断させる",
+        "searchable PDF と構造抽出の用途差を比較させる",
+        "layout / figure detection / batch API の選択を問う"
+      ],
+      "distractor_directives": [
+        "古い Form Recognizer 名称だけで考えさせる誤答を混ぜます。",
+        "Document Intelligence と Content Understanding の責務を逆転させる誤答を入れます。"
+      ],
+      "grounding_policy": {
+        "allowed_sources": [
+          "study_guide",
+          "microsoft_learn_whats_new",
+          "official_service_overview"
+        ],
+        "must_trace_to_signal": true,
+        "must_explain_why_current": true
+      },
+      "deemphasized_keywords": []
+    }
+  ]
+}

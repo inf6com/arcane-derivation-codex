@@ -126,7 +126,7 @@
 		A1C0E03220261105A0000001 /* HinotoriFold7Classifier.mlmodel in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1120261105A0000001 /* HinotoriFold7Classifier.mlmodel */; };
 		A1C0E03320261105A0000001 /* HinotoriFold7CoreML.manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1220261105A0000001 /* HinotoriFold7CoreML.manifest.json */; };
 		A1C0E03420261105A0000001 /* HinotoriFold7Vocabulary.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1320261105A0000001 /* HinotoriFold7Vocabulary.json */; };
-		A1C0E03520261105A0000001 /* HinotoriSimilarityGroups87.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1420261105A0000001 /* HinotoriSimilarityGroups87.json */; };
+		A1C0E03520261105A0000001 /* HinotoriPrototypeCosineSimilarityGroups.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1420261105A0000001 /* HinotoriPrototypeCosineSimilarityGroups.json */; };
 		A1C0E03620261105A0000001 /* Sources/ArcaneDerivationCore/HinotoriFormulaFold7Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0E2F620261105A0000001 /* Sources/ArcaneDerivationCore/HinotoriFormulaFold7Engine.swift */; };
 		A1C0E03720261105A0000001 /* HinotoriFormulaSegmenter.mlpackage in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1720261105A0000001 /* HinotoriFormulaSegmenter.mlpackage */; };
 		A1C0E03820261105A0000001 /* HinotoriFormulaSegmenter.manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1820261105A0000001 /* HinotoriFormulaSegmenter.manifest.json */; };
@@ -139,7 +139,8 @@
 		A1C0E01020261104A0000001 /* HinotoriVocabulary.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF0320261104A0000001 /* HinotoriVocabulary.json */; };
 		A1C0E01120261104A0000001 /* HinotoriClassPrototypes.f32le in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF0420261104A0000001 /* HinotoriClassPrototypes.f32le */; };
 		A1C0E01220261104A0000001 /* HinotoriClassPrototypes.manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF0520261104A0000001 /* HinotoriClassPrototypes.manifest.json */; };
-		A1C0E01320261104A0000001 /* FirebirdVisualSimilaritySubsets.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF0620261104A0000001 /* FirebirdVisualSimilaritySubsets.json */; };
+		A1C0E01320261104A0000001 /* HinotoriVisualSimilaritySubsets.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF0620261104A0000001 /* HinotoriVisualSimilaritySubsets.json */; };
+		A1C0E03D20261106A0000001 /* HinotoriCandidateEnsemble.json in Resources */ = {isa = PBXBuildFile; fileRef = A1C0EF1C20261106A0000001 /* HinotoriCandidateEnsemble.json */; };
 		A1C0E1C120260918A0000001 /* Tests/ArcaneDerivationCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0E1C220260918A0000001 /* Tests/ArcaneDerivationCoreTests.swift */; };
 		A2C23BB67F64ED8BBCECDF17 /* inf6/Inf6PaperSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DF061CD2EF41E0C06453A6 /* inf6/Inf6PaperSearchResult.swift */; };
 		A8503B47E62666841D518740 /* inf6/OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E01F70870491F09330D4034 /* inf6/OpenAI.swift */; };
@@ -340,12 +341,13 @@
 		A1C0EF0320261104A0000001 /* HinotoriVocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/Fold07StrokeSetEmbeddingV2/HinotoriVocabulary.json; sourceTree = SOURCE_ROOT; };
 		A1C0EF0420261104A0000001 /* HinotoriClassPrototypes.f32le */ = {isa = PBXFileReference; lastKnownFileType = file; path = Models/Hinotori/Fold07StrokeSetEmbeddingV2/HinotoriClassPrototypes.f32le; sourceTree = SOURCE_ROOT; };
 		A1C0EF0520261104A0000001 /* HinotoriClassPrototypes.manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/Fold07StrokeSetEmbeddingV2/HinotoriClassPrototypes.manifest.json; sourceTree = SOURCE_ROOT; };
-		A1C0EF0620261104A0000001 /* FirebirdVisualSimilaritySubsets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ModelConversion/FirebirdVisualSimilaritySubsets.json; sourceTree = SOURCE_ROOT; };
+		A1C0EF0620261104A0000001 /* HinotoriVisualSimilaritySubsets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ModelConversion/HinotoriVisualSimilaritySubsets.json; sourceTree = SOURCE_ROOT; };
+		A1C0EF1C20261106A0000001 /* HinotoriCandidateEnsemble.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/Ensemble/HinotoriCandidateEnsemble.json; sourceTree = SOURCE_ROOT; };
 		A1C0E2F320261105A0000001 /* Sources/ArcaneDerivationCore/HinotoriFold7CoreMLClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/ArcaneDerivationCore/HinotoriFold7CoreMLClassifier.swift; sourceTree = SOURCE_ROOT; };
 		A1C0EF1120261105A0000001 /* HinotoriFold7Classifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Models/Hinotori/Fold07SpatialPyramid/HinotoriFold7Classifier.mlmodel; sourceTree = SOURCE_ROOT; };
 		A1C0EF1220261105A0000001 /* HinotoriFold7CoreML.manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/Fold07SpatialPyramid/HinotoriFold7CoreML.manifest.json; sourceTree = SOURCE_ROOT; };
 		A1C0EF1320261105A0000001 /* HinotoriFold7Vocabulary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/Fold07SpatialPyramid/HinotoriFold7Vocabulary.json; sourceTree = SOURCE_ROOT; };
-		A1C0EF1420261105A0000001 /* HinotoriSimilarityGroups87.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/Fold07SpatialPyramid/HinotoriSimilarityGroups87.json; sourceTree = SOURCE_ROOT; };
+		A1C0EF1420261105A0000001 /* HinotoriPrototypeCosineSimilarityGroups.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/Fold07SpatialPyramid/HinotoriPrototypeCosineSimilarityGroups.json; sourceTree = SOURCE_ROOT; };
 		A1C0E2F620261105A0000001 /* Sources/ArcaneDerivationCore/HinotoriFormulaFold7Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/ArcaneDerivationCore/HinotoriFormulaFold7Engine.swift; sourceTree = SOURCE_ROOT; };
 		A1C0EF1720261105A0000001 /* HinotoriFormulaSegmenter.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper.mlpackage; path = Models/Hinotori/FormulaSegmenter/HinotoriFormulaSegmenter.mlpackage; sourceTree = SOURCE_ROOT; };
 		A1C0EF1820261105A0000001 /* HinotoriFormulaSegmenter.manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Models/Hinotori/FormulaSegmenter/HinotoriFormulaSegmenter.manifest.json; sourceTree = SOURCE_ROOT; };
@@ -767,7 +769,7 @@
 				A1C0EF1120261105A0000001 /* HinotoriFold7Classifier.mlmodel */,
 				A1C0EF1220261105A0000001 /* HinotoriFold7CoreML.manifest.json */,
 				A1C0EF1320261105A0000001 /* HinotoriFold7Vocabulary.json */,
-				A1C0EF1420261105A0000001 /* HinotoriSimilarityGroups87.json */,
+				A1C0EF1420261105A0000001 /* HinotoriPrototypeCosineSimilarityGroups.json */,
 				A1C0EF1720261105A0000001 /* HinotoriFormulaSegmenter.mlpackage */,
 				A1C0EF1820261105A0000001 /* HinotoriFormulaSegmenter.manifest.json */,
 				A1C0E2F720261105A0000001 /* Sources/ArcaneDerivationCore/HinotoriTypesetAuxiliaryCoreMLClassifier.swift */,
@@ -779,7 +781,8 @@
 				A1C0EF0320261104A0000001 /* HinotoriVocabulary.json */,
 				A1C0EF0420261104A0000001 /* HinotoriClassPrototypes.f32le */,
 				A1C0EF0520261104A0000001 /* HinotoriClassPrototypes.manifest.json */,
-				A1C0EF0620261104A0000001 /* FirebirdVisualSimilaritySubsets.json */,
+				A1C0EF0620261104A0000001 /* HinotoriVisualSimilaritySubsets.json */,
+				A1C0EF1C20261106A0000001 /* HinotoriCandidateEnsemble.json */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1034,7 +1037,7 @@
 				A1C0E03220261105A0000001 /* HinotoriFold7Classifier.mlmodel in Resources */,
 				A1C0E03320261105A0000001 /* HinotoriFold7CoreML.manifest.json in Resources */,
 				A1C0E03420261105A0000001 /* HinotoriFold7Vocabulary.json in Resources */,
-				A1C0E03520261105A0000001 /* HinotoriSimilarityGroups87.json in Resources */,
+				A1C0E03520261105A0000001 /* HinotoriPrototypeCosineSimilarityGroups.json in Resources */,
 				A1C0E03720261105A0000001 /* HinotoriFormulaSegmenter.mlpackage in Resources */,
 				A1C0E03820261105A0000001 /* HinotoriFormulaSegmenter.manifest.json in Resources */,
 				A1C0E03A20261105A0000001 /* HinotoriTypesetAuxiliaryHead.mlpackage in Resources */,
@@ -1043,7 +1046,8 @@
 				A1C0E01020261104A0000001 /* HinotoriVocabulary.json in Resources */,
 				A1C0E01120261104A0000001 /* HinotoriClassPrototypes.f32le in Resources */,
 				A1C0E01220261104A0000001 /* HinotoriClassPrototypes.manifest.json in Resources */,
-				A1C0E01320261104A0000001 /* FirebirdVisualSimilaritySubsets.json in Resources */,
+				A1C0E01320261104A0000001 /* HinotoriVisualSimilaritySubsets.json in Resources */,
+				A1C0E03D20261106A0000001 /* HinotoriCandidateEnsemble.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1439,7 +1443,7 @@
 				CODE_SIGN_ENTITLEMENTS = inf6/inf6.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 70;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "$(PROJECT_DIR)/inf6/Info.plist";
@@ -1480,7 +1484,7 @@
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = inf6/inf6.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 70;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "$(PROJECT_DIR)/inf6/Info.plist";
@@ -1519,7 +1523,7 @@
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = inf6Watch;
@@ -1553,7 +1557,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = inf6Watch;
@@ -1586,7 +1590,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.7.1;
@@ -1610,7 +1614,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.7.1;
@@ -1633,7 +1637,7 @@
 			buildSettings = {
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.7.1;
@@ -1656,7 +1660,7 @@
 			buildSettings = {
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.7.1;
@@ -1679,7 +1683,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -1704,7 +1708,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -1728,7 +1732,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -1747,7 +1751,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = W7RB5ZZNUJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;

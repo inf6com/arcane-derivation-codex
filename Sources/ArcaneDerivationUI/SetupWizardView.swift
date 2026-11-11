@@ -12,6 +12,8 @@ struct SetupWizardView: View {
     @State private var syllabusRevision = ""
     @State private var syllabusMessage: String?
     @State private var syllabusAvailable = false
+    @State private var syllabusBusy = false
+    @State private var syllabusTask: Task<Void, Never>?
     @State private var rootMessage: String?
     @State private var setupErrorMessage: String?
     @State private var provider: AIProvider = .openAI
@@ -62,7 +64,7 @@ struct SetupWizardView: View {
                     let started = url.startAccessingSecurityScopedResource()
                     defer { if started { url.stopAccessingSecurityScopedResource() } }
                     try onRootChange(url)
-                    rootPath = url.path
+                    rootPath = Inf6EntityImageLocation.displayPath ?? url.path
                     rootMessage = nil
                 } catch {
                     rootMessage = error.localizedDescription
@@ -90,7 +92,7 @@ struct SetupWizardView: View {
                 Text("日本語").tag(InterfaceLanguage.japanese.rawValue)
                 Text("English").tag(InterfaceLanguage.english.rawValue)
             }
-            .pickerStyle(.inline)
+            .pickerStyle(.segmented)
         }
     }
 
@@ -102,8 +104,31 @@ struct SetupWizardView: View {
             Text(rootPath.isEmpty ? jp("未設定", "Not set") : rootPath)
                 .textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading)
                 .padding().background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
-            Button(jp("保存先を選択", "Choose storage root")) { folderPickerPresented = true }.buttonStyle(.borderedProminent)
+            HStack(spacing: 12) {
+                Button(jp("このiPad内に保存", "Use this iPad's app folder")) {
+                    selectDeviceLocalRoot()
+                }
+                .buttonStyle(.borderedProminent)
+                Button(jp("別のフォルダを選択…", "Choose another folder…")) {
+                folderPickerPresented = true
+                }
+                .buttonStyle(.bordered)
+            }
             if let rootMessage { Text(rootMessage).foregroundStyle(.red).textSelection(.enabled) }
+        }
+    }
+
+    private func selectDeviceLocalRoot() {
+        guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            rootMessage = jp("この端末の保存先を取得できません。", "Could not access this device's storage folder.")
+            return
+        }
+        do {
+            try onRootChange(url)
+            rootPath = Inf6EntityImageLocation.displayPath ?? url.path
+            rootMessage = nil
+        } catch {
+            rootMessage = error.localizedDescription
         }
     }
 
@@ -113,11 +138,17 @@ struct SetupWizardView: View {
             Text(syllabusAvailable ? jp("保存済みのシラバスを最新情報と照合します。", "Compare the saved syllabus with the latest information.") : jp("E資格の最新シラバス情報を取得してください。", "Retrieve the latest E-Qualification syllabus."))
                 .foregroundStyle(.secondary).textSelection(.enabled)
             Link(jp("JDLA E資格シラバス", "JDLA E-Qualification syllabus"), destination: URL(string: syllabusURL)!)
-            Button(syllabusAvailable ? jp("E資格シラバスを最新確認", "Check the latest E-Qualification syllabus") : jp("E資格シラバスを取得", "Retrieve the E-Qualification syllabus")) {
+            Button(syllabusBusy ? jp("確認中…", "Checking…") : (syllabusAvailable ? jp("E資格シラバスを最新確認", "Check the latest E-Qualification syllabus") : jp("E資格シラバスを取得", "Retrieve the E-Qualification syllabus"))) {
                 verifySyllabus()
             }
             .buttonStyle(.borderedProminent)
-            if let syllabusMessage { Text(syllabusMessage).textSelection(.enabled).foregroundStyle(syllabusMessage.hasPrefix("取得済み:") ? Color.green : Color.red) }
+            .disabled(syllabusBusy)
+            if syllabusBusy {
+                Button(jp("取得をキャンセル", "Cancel retrieval")) {
+                    syllabusTask?.cancel()
+                }
+            }
+            if let syllabusMessage { Text(syllabusMessage).textSelection(.enabled).foregroundStyle(syllabusAvailable ? Color.green : Color.red) }
         }
         .task {
             loadExistingSyllabus()
@@ -246,35 +277,39 @@ struct SetupWizardView: View {
     }
 
     private func verifySyllabus() {
-        guard let url = URL(string: syllabusURL), url.scheme == "https" else { syllabusMessage = "HTTPSの公式URLを入力してください。"; return }
-        syllabusMessage = "確認中…"
-        Task {
+        guard !syllabusBusy else { return }
+        guard let url = URL(string: syllabusURL), url.scheme == "https" else {
+            syllabusMessage = jp("HTTPSの公式URLを入力してください。", "The official source must use HTTPS.")
+            return
+        }
+        syllabusBusy = true
+        syllabusAvailable = false
+        syllabusMessage = jp("公式シラバスとPDFを確認中…", "Checking the official syllabus and PDF…")
+        syllabusTask = Task { @MainActor in
+            defer {
+                syllabusBusy = false
+                syllabusTask = nil
+            }
             do {
                 let root = try WorkspaceStore(root: URL(fileURLWithPath: rootPath))
                 let refresh = try await SyllabusUpdateService(root: root).refresh(domain: "E資格", sourceURL: url)
-                persistCodexOutlineIfAvailable(refresh.snapshot)
+                guard let manifest = Inf6LearningFamilyManifestStore.load(familyID: "e-shikaku") else {
+                    throw NSError(domain: "SetupWizardView", code: 1, userInfo: [NSLocalizedDescriptionKey: jp("E資格の公式ドメイン定義が見つかりません。", "The official E-Qualification domain definition is missing.")])
+                }
+                try await Inf6SyllabusConceptSetSynchronizer.synchronizeJDLAWithUserApproval(manifest: manifest)
+                let outline = try Inf6SyllabusConceptSetSynchronizer.currentOutlineItemsForPaperSearch(for: manifest)
+                guard !outline.isEmpty else {
+                    throw NSError(domain: "SetupWizardView", code: 2, userInfo: [NSLocalizedDescriptionKey: jp("公式PDFからシラバス項目を復元できませんでした。", "Could not extract syllabus items from the official PDF.")])
+                }
+                try Inf6KnowledgeDataStore.reconcileEshikakuPaperLinkedStructure()
                 syllabusRevision = refresh.snapshot.revision
                 syllabusAvailable = true
-                syllabusMessage = "取得済み: \(refresh.snapshot.domainName) / \(refresh.snapshot.revision)"
-            } catch { syllabusMessage = error.localizedDescription }
-        }
-    }
-
-    private func persistCodexOutlineIfAvailable(_ snapshot: SyllabusSnapshot) {
-        guard let rawContent = snapshot.content, !rawContent.isEmpty else { return }
-        let plainText = rawContent
-            .replacingOccurrences(of: #"<[^>]+>"#, with: "\n", options: .regularExpression)
-            .replacingOccurrences(of: "&nbsp;", with: " ")
-            .replacingOccurrences(of: "&amp;", with: "&")
-        let outline = Inf6EshikakuOutlineExtractor.extract(from: plainText)
-        guard outline.count >= 12 else { return }
-        do {
-            let cacheURL = try Inf6Storage.syllabusOutlineCacheURL()
-            var cache = Inf6DiskJSON.load([String: [Inf6SyllabusOutlineItem]].self, from: cacheURL) ?? [:]
-            cache["eshikaku_outline:\(snapshot.revision)"] = outline
-            try Inf6DiskJSON.save(cache, to: cacheURL)
-        } catch {
-            NSLog("[SetupWizard] E資格 outline cache was not written: %@", error.localizedDescription)
+                syllabusMessage = jp("取得済み: \(outline.count)項目 / \(refresh.snapshot.revision)", "Ready: \(outline.count) syllabus items / \(refresh.snapshot.revision)")
+            } catch is CancellationError {
+                syllabusMessage = jp("取得をキャンセルしました。", "Syllabus retrieval was cancelled.")
+            } catch {
+                syllabusMessage = error.localizedDescription
+            }
         }
     }
 
@@ -285,9 +320,18 @@ struct SetupWizardView: View {
             do {
                 let workspace = try WorkspaceStore(root: URL(fileURLWithPath: path))
                 guard let snapshot = try SyllabusRepository(root: workspace).current(domain: "E資格") else { return }
+                guard let manifest = Inf6LearningFamilyManifestStore.load(familyID: "e-shikaku") else {
+                    throw NSError(domain: "SetupWizardView", code: 3, userInfo: [NSLocalizedDescriptionKey: jp("E資格の公式ドメイン定義が見つかりません。", "The official E-Qualification domain definition is missing.")])
+                }
+                let outline = try Inf6SyllabusConceptSetSynchronizer.currentOutlineItemsForPaperSearch(for: manifest)
+                guard !outline.isEmpty else {
+                    syllabusMessage = jp("保存済みの公式PDFアウトラインがありません。取得してください。", "No official PDF outline is saved. Retrieve the syllabus.")
+                    return
+                }
+                try Inf6KnowledgeDataStore.reconcileEshikakuPaperLinkedStructure()
                 syllabusRevision = snapshot.revision
                 syllabusAvailable = true
-                syllabusMessage = "取得済み: \(snapshot.domainName) / \(snapshot.revision)"
+                syllabusMessage = jp("取得済み: \(outline.count)項目 / \(snapshot.revision)", "Ready: \(outline.count) syllabus items / \(snapshot.revision)")
             } catch {
                 syllabusMessage = error.localizedDescription
             }

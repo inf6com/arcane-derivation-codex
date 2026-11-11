@@ -1,0 +1,2114 @@
+[
+  {
+    "domain_id": "e-shikaku",
+    "syllabus_version_id": "E資格",
+    "nodes": [
+      {
+        "node_id": "domain:e-shikaku",
+        "kind": "domain",
+        "title_ja": "E資格",
+        "achievement": "not_started",
+        "paper_count": 84,
+        "linked_paper_ids": [
+          "attention_is_all_you_need",
+          "vit_an_image_is_worth_16x16_words",
+          "swin_transformer",
+          "detr_end_to_end_object_detection_with_transformers",
+          "faster_r_cnn",
+          "mask_r_cnn",
+          "fcos_anchor_free",
+          "yolov3",
+          "fcn_semantic_segmentation",
+          "ssd_single_shot_multibox",
+          "u_net",
+          "alexnet_imagenet_classification_2012",
+          "vgg_very_deep_convolutional_networks",
+          "resnet_deep_residual_learning",
+          "resnet_cvpr2016_cvf",
+          "adam_2014",
+          "batch_normalization",
+          "batch_normalization_icml2015_pmlr",
+          "layer_normalization",
+          "dropout_jmlr_2014",
+          "gan_2014",
+          "vae_2013",
+          "gru_cho_2014",
+          "seq2seq_2014",
+          "bahdanau_attention_nmt_2014",
+          "bert_pretraining_2018",
+          "gpt3_few_shot_learners",
+          "rag_retrieval_augmented_generation",
+          "word2vec_2013",
+          "glove_2014",
+          "cs229_main_notes",
+          "cs229_probability_review",
+          "cs229_linear_algebra_review",
+          "islr2",
+          "matrix_cookbook",
+          "mackay_itprnn",
+          "mobilenet",
+          "efficientnet",
+          "distillation",
+          "quantization_integer_only",
+          "deep_compression",
+          "fedavg_communication_efficient",
+          "horovod",
+          "large_batch_sgd_1hour",
+          "deep_gradient_compression",
+          "sutton_barto_rlbook",
+          "dqn",
+          "a3c",
+          "ppo",
+          "grad_cam",
+          "integrated_gradients",
+          "lime",
+          "shap",
+          "simclr",
+          "moco",
+          "byol",
+          "maml",
+          "wavenet",
+          "gcn",
+          "gat",
+          "gnn_survey",
+          "googlenet_inception_v1",
+          "densenet",
+          "inception_v3",
+          "prelu_he_2015",
+          "fpn_feature_pyramid",
+          "deeplabv3",
+          "group_normalization",
+          "instance_normalization",
+          "spectral_normalization",
+          "dcgan",
+          "conditional_gan",
+          "pix2pix",
+          "cyclegan",
+          "ddpm",
+          "elmo_deep_contextualized",
+          "t5_text_to_text",
+          "bilstm_crf_ner",
+          "xlnet",
+          "clip",
+          "mae_masked_autoencoder",
+          "sac_soft_actor_critic",
+          "td3_addressing_function_approximation",
+          "pytorch_100_tokkun_eshikaku"
+        ],
+        "title_en": "E-Qualification"
+      },
+      {
+        "node_id": "syllabus:E資格",
+        "kind": "syllabus_version",
+        "title_ja": "E資格",
+        "achievement": "not_started",
+        "paper_count": 84,
+        "linked_paper_ids": [
+          "attention_is_all_you_need",
+          "vit_an_image_is_worth_16x16_words",
+          "swin_transformer",
+          "detr_end_to_end_object_detection_with_transformers",
+          "faster_r_cnn",
+          "mask_r_cnn",
+          "fcos_anchor_free",
+          "yolov3",
+          "fcn_semantic_segmentation",
+          "ssd_single_shot_multibox",
+          "u_net",
+          "alexnet_imagenet_classification_2012",
+          "vgg_very_deep_convolutional_networks",
+          "resnet_deep_residual_learning",
+          "resnet_cvpr2016_cvf",
+          "adam_2014",
+          "batch_normalization",
+          "batch_normalization_icml2015_pmlr",
+          "layer_normalization",
+          "dropout_jmlr_2014",
+          "gan_2014",
+          "vae_2013",
+          "gru_cho_2014",
+          "seq2seq_2014",
+          "bahdanau_attention_nmt_2014",
+          "bert_pretraining_2018",
+          "gpt3_few_shot_learners",
+          "rag_retrieval_augmented_generation",
+          "word2vec_2013",
+          "glove_2014",
+          "cs229_main_notes",
+          "cs229_probability_review",
+          "cs229_linear_algebra_review",
+          "islr2",
+          "matrix_cookbook",
+          "mackay_itprnn",
+          "mobilenet",
+          "efficientnet",
+          "distillation",
+          "quantization_integer_only",
+          "deep_compression",
+          "fedavg_communication_efficient",
+          "horovod",
+          "large_batch_sgd_1hour",
+          "deep_gradient_compression",
+          "sutton_barto_rlbook",
+          "dqn",
+          "a3c",
+          "ppo",
+          "grad_cam",
+          "integrated_gradients",
+          "lime",
+          "shap",
+          "simclr",
+          "moco",
+          "byol",
+          "maml",
+          "wavenet",
+          "gcn",
+          "gat",
+          "gnn_survey",
+          "googlenet_inception_v1",
+          "densenet",
+          "inception_v3",
+          "prelu_he_2015",
+          "fpn_feature_pyramid",
+          "deeplabv3",
+          "group_normalization",
+          "instance_normalization",
+          "spectral_normalization",
+          "dcgan",
+          "conditional_gan",
+          "pix2pix",
+          "cyclegan",
+          "ddpm",
+          "elmo_deep_contextualized",
+          "t5_text_to_text",
+          "bilstm_crf_ner",
+          "xlnet",
+          "clip",
+          "mae_masked_autoencoder",
+          "sac_soft_actor_critic",
+          "td3_addressing_function_approximation",
+          "pytorch_100_tokkun_eshikaku"
+        ],
+        "title_en": "E-Qualification"
+      },
+      {
+        "node_id": "e_01",
+        "kind": "major",
+        "title_ja": "数学的基礎",
+        "achievement": "not_started",
+        "paper_count": 6,
+        "linked_paper_ids": [
+          "cs229_main_notes",
+          "cs229_probability_review",
+          "cs229_linear_algebra_review",
+          "islr2",
+          "matrix_cookbook",
+          "mackay_itprnn"
+        ],
+        "title_en": "Mathematical foundations"
+      },
+      {
+        "node_id": "e_02_01",
+        "kind": "major",
+        "title_ja": "機械学習の基礎",
+        "achievement": "not_started",
+        "paper_count": 5,
+        "linked_paper_ids": [
+          "adam_2014",
+          "dropout_jmlr_2014",
+          "cs229_main_notes",
+          "islr2",
+          "large_batch_sgd_1hour"
+        ],
+        "title_en": "Machine learning foundations"
+      },
+      {
+        "node_id": "section:深層学習の基礎（順伝播型ネットワーク）",
+        "kind": "major",
+        "title_ja": "深層学習の基礎（順伝播型ネットワーク）",
+        "achievement": "not_started",
+        "paper_count": 15,
+        "linked_paper_ids": [
+          "faster_r_cnn",
+          "fcn_semantic_segmentation",
+          "alexnet_imagenet_classification_2012",
+          "vgg_very_deep_convolutional_networks",
+          "resnet_deep_residual_learning",
+          "resnet_cvpr2016_cvf",
+          "mobilenet",
+          "efficientnet",
+          "googlenet_inception_v1",
+          "densenet",
+          "inception_v3",
+          "prelu_he_2015",
+          "fpn_feature_pyramid",
+          "deeplabv3",
+          "dcgan"
+        ],
+        "title_en": "Deep learning foundations (feedforward networks)"
+      },
+      {
+        "node_id": "section:正規化・正則化",
+        "kind": "major",
+        "title_ja": "正規化・正則化",
+        "achievement": "not_started",
+        "paper_count": 7,
+        "linked_paper_ids": [
+          "batch_normalization",
+          "batch_normalization_icml2015_pmlr",
+          "layer_normalization",
+          "dropout_jmlr_2014",
+          "group_normalization",
+          "instance_normalization",
+          "spectral_normalization"
+        ],
+        "title_en": "Normalization and regularization"
+      },
+      {
+        "node_id": "section:最適化手法",
+        "kind": "major",
+        "title_ja": "最適化手法",
+        "achievement": "not_started",
+        "paper_count": 2,
+        "linked_paper_ids": [
+          "adam_2014",
+          "large_batch_sgd_1hour"
+        ],
+        "title_en": "Optimization Methods"
+      },
+      {
+        "node_id": "section:CNN・画像認識",
+        "kind": "major",
+        "title_ja": "CNN・画像認識",
+        "achievement": "not_started",
+        "paper_count": 20,
+        "linked_paper_ids": [
+          "vit_an_image_is_worth_16x16_words",
+          "swin_transformer",
+          "faster_r_cnn",
+          "fcn_semantic_segmentation",
+          "alexnet_imagenet_classification_2012",
+          "vgg_very_deep_convolutional_networks",
+          "resnet_deep_residual_learning",
+          "resnet_cvpr2016_cvf",
+          "mobilenet",
+          "efficientnet",
+          "grad_cam",
+          "googlenet_inception_v1",
+          "densenet",
+          "inception_v3",
+          "prelu_he_2015",
+          "fpn_feature_pyramid",
+          "deeplabv3",
+          "dcgan",
+          "clip",
+          "mae_masked_autoencoder"
+        ],
+        "title_en": "CNNs and image recognition"
+      },
+      {
+        "node_id": "section:物体検出",
+        "kind": "major",
+        "title_ja": "物体検出",
+        "achievement": "not_started",
+        "paper_count": 7,
+        "linked_paper_ids": [
+          "detr_end_to_end_object_detection_with_transformers",
+          "faster_r_cnn",
+          "mask_r_cnn",
+          "fcos_anchor_free",
+          "yolov3",
+          "ssd_single_shot_multibox",
+          "fpn_feature_pyramid"
+        ],
+        "title_en": "Object detection"
+      },
+      {
+        "node_id": "section:セグメンテーション",
+        "kind": "major",
+        "title_ja": "セグメンテーション",
+        "achievement": "not_started",
+        "paper_count": 4,
+        "linked_paper_ids": [
+          "mask_r_cnn",
+          "fcn_semantic_segmentation",
+          "u_net",
+          "deeplabv3"
+        ],
+        "title_en": "Segmentation"
+      },
+      {
+        "node_id": "section:RNN・時系列モデル",
+        "kind": "major",
+        "title_ja": "RNN・時系列モデル",
+        "achievement": "not_started",
+        "paper_count": 7,
+        "linked_paper_ids": [
+          "attention_is_all_you_need",
+          "gru_cho_2014",
+          "seq2seq_2014",
+          "bahdanau_attention_nmt_2014",
+          "gat",
+          "bilstm_crf_ner",
+          "pytorch_100_tokkun_eshikaku"
+        ],
+        "title_en": "RNNs and time-series models"
+      },
+      {
+        "node_id": "section:Transformer・自己注意機構",
+        "kind": "major",
+        "title_ja": "Transformer・自己注意機構",
+        "achievement": "not_started",
+        "paper_count": 11,
+        "linked_paper_ids": [
+          "attention_is_all_you_need",
+          "vit_an_image_is_worth_16x16_words",
+          "swin_transformer",
+          "detr_end_to_end_object_detection_with_transformers",
+          "layer_normalization",
+          "bahdanau_attention_nmt_2014",
+          "bert_pretraining_2018",
+          "gat",
+          "t5_text_to_text",
+          "xlnet",
+          "pytorch_100_tokkun_eshikaku"
+        ],
+        "title_en": "Transformers and self-attention mechanisms"
+      },
+      {
+        "node_id": "section:自然言語処理・事前学習",
+        "kind": "major",
+        "title_ja": "自然言語処理・事前学習",
+        "achievement": "not_started",
+        "paper_count": 12,
+        "linked_paper_ids": [
+          "attention_is_all_you_need",
+          "bert_pretraining_2018",
+          "gpt3_few_shot_learners",
+          "rag_retrieval_augmented_generation",
+          "word2vec_2013",
+          "glove_2014",
+          "elmo_deep_contextualized",
+          "t5_text_to_text",
+          "bilstm_crf_ner",
+          "xlnet",
+          "clip",
+          "pytorch_100_tokkun_eshikaku"
+        ],
+        "title_en": "Natural language processing and pretraining"
+      },
+      {
+        "node_id": "section:生成モデル（GAN・VAE）",
+        "kind": "major",
+        "title_ja": "生成モデル（GAN・VAE）",
+        "achievement": "not_started",
+        "paper_count": 7,
+        "linked_paper_ids": [
+          "gan_2014",
+          "vae_2013",
+          "spectral_normalization",
+          "dcgan",
+          "conditional_gan",
+          "pix2pix",
+          "cyclegan"
+        ],
+        "title_en": "Generative models (GAN and VAE)"
+      },
+      {
+        "node_id": "section:自己教師あり学習・対照学習",
+        "kind": "major",
+        "title_ja": "自己教師あり学習・対照学習",
+        "achievement": "not_started",
+        "paper_count": 5,
+        "linked_paper_ids": [
+          "simclr",
+          "moco",
+          "byol",
+          "clip",
+          "mae_masked_autoencoder"
+        ],
+        "title_en": "Self-supervised learning and contrastive learning"
+      },
+      {
+        "node_id": "section:強化学習",
+        "kind": "major",
+        "title_ja": "強化学習",
+        "achievement": "not_started",
+        "paper_count": 6,
+        "linked_paper_ids": [
+          "sutton_barto_rlbook",
+          "dqn",
+          "a3c",
+          "ppo",
+          "sac_soft_actor_critic",
+          "td3_addressing_function_approximation"
+        ],
+        "title_en": "Reinforcement Learning"
+      },
+      {
+        "node_id": "section:エッジ・モデル圧縮",
+        "kind": "major",
+        "title_ja": "エッジ・モデル圧縮",
+        "achievement": "not_started",
+        "paper_count": 6,
+        "linked_paper_ids": [
+          "mobilenet",
+          "efficientnet",
+          "distillation",
+          "quantization_integer_only",
+          "deep_compression",
+          "deep_gradient_compression"
+        ],
+        "title_en": "Edge deployment and model compression"
+      },
+      {
+        "node_id": "section:分散学習",
+        "kind": "major",
+        "title_ja": "分散学習",
+        "achievement": "not_started",
+        "paper_count": 4,
+        "linked_paper_ids": [
+          "fedavg_communication_efficient",
+          "horovod",
+          "large_batch_sgd_1hour",
+          "deep_gradient_compression"
+        ],
+        "title_en": "Distributed learning"
+      },
+      {
+        "node_id": "section:説明可能_AI（XAI）",
+        "kind": "major",
+        "title_ja": "説明可能 AI（XAI）",
+        "achievement": "not_started",
+        "paper_count": 4,
+        "linked_paper_ids": [
+          "grad_cam",
+          "integrated_gradients",
+          "lime",
+          "shap"
+        ],
+        "title_en": "Explainable AI (XAI)"
+      },
+      {
+        "node_id": "section:グラフニューラルネット",
+        "kind": "major",
+        "title_ja": "グラフニューラルネット",
+        "achievement": "not_started",
+        "paper_count": 3,
+        "linked_paper_ids": [
+          "gcn",
+          "gat",
+          "gnn_survey"
+        ],
+        "title_en": "Graph neural networks"
+      },
+      {
+        "node_id": "section:メタ学習",
+        "kind": "major",
+        "title_ja": "メタ学習",
+        "achievement": "not_started",
+        "paper_count": 1,
+        "linked_paper_ids": [
+          "maml"
+        ],
+        "title_en": "Meta-learning"
+      },
+      {
+        "node_id": "section:音声処理",
+        "kind": "major",
+        "title_ja": "音声処理",
+        "achievement": "not_started",
+        "paper_count": 1,
+        "linked_paper_ids": [
+          "wavenet"
+        ],
+        "title_en": "Speech Processing"
+      },
+      {
+        "node_id": "section:拡散モデル",
+        "kind": "major",
+        "title_ja": "拡散モデル",
+        "achievement": "not_started",
+        "paper_count": 1,
+        "linked_paper_ids": [
+          "ddpm"
+        ],
+        "title_en": "Diffusion models"
+      },
+      {
+        "node_id": "section:マルチモーダル学習",
+        "kind": "major",
+        "title_ja": "マルチモーダル学習",
+        "achievement": "not_started",
+        "paper_count": 1,
+        "linked_paper_ids": [
+          "clip"
+        ],
+        "title_en": "Multimodal learning"
+      },
+      {
+        "node_id": "section:PyTorch_実装",
+        "kind": "major",
+        "title_ja": "PyTorch 実装",
+        "achievement": "not_started",
+        "paper_count": 1,
+        "linked_paper_ids": [
+          "pytorch_100_tokkun_eshikaku"
+        ],
+        "title_en": "PyTorch implementation"
+      }
+    ],
+    "papers": [
+      {
+        "paper_id": "attention_is_all_you_need",
+        "paper_title": "Attention Is All You Need",
+        "year": 2017,
+        "paper_title_ja": "Attention Is All You Need",
+        "paper_title_en": "Attention Is All You Need"
+      },
+      {
+        "paper_id": "vit_an_image_is_worth_16x16_words",
+        "paper_title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (ViT)",
+        "year": 2020,
+        "paper_title_ja": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (ViT)",
+        "paper_title_en": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale (ViT)"
+      },
+      {
+        "paper_id": "swin_transformer",
+        "paper_title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+        "year": 2021,
+        "paper_title_ja": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+        "paper_title_en": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows"
+      },
+      {
+        "paper_id": "detr_end_to_end_object_detection_with_transformers",
+        "paper_title": "DETR: End-to-End Object Detection with Transformers",
+        "year": 2020,
+        "paper_title_ja": "DETR: End-to-End Object Detection with Transformers",
+        "paper_title_en": "DETR: End-to-End Object Detection with Transformers"
+      },
+      {
+        "paper_id": "faster_r_cnn",
+        "paper_title": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
+        "year": 2015,
+        "paper_title_ja": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks",
+        "paper_title_en": "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks"
+      },
+      {
+        "paper_id": "mask_r_cnn",
+        "paper_title": "Mask R-CNN",
+        "year": 2017,
+        "paper_title_ja": "Mask R-CNN",
+        "paper_title_en": "Mask R-CNN"
+      },
+      {
+        "paper_id": "fcos_anchor_free",
+        "paper_title": "FCOS: Fully Convolutional One-Stage Object Detection",
+        "year": 2019,
+        "paper_title_ja": "FCOS: Fully Convolutional One-Stage Object Detection",
+        "paper_title_en": "FCOS: Fully Convolutional One-Stage Object Detection"
+      },
+      {
+        "paper_id": "yolov3",
+        "paper_title": "YOLOv3: An Incremental Improvement",
+        "year": 2018,
+        "paper_title_ja": "YOLOv3: An Incremental Improvement",
+        "paper_title_en": "YOLOv3: An Incremental Improvement"
+      },
+      {
+        "paper_id": "fcn_semantic_segmentation",
+        "paper_title": "Fully Convolutional Networks for Semantic Segmentation (FCN)",
+        "year": 2014,
+        "paper_title_ja": "Fully Convolutional Networks for Semantic Segmentation (FCN)",
+        "paper_title_en": "Fully Convolutional Networks for Semantic Segmentation (FCN)"
+      },
+      {
+        "paper_id": "ssd_single_shot_multibox",
+        "paper_title": "SSD: Single Shot MultiBox Detector",
+        "year": 2015,
+        "paper_title_ja": "SSD: Single Shot MultiBox Detector",
+        "paper_title_en": "SSD: Single Shot MultiBox Detector"
+      },
+      {
+        "paper_id": "u_net",
+        "paper_title": "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+        "year": 2015,
+        "paper_title_ja": "U-Net: Convolutional Networks for Biomedical Image Segmentation",
+        "paper_title_en": "U-Net: Convolutional Networks for Biomedical Image Segmentation"
+      },
+      {
+        "paper_id": "alexnet_imagenet_classification_2012",
+        "paper_title": "ImageNet Classification with Deep Convolutional Neural Networks (AlexNet)",
+        "year": 2012,
+        "paper_title_ja": "ImageNet Classification with Deep Convolutional Neural Networks (AlexNet)",
+        "paper_title_en": "ImageNet Classification with Deep Convolutional Neural Networks (AlexNet)"
+      },
+      {
+        "paper_id": "vgg_very_deep_convolutional_networks",
+        "paper_title": "Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG)",
+        "year": 2014,
+        "paper_title_ja": "Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG)",
+        "paper_title_en": "Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG)"
+      },
+      {
+        "paper_id": "resnet_deep_residual_learning",
+        "paper_title": "Deep Residual Learning for Image Recognition (ResNet)",
+        "year": 2015,
+        "paper_title_ja": "Deep Residual Learning for Image Recognition (ResNet)",
+        "paper_title_en": "Deep Residual Learning for Image Recognition (ResNet)"
+      },
+      {
+        "paper_id": "resnet_cvpr2016_cvf",
+        "paper_title": "Deep Residual Learning for Image Recognition (CVPR 2016 CVF OpenAccess)",
+        "year": 2016,
+        "paper_title_ja": "Deep Residual Learning for Image Recognition (CVPR 2016 CVF OpenAccess)",
+        "paper_title_en": "Deep Residual Learning for Image Recognition (CVPR 2016 CVF OpenAccess)"
+      },
+      {
+        "paper_id": "adam_2014",
+        "paper_title": "Adam: A Method for Stochastic Optimization",
+        "year": 2014,
+        "paper_title_ja": "Adam: A Method for Stochastic Optimization",
+        "paper_title_en": "Adam: A Method for Stochastic Optimization"
+      },
+      {
+        "paper_id": "batch_normalization",
+        "paper_title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+        "year": 2015,
+        "paper_title_ja": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+        "paper_title_en": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift"
+      },
+      {
+        "paper_id": "batch_normalization_icml2015_pmlr",
+        "paper_title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (ICML 2015 PMLR)",
+        "year": 2015,
+        "paper_title_ja": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (ICML 2015 PMLR)",
+        "paper_title_en": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (ICML 2015 PMLR)"
+      },
+      {
+        "paper_id": "layer_normalization",
+        "paper_title": "Layer Normalization",
+        "year": 2016,
+        "paper_title_ja": "Layer Normalization",
+        "paper_title_en": "Layer Normalization"
+      },
+      {
+        "paper_id": "dropout_jmlr_2014",
+        "paper_title": "Dropout: A Simple Way to Prevent Neural Networks from Overfitting",
+        "year": 2014,
+        "paper_title_ja": "Dropout: A Simple Way to Prevent Neural Networks from Overfitting",
+        "paper_title_en": "Dropout: A Simple Way to Prevent Neural Networks from Overfitting"
+      },
+      {
+        "paper_id": "gan_2014",
+        "paper_title": "Generative Adversarial Nets (GAN)",
+        "year": 2014,
+        "paper_title_ja": "Generative Adversarial Nets (GAN)",
+        "paper_title_en": "Generative Adversarial Nets (GAN)"
+      },
+      {
+        "paper_id": "vae_2013",
+        "paper_title": "Auto-Encoding Variational Bayes (VAE)",
+        "year": 2013,
+        "paper_title_ja": "Auto-Encoding Variational Bayes (VAE)",
+        "paper_title_en": "Auto-Encoding Variational Bayes (VAE)"
+      },
+      {
+        "paper_id": "gru_cho_2014",
+        "paper_title": "Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation (GRU)",
+        "year": 2014,
+        "paper_title_ja": "Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation (GRU)",
+        "paper_title_en": "Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation (GRU)"
+      },
+      {
+        "paper_id": "seq2seq_2014",
+        "paper_title": "Sequence to Sequence Learning with Neural Networks",
+        "year": 2014,
+        "paper_title_ja": "Sequence to Sequence Learning with Neural Networks",
+        "paper_title_en": "Sequence to Sequence Learning with Neural Networks"
+      },
+      {
+        "paper_id": "bahdanau_attention_nmt_2014",
+        "paper_title": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau Attention)",
+        "year": 2014,
+        "paper_title_ja": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau Attention)",
+        "paper_title_en": "Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau Attention)"
+      },
+      {
+        "paper_id": "bert_pretraining_2018",
+        "paper_title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "year": 2018,
+        "paper_title_ja": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "paper_title_en": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
+      },
+      {
+        "paper_id": "gpt3_few_shot_learners",
+        "paper_title": "Language Models are Few-Shot Learners (GPT-3)",
+        "year": 2020,
+        "paper_title_ja": "Language Models are Few-Shot Learners (GPT-3)",
+        "paper_title_en": "Language Models are Few-Shot Learners (GPT-3)"
+      },
+      {
+        "paper_id": "rag_retrieval_augmented_generation",
+        "paper_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (RAG)",
+        "year": 2020,
+        "paper_title_ja": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (RAG)",
+        "paper_title_en": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (RAG)"
+      },
+      {
+        "paper_id": "word2vec_2013",
+        "paper_title": "Efficient Estimation of Word Representations in Vector Space (word2vec)",
+        "year": 2013,
+        "paper_title_ja": "Efficient Estimation of Word Representations in Vector Space (word2vec)",
+        "paper_title_en": "Efficient Estimation of Word Representations in Vector Space (word2vec)"
+      },
+      {
+        "paper_id": "glove_2014",
+        "paper_title": "GloVe: Global Vectors for Word Representation",
+        "year": 2014,
+        "paper_title_ja": "GloVe: Global Vectors for Word Representation",
+        "paper_title_en": "GloVe: Global Vectors for Word Representation"
+      },
+      {
+        "paper_id": "cs229_main_notes",
+        "paper_title": "CS229 Lecture Notes (Ng, Ma) — Main Notes",
+        "year": 2000,
+        "paper_title_ja": "CS229 Lecture Notes (Ng, Ma) — Main Notes",
+        "paper_title_en": "CS229 Lecture Notes (Ng, Ma) — Main Notes"
+      },
+      {
+        "paper_id": "cs229_probability_review",
+        "paper_title": "CS229 Probability Theory Review and Reference",
+        "year": 2000,
+        "paper_title_ja": "CS229 Probability Theory Review and Reference",
+        "paper_title_en": "CS229 Probability Theory Review and Reference"
+      },
+      {
+        "paper_id": "cs229_linear_algebra_review",
+        "paper_title": "CS229 Linear Algebra Review",
+        "year": 2000,
+        "paper_title_ja": "CS229 Linear Algebra Review",
+        "paper_title_en": "CS229 Linear Algebra Review"
+      },
+      {
+        "paper_id": "islr2",
+        "paper_title": "An Introduction to Statistical Learning (ISLR, 2nd ed.)",
+        "year": 2021,
+        "paper_title_ja": "An Introduction to Statistical Learning (ISLR, 2nd ed.)",
+        "paper_title_en": "An Introduction to Statistical Learning (ISLR, 2nd ed.)"
+      },
+      {
+        "paper_id": "matrix_cookbook",
+        "paper_title": "The Matrix Cookbook",
+        "year": 2012,
+        "paper_title_ja": "The Matrix Cookbook",
+        "paper_title_en": "The Matrix Cookbook"
+      },
+      {
+        "paper_id": "mackay_itprnn",
+        "paper_title": "Information Theory, Pattern Recognition and Neural Networks (MacKay)",
+        "year": 2003,
+        "paper_title_ja": "Information Theory, Pattern Recognition and Neural Networks (MacKay)",
+        "paper_title_en": "Information Theory, Pattern Recognition and Neural Networks (MacKay)"
+      },
+      {
+        "paper_id": "mobilenet",
+        "paper_title": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+        "year": 2017,
+        "paper_title_ja": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
+        "paper_title_en": "MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications"
+      },
+      {
+        "paper_id": "efficientnet",
+        "paper_title": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
+        "year": 2019,
+        "paper_title_ja": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",
+        "paper_title_en": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks"
+      },
+      {
+        "paper_id": "distillation",
+        "paper_title": "Distilling the Knowledge in a Neural Network",
+        "year": 2015,
+        "paper_title_ja": "Distilling the Knowledge in a Neural Network",
+        "paper_title_en": "Distilling the Knowledge in a Neural Network"
+      },
+      {
+        "paper_id": "quantization_integer_only",
+        "paper_title": "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference",
+        "year": 2017,
+        "paper_title_ja": "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference",
+        "paper_title_en": "Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference"
+      },
+      {
+        "paper_id": "deep_compression",
+        "paper_title": "Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and Huffman Coding",
+        "year": 2015,
+        "paper_title_ja": "Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and Huffman Coding",
+        "paper_title_en": "Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and Huffman Coding"
+      },
+      {
+        "paper_id": "fedavg_communication_efficient",
+        "paper_title": "Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg)",
+        "year": 2017,
+        "paper_title_ja": "Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg)",
+        "paper_title_en": "Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg)"
+      },
+      {
+        "paper_id": "horovod",
+        "paper_title": "Horovod: fast and easy distributed deep learning in TensorFlow",
+        "year": 2018,
+        "paper_title_ja": "Horovod: fast and easy distributed deep learning in TensorFlow",
+        "paper_title_en": "Horovod: fast and easy distributed deep learning in TensorFlow"
+      },
+      {
+        "paper_id": "large_batch_sgd_1hour",
+        "paper_title": "Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour",
+        "year": 2017,
+        "paper_title_ja": "Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour",
+        "paper_title_en": "Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour"
+      },
+      {
+        "paper_id": "deep_gradient_compression",
+        "paper_title": "Deep Gradient Compression: Reducing the Communication Bandwidth for Distributed Training",
+        "year": 2017,
+        "paper_title_ja": "Deep Gradient Compression: Reducing the Communication Bandwidth for Distributed Training",
+        "paper_title_en": "Deep Gradient Compression: Reducing the Communication Bandwidth for Distributed Training"
+      },
+      {
+        "paper_id": "sutton_barto_rlbook",
+        "paper_title": "Reinforcement Learning: An Introduction (Sutton & Barto, 2nd ed.)",
+        "year": 2018,
+        "paper_title_ja": "Reinforcement Learning: An Introduction (Sutton & Barto, 2nd ed.)",
+        "paper_title_en": "Reinforcement Learning: An Introduction (Sutton & Barto, 2nd ed.)"
+      },
+      {
+        "paper_id": "dqn",
+        "paper_title": "Playing Atari with Deep Reinforcement Learning (DQN)",
+        "year": 2013,
+        "paper_title_ja": "Playing Atari with Deep Reinforcement Learning (DQN)",
+        "paper_title_en": "Playing Atari with Deep Reinforcement Learning (DQN)"
+      },
+      {
+        "paper_id": "a3c",
+        "paper_title": "Asynchronous Methods for Deep Reinforcement Learning (A3C)",
+        "year": 2016,
+        "paper_title_ja": "Asynchronous Methods for Deep Reinforcement Learning (A3C)",
+        "paper_title_en": "Asynchronous Methods for Deep Reinforcement Learning (A3C)"
+      },
+      {
+        "paper_id": "ppo",
+        "paper_title": "Proximal Policy Optimization Algorithms (PPO)",
+        "year": 2017,
+        "paper_title_ja": "Proximal Policy Optimization Algorithms (PPO)",
+        "paper_title_en": "Proximal Policy Optimization Algorithms (PPO)"
+      },
+      {
+        "paper_id": "grad_cam",
+        "paper_title": "Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization",
+        "year": 2016,
+        "paper_title_ja": "Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization",
+        "paper_title_en": "Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization"
+      },
+      {
+        "paper_id": "integrated_gradients",
+        "paper_title": "Axiomatic Attribution for Deep Networks (Integrated Gradients)",
+        "year": 2017,
+        "paper_title_ja": "Axiomatic Attribution for Deep Networks (Integrated Gradients)",
+        "paper_title_en": "Axiomatic Attribution for Deep Networks (Integrated Gradients)"
+      },
+      {
+        "paper_id": "lime",
+        "paper_title": "\\\"Why Should I Trust You?\\\": Explaining the Predictions of Any Classifier (LIME)",
+        "year": 2016,
+        "paper_title_ja": "\\\"Why Should I Trust You?\\\": Explaining the Predictions of Any Classifier (LIME)",
+        "paper_title_en": "\\\"Why Should I Trust You?\\\": Explaining the Predictions of Any Classifier (LIME)"
+      },
+      {
+        "paper_id": "shap",
+        "paper_title": "A Unified Approach to Interpreting Model Predictions (SHAP)",
+        "year": 2017,
+        "paper_title_ja": "A Unified Approach to Interpreting Model Predictions (SHAP)",
+        "paper_title_en": "A Unified Approach to Interpreting Model Predictions (SHAP)"
+      },
+      {
+        "paper_id": "simclr",
+        "paper_title": "A Simple Framework for Contrastive Learning of Visual Representations (SimCLR)",
+        "year": 2020,
+        "paper_title_ja": "A Simple Framework for Contrastive Learning of Visual Representations (SimCLR)",
+        "paper_title_en": "A Simple Framework for Contrastive Learning of Visual Representations (SimCLR)"
+      },
+      {
+        "paper_id": "moco",
+        "paper_title": "Momentum Contrast for Unsupervised Visual Representation Learning (MoCo)",
+        "year": 2019,
+        "paper_title_ja": "Momentum Contrast for Unsupervised Visual Representation Learning (MoCo)",
+        "paper_title_en": "Momentum Contrast for Unsupervised Visual Representation Learning (MoCo)"
+      },
+      {
+        "paper_id": "byol",
+        "paper_title": "Bootstrap Your Own Latent (BYOL)",
+        "year": 2020,
+        "paper_title_ja": "Bootstrap Your Own Latent (BYOL)",
+        "paper_title_en": "Bootstrap Your Own Latent (BYOL)"
+      },
+      {
+        "paper_id": "maml",
+        "paper_title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (MAML)",
+        "year": 2017,
+        "paper_title_ja": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (MAML)",
+        "paper_title_en": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (MAML)"
+      },
+      {
+        "paper_id": "wavenet",
+        "paper_title": "WaveNet: A Generative Model for Raw Audio",
+        "year": 2016,
+        "paper_title_ja": "WaveNet: A Generative Model for Raw Audio",
+        "paper_title_en": "WaveNet: A Generative Model for Raw Audio"
+      },
+      {
+        "paper_id": "gcn",
+        "paper_title": "Semi-Supervised Classification with Graph Convolutional Networks (GCN)",
+        "year": 2016,
+        "paper_title_ja": "Semi-Supervised Classification with Graph Convolutional Networks (GCN)",
+        "paper_title_en": "Semi-Supervised Classification with Graph Convolutional Networks (GCN)"
+      },
+      {
+        "paper_id": "gat",
+        "paper_title": "Graph Attention Networks (GAT)",
+        "year": 2017,
+        "paper_title_ja": "Graph Attention Networks (GAT)",
+        "paper_title_en": "Graph Attention Networks (GAT)"
+      },
+      {
+        "paper_id": "gnn_survey",
+        "paper_title": "A Comprehensive Survey on Graph Neural Networks",
+        "year": 2019,
+        "paper_title_ja": "A Comprehensive Survey on Graph Neural Networks",
+        "paper_title_en": "A Comprehensive Survey on Graph Neural Networks"
+      },
+      {
+        "paper_id": "googlenet_inception_v1",
+        "paper_title": "Going Deeper with Convolutions (GoogLeNet / Inception v1)",
+        "year": 2014,
+        "paper_title_ja": "Going Deeper with Convolutions (GoogLeNet / Inception v1)",
+        "paper_title_en": "Going Deeper with Convolutions (GoogLeNet / Inception v1)"
+      },
+      {
+        "paper_id": "densenet",
+        "paper_title": "Densely Connected Convolutional Networks (DenseNet)",
+        "year": 2016,
+        "paper_title_ja": "Densely Connected Convolutional Networks (DenseNet)",
+        "paper_title_en": "Densely Connected Convolutional Networks (DenseNet)"
+      },
+      {
+        "paper_id": "inception_v3",
+        "paper_title": "Rethinking the Inception Architecture for Computer Vision (Inception v3)",
+        "year": 2015,
+        "paper_title_ja": "Rethinking the Inception Architecture for Computer Vision (Inception v3)",
+        "paper_title_en": "Rethinking the Inception Architecture for Computer Vision (Inception v3)"
+      },
+      {
+        "paper_id": "prelu_he_2015",
+        "paper_title": "Delving Deep into Rectifiers: Surpassing Human-Level Performance (PReLU / He init)",
+        "year": 2015,
+        "paper_title_ja": "Delving Deep into Rectifiers: Surpassing Human-Level Performance (PReLU / He init)",
+        "paper_title_en": "Delving Deep into Rectifiers: Surpassing Human-Level Performance (PReLU / He init)"
+      },
+      {
+        "paper_id": "fpn_feature_pyramid",
+        "paper_title": "Feature Pyramid Networks for Object Detection (FPN)",
+        "year": 2016,
+        "paper_title_ja": "Feature Pyramid Networks for Object Detection (FPN)",
+        "paper_title_en": "Feature Pyramid Networks for Object Detection (FPN)"
+      },
+      {
+        "paper_id": "deeplabv3",
+        "paper_title": "Rethinking Atrous Convolution for Semantic Image Segmentation (DeepLabv3)",
+        "year": 2017,
+        "paper_title_ja": "Rethinking Atrous Convolution for Semantic Image Segmentation (DeepLabv3)",
+        "paper_title_en": "Rethinking Atrous Convolution for Semantic Image Segmentation (DeepLabv3)"
+      },
+      {
+        "paper_id": "group_normalization",
+        "paper_title": "Group Normalization",
+        "year": 2018,
+        "paper_title_ja": "Group Normalization",
+        "paper_title_en": "Group Normalization"
+      },
+      {
+        "paper_id": "instance_normalization",
+        "paper_title": "Instance Normalization: The Missing Ingredient for Fast Stylization",
+        "year": 2016,
+        "paper_title_ja": "Instance Normalization: The Missing Ingredient for Fast Stylization",
+        "paper_title_en": "Instance Normalization: The Missing Ingredient for Fast Stylization"
+      },
+      {
+        "paper_id": "spectral_normalization",
+        "paper_title": "Spectral Normalization for Generative Adversarial Networks",
+        "year": 2018,
+        "paper_title_ja": "Spectral Normalization for Generative Adversarial Networks",
+        "paper_title_en": "Spectral Normalization for Generative Adversarial Networks"
+      },
+      {
+        "paper_id": "dcgan",
+        "paper_title": "Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks (DCGAN)",
+        "year": 2015,
+        "paper_title_ja": "Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks (DCGAN)",
+        "paper_title_en": "Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks (DCGAN)"
+      },
+      {
+        "paper_id": "conditional_gan",
+        "paper_title": "Conditional Generative Adversarial Nets",
+        "year": 2014,
+        "paper_title_ja": "Conditional Generative Adversarial Nets",
+        "paper_title_en": "Conditional Generative Adversarial Nets"
+      },
+      {
+        "paper_id": "pix2pix",
+        "paper_title": "Image-to-Image Translation with Conditional Adversarial Networks (pix2pix)",
+        "year": 2016,
+        "paper_title_ja": "Image-to-Image Translation with Conditional Adversarial Networks (pix2pix)",
+        "paper_title_en": "Image-to-Image Translation with Conditional Adversarial Networks (pix2pix)"
+      },
+      {
+        "paper_id": "cyclegan",
+        "paper_title": "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (CycleGAN)",
+        "year": 2017,
+        "paper_title_ja": "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (CycleGAN)",
+        "paper_title_en": "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (CycleGAN)"
+      },
+      {
+        "paper_id": "ddpm",
+        "paper_title": "Denoising Diffusion Probabilistic Models (DDPM)",
+        "year": 2020,
+        "paper_title_ja": "Denoising Diffusion Probabilistic Models (DDPM)",
+        "paper_title_en": "Denoising Diffusion Probabilistic Models (DDPM)"
+      },
+      {
+        "paper_id": "elmo_deep_contextualized",
+        "paper_title": "Deep contextualized word representations (ELMo)",
+        "year": 2018,
+        "paper_title_ja": "Deep contextualized word representations (ELMo)",
+        "paper_title_en": "Deep contextualized word representations (ELMo)"
+      },
+      {
+        "paper_id": "t5_text_to_text",
+        "paper_title": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)",
+        "year": 2019,
+        "paper_title_ja": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)",
+        "paper_title_en": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)"
+      },
+      {
+        "paper_id": "bilstm_crf_ner",
+        "paper_title": "Neural Architectures for Named Entity Recognition (BiLSTM-CRF)",
+        "year": 2016,
+        "paper_title_ja": "Neural Architectures for Named Entity Recognition (BiLSTM-CRF)",
+        "paper_title_en": "Neural Architectures for Named Entity Recognition (BiLSTM-CRF)"
+      },
+      {
+        "paper_id": "xlnet",
+        "paper_title": "XLNet: Generalized Autoregressive Pretraining for Language Understanding",
+        "year": 2019,
+        "paper_title_ja": "XLNet: Generalized Autoregressive Pretraining for Language Understanding",
+        "paper_title_en": "XLNet: Generalized Autoregressive Pretraining for Language Understanding"
+      },
+      {
+        "paper_id": "clip",
+        "paper_title": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+        "year": 2021,
+        "paper_title_ja": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+        "paper_title_en": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)"
+      },
+      {
+        "paper_id": "mae_masked_autoencoder",
+        "paper_title": "Masked Autoencoders Are Scalable Vision Learners (MAE)",
+        "year": 2021,
+        "paper_title_ja": "Masked Autoencoders Are Scalable Vision Learners (MAE)",
+        "paper_title_en": "Masked Autoencoders Are Scalable Vision Learners (MAE)"
+      },
+      {
+        "paper_id": "sac_soft_actor_critic",
+        "paper_title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor (SAC)",
+        "year": 2018,
+        "paper_title_ja": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor (SAC)",
+        "paper_title_en": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor (SAC)"
+      },
+      {
+        "paper_id": "td3_addressing_function_approximation",
+        "paper_title": "Addressing Function Approximation Error in Actor-Critic Methods (TD3)",
+        "year": 2018,
+        "paper_title_ja": "Addressing Function Approximation Error in Actor-Critic Methods (TD3)",
+        "paper_title_en": "Addressing Function Approximation Error in Actor-Critic Methods (TD3)"
+      },
+      {
+        "paper_id": "pytorch_100_tokkun_eshikaku",
+        "paper_title": "E資格に出る PyTorch 必達特訓100選 (Jetson TX1 / NLP中心カリキュラム)",
+        "year": 2025,
+        "paper_title_ja": "E資格に出る PyTorch 必達特訓100選 (Jetson TX1 / NLP中心カリキュラム)",
+        "paper_title_en": "PyTorch Intensive Training 100 for E-Qualification (Jetson TX1 / NLP-focused curriculum)"
+      }
+    ],
+    "edges": []
+  },
+  {
+    "domain_id": "g-kentei",
+    "syllabus_version_id": "G検定",
+    "nodes": [
+      {
+        "node_id": "domain:g-kentei",
+        "kind": "domain",
+        "title_ja": "G検定",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "G-Kentei"
+      },
+      {
+        "node_id": "syllabus:G検定",
+        "kind": "syllabus_version",
+        "title_ja": "G検定",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "G-Kentei"
+      },
+      {
+        "node_id": "gkentei_01",
+        "kind": "major",
+        "title_ja": "0 Gシラバス2024 新規作成",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "G-Kentei syllabus 2024 newly created"
+      },
+      {
+        "node_id": "gkentei_01_1",
+        "kind": "major",
+        "title_ja": "1 以下のキーワード内容を見直し",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Review the following keyword contents"
+      },
+      {
+        "node_id": "gkentei_01_2",
+        "kind": "major",
+        "title_ja": "2 以下のキーワード内容を見直し",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Review the following keyword contents"
+      },
+      {
+        "node_id": "gkentei_01_3",
+        "kind": "major",
+        "title_ja": "3 以下のキーワードの一部見直し、および表記内容（表現の統一など）の変更",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Review selected keywords and revise wording for consistency"
+      },
+      {
+        "node_id": "gkentei_01_4",
+        "kind": "major",
+        "title_ja": "人工知能の定義",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Definition of AI"
+      },
+      {
+        "node_id": "gkentei_02",
+        "kind": "major",
+        "title_ja": "人工知能分野で議論される問題",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Issues Discussed in AI"
+      },
+      {
+        "node_id": "gkentei_03",
+        "kind": "major",
+        "title_ja": "探索・推論",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Search and Reasoning"
+      },
+      {
+        "node_id": "gkentei_04",
+        "kind": "major",
+        "title_ja": "知識表現とエキスパートシステム",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Knowledge Representation and Expert Systems"
+      },
+      {
+        "node_id": "gkentei_05",
+        "kind": "major",
+        "title_ja": "機械学習",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Machine Learning"
+      },
+      {
+        "node_id": "gkentei_06",
+        "kind": "major",
+        "title_ja": "ディープラーニング",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Deep Learning"
+      },
+      {
+        "node_id": "gkentei_07",
+        "kind": "major",
+        "title_ja": "教師あり学習",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Supervised Learning"
+      },
+      {
+        "node_id": "gkentei_08",
+        "kind": "major",
+        "title_ja": "教師なし学習",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Unsupervised Learning"
+      },
+      {
+        "node_id": "gkentei_09",
+        "kind": "major",
+        "title_ja": "強化学習",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Reinforcement Learning"
+      },
+      {
+        "node_id": "gkentei_10",
+        "kind": "major",
+        "title_ja": "モデルの選択・評価",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Model Selection and Evaluation"
+      },
+      {
+        "node_id": "gkentei_11",
+        "kind": "major",
+        "title_ja": "ニューラルネットワークとディープラーニング",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Neural Networks and Deep Learning"
+      },
+      {
+        "node_id": "gkentei_12",
+        "kind": "major",
+        "title_ja": "活性化関数",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Activation Functions"
+      },
+      {
+        "node_id": "gkentei_13",
+        "kind": "major",
+        "title_ja": "誤差関数",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Loss Functions"
+      },
+      {
+        "node_id": "gkentei_14",
+        "kind": "major",
+        "title_ja": "正則化",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Regularization"
+      },
+      {
+        "node_id": "gkentei_15",
+        "kind": "major",
+        "title_ja": "誤差逆伝播法",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Backpropagation"
+      },
+      {
+        "node_id": "gkentei_16",
+        "kind": "major",
+        "title_ja": "最適化手法",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Optimization Methods"
+      },
+      {
+        "node_id": "gkentei_17",
+        "kind": "major",
+        "title_ja": "全結合層",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Fully Connected Layers"
+      },
+      {
+        "node_id": "gkentei_18",
+        "kind": "major",
+        "title_ja": "畳み込み層",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Convolutional Layers"
+      },
+      {
+        "node_id": "gkentei_19",
+        "kind": "major",
+        "title_ja": "正規化層",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Normalization Layers"
+      },
+      {
+        "node_id": "gkentei_20",
+        "kind": "major",
+        "title_ja": "プーリング層",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Pooling Layers"
+      },
+      {
+        "node_id": "gkentei_21",
+        "kind": "major",
+        "title_ja": "スキップ結合",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Skip Connections"
+      },
+      {
+        "node_id": "gkentei_22",
+        "kind": "major",
+        "title_ja": "回帰結合層",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Recurrent Layers"
+      },
+      {
+        "node_id": "gkentei_23",
+        "kind": "major",
+        "title_ja": "Attention",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Attention"
+      },
+      {
+        "node_id": "gkentei_24",
+        "kind": "major",
+        "title_ja": "オートエンコーダ",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Autoencoders"
+      },
+      {
+        "node_id": "gkentei_25",
+        "kind": "major",
+        "title_ja": "データ拡張",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Data Augmentation"
+      },
+      {
+        "node_id": "gkentei_26",
+        "kind": "major",
+        "title_ja": "画像認識",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Image Recognition"
+      },
+      {
+        "node_id": "gkentei_27",
+        "kind": "major",
+        "title_ja": "自然言語処理",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Natural Language Processing"
+      },
+      {
+        "node_id": "gkentei_28",
+        "kind": "major",
+        "title_ja": "音声処理",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Speech Processing"
+      },
+      {
+        "node_id": "gkentei_29",
+        "kind": "major",
+        "title_ja": "深層強化学習",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Deep Reinforcement Learning"
+      },
+      {
+        "node_id": "gkentei_30",
+        "kind": "major",
+        "title_ja": "データ生成",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Data Generation"
+      },
+      {
+        "node_id": "gkentei_31",
+        "kind": "major",
+        "title_ja": "転移学習・ファインチューニング",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Transfer Learning and Fine-Tuning"
+      },
+      {
+        "node_id": "gkentei_32",
+        "kind": "major",
+        "title_ja": "マルチモーダル",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Multimodal"
+      },
+      {
+        "node_id": "gkentei_33",
+        "kind": "major",
+        "title_ja": "モデルの解釈性",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Model Interpretability"
+      },
+      {
+        "node_id": "gkentei_34",
+        "kind": "major",
+        "title_ja": "モデルの軽量化",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Model Compression"
+      },
+      {
+        "node_id": "gkentei_35",
+        "kind": "major",
+        "title_ja": "AI プロジェクトの進め方",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Managing AI Projects"
+      },
+      {
+        "node_id": "gkentei_36",
+        "kind": "major",
+        "title_ja": "データの収集・加工・分析・学習",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Data Collection, Processing, Analysis, and Training"
+      },
+      {
+        "node_id": "gkentei_37",
+        "kind": "major",
+        "title_ja": "AI に必要な数理・統計知識",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Mathematics and Statistics for AI"
+      },
+      {
+        "node_id": "gkentei_01_41",
+        "kind": "major",
+        "title_ja": "個人情報保護法",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Personal Information Protection Act"
+      },
+      {
+        "node_id": "gkentei_02_42",
+        "kind": "major",
+        "title_ja": "著作権法",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Copyright Act"
+      },
+      {
+        "node_id": "gkentei_03_43",
+        "kind": "major",
+        "title_ja": "特許法",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Patent Act"
+      },
+      {
+        "node_id": "gkentei_04_44",
+        "kind": "major",
+        "title_ja": "不正競争防止法",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Unfair Competition Prevention Act"
+      },
+      {
+        "node_id": "gkentei_05_45",
+        "kind": "major",
+        "title_ja": "独占禁止法",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Antimonopoly Act"
+      },
+      {
+        "node_id": "gkentei_06_46",
+        "kind": "major",
+        "title_ja": "AI開発委託契約",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "AI Development Contracts"
+      },
+      {
+        "node_id": "gkentei_07_47",
+        "kind": "major",
+        "title_ja": "AIサービス提供契約",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "AI Service Contracts"
+      },
+      {
+        "node_id": "gkentei_08_48",
+        "kind": "major",
+        "title_ja": "国内外のガイドライン",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Domestic and International Guidelines"
+      },
+      {
+        "node_id": "gkentei_09_49",
+        "kind": "major",
+        "title_ja": "プライバシー",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Privacy"
+      },
+      {
+        "node_id": "gkentei_10_50",
+        "kind": "major",
+        "title_ja": "公平性",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Fairness"
+      },
+      {
+        "node_id": "gkentei_11_51",
+        "kind": "major",
+        "title_ja": "安全性とセキュリティ",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Safety and Security"
+      },
+      {
+        "node_id": "gkentei_12_52",
+        "kind": "major",
+        "title_ja": "悪用",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Misuse"
+      },
+      {
+        "node_id": "gkentei_13_53",
+        "kind": "major",
+        "title_ja": "透明性",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Transparency"
+      },
+      {
+        "node_id": "gkentei_14_54",
+        "kind": "major",
+        "title_ja": "民主主義",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Democracy"
+      },
+      {
+        "node_id": "gkentei_15_55",
+        "kind": "major",
+        "title_ja": "環境保護",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Environmental Protection"
+      },
+      {
+        "node_id": "gkentei_16_56",
+        "kind": "major",
+        "title_ja": "労働政策",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Labor Policy"
+      },
+      {
+        "node_id": "gkentei_17_57",
+        "kind": "major",
+        "title_ja": "その他の重要な価値",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Other Important Values"
+      },
+      {
+        "node_id": "gkentei_18_58",
+        "kind": "major",
+        "title_ja": "AIガバナンス",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "AI Governance"
+      }
+    ],
+    "papers": [],
+    "edges": [
+      {
+        "from_node_id": "gkentei_01_4",
+        "to_node_id": "gkentei_02",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_02",
+        "to_node_id": "gkentei_03",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_03",
+        "to_node_id": "gkentei_04",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_04",
+        "to_node_id": "gkentei_05",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_05",
+        "to_node_id": "gkentei_06",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_05",
+        "to_node_id": "gkentei_07",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_05",
+        "to_node_id": "gkentei_08",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_05",
+        "to_node_id": "gkentei_09",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_11",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_12",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_13",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_14",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_15",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_16",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_17",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_18",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_19",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_20",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_21",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_22",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_23",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_24",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11",
+        "to_node_id": "gkentei_25",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_26",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_27",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_28",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_09",
+        "to_node_id": "gkentei_29",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_29",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_30",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_31",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_32",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_10",
+        "to_node_id": "gkentei_33",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_10",
+        "to_node_id": "gkentei_34",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_35",
+        "to_node_id": "gkentei_36",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_35",
+        "to_node_id": "gkentei_37",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_37",
+        "to_node_id": "gkentei_10",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_37",
+        "to_node_id": "gkentei_16",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_37",
+        "to_node_id": "gkentei_15",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_01_41",
+        "to_node_id": "gkentei_09_49",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_01_41",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_02_42",
+        "to_node_id": "gkentei_03_43",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_03_43",
+        "to_node_id": "gkentei_04_44",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_03_43",
+        "to_node_id": "gkentei_06_46",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_03_43",
+        "to_node_id": "gkentei_07_47",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_04_44",
+        "to_node_id": "gkentei_06_46",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_04_44",
+        "to_node_id": "gkentei_07_47",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_08_48",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_09_49",
+        "to_node_id": "gkentei_13_53",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_10_50",
+        "to_node_id": "gkentei_13_53",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11_51",
+        "to_node_id": "gkentei_12_52",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_11_51",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_12_52",
+        "to_node_id": "gkentei_14_54",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_12_52",
+        "to_node_id": "gkentei_17_57",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_13_53",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_14_54",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_15_55",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_16_56",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_17_57",
+        "to_node_id": "gkentei_18_58",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_01_3",
+        "kind": "diff"
+      },
+      {
+        "from_node_id": "gkentei_27",
+        "to_node_id": "gkentei_01_1",
+        "kind": "boundary"
+      },
+      {
+        "from_node_id": "gkentei_23",
+        "to_node_id": "gkentei_01_2",
+        "kind": "boundary"
+      },
+      {
+        "from_node_id": "gkentei_27",
+        "to_node_id": "gkentei_01_2",
+        "kind": "boundary"
+      },
+      {
+        "from_node_id": "gkentei_27",
+        "to_node_id": "gkentei_01_3",
+        "kind": "boundary"
+      },
+      {
+        "from_node_id": "gkentei_06",
+        "to_node_id": "gkentei_01_3",
+        "kind": "renaming"
+      }
+    ]
+  },
+  {
+    "domain_id": "ai-102",
+    "syllabus_version_id": "AI-102",
+    "nodes": [
+      {
+        "node_id": "domain:ai-102",
+        "kind": "domain",
+        "title_ja": "AI-102",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "AI-102"
+      },
+      {
+        "node_id": "syllabus:AI-102",
+        "kind": "syllabus_version",
+        "title_ja": "AI-102",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "AI-102"
+      },
+      {
+        "node_id": "ai102_certification",
+        "kind": "major",
+        "title_ja": "AI-102 認定試験",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "AI-102 certification exam"
+      },
+      {
+        "node_id": "azure_ai_engineer_associate",
+        "kind": "major",
+        "title_ja": "Azure AI Engineer Associate",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Azure AI Engineer Associate"
+      },
+      {
+        "node_id": "fundamentals_category",
+        "kind": "major",
+        "title_ja": "Fundamentals カテゴリ",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Fundamentals category"
+      },
+      {
+        "node_id": "related_ai_fundamentals",
+        "kind": "major",
+        "title_ja": "関連 AI 基礎認定",
+        "achievement": "not_started",
+        "paper_count": 0,
+        "linked_paper_ids": [],
+        "title_en": "Related AI fundamentals certifications"
+      }
+    ],
+    "papers": [],
+    "edges": [
+      {
+        "from_node_id": "related_ai_fundamentals",
+        "to_node_id": "azure_ai_engineer_associate",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "azure_ai_engineer_associate",
+        "to_node_id": "ai102_certification",
+        "kind": "prereq"
+      },
+      {
+        "from_node_id": "fundamentals_category",
+        "to_node_id": "related_ai_fundamentals",
+        "kind": "boundary"
+      },
+      {
+        "from_node_id": "azure_ai_engineer_associate",
+        "to_node_id": "ai102_certification",
+        "kind": "renaming"
+      }
+    ]
+  }
+]

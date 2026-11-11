@@ -51,7 +51,7 @@ def main() -> None:
         raise ValueError("ViT and Fold-07 vocabulary label order differs")
     partition_bytes = args.partition.read_bytes()
     partition = json.loads(partition_bytes)
-    if partition.get("schema") != "firebird-vit-font-and-handwriting-confusion-subsets-v3":
+    if partition.get("schema") != "hinotori-vit-visual-similarity-subsets-v1":
         raise ValueError("partition schema is not the font-plus-handwriting Firebird ViT confusion partition")
     if partition.get("vocabulary", {}).get("sha256") != hashlib.sha256(vocabulary_bytes).hexdigest():
         raise ValueError("ViT partition and Fold-07 vocabulary hashes differ")

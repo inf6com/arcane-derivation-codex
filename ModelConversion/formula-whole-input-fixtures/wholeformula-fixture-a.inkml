@@ -1,0 +1,13 @@
+<ink xmlns="http://www.w3.org/2003/InkML">
+  <annotation type="sampleId">wholeformula-fixture-a</annotation>
+  <annotation type="normalizedLabel">x^{2}</annotation>
+  <annotation type="splitTagOriginal">train</annotation>
+  <annotation type="inkCreationMethod">synthetic-fixture</annotation>
+  <traceFormat>
+    <channel name="X" type="decimal" units="dev"/>
+    <channel name="Y" type="decimal" units="dev"/>
+    <channel name="T" type="decimal" units="1/100ms"/>
+  </traceFormat>
+  <trace>10 20 0, 15 25 12, 20 15 30</trace>
+  <trace>30 10 55, 35 10 61, 35 5 70</trace>
+</ink>

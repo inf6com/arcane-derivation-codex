@@ -33,6 +33,8 @@ public struct HinotoriFold7SimilarityExpansion: Codable, Sendable, Equatable {
 public struct HinotoriFold7Prediction: Sendable, Equatable {
     /// Exact classifier ranking, ordered by its unmodified logits.
     public let candidates: [HinotoriFold7Candidate]
+    /// All 229 unmodified classifier logits, aligned with vocabulary indices.
+    public let classLogits: [Float]
     /// Cosine similarity to each of the ordered 229 normalized class prototypes.
     /// Group expansion is requested only after the user selects an exact candidate.
     public let classCosineSimilarities: [Float]
@@ -60,7 +62,7 @@ public final class HinotoriFold7CoreMLClassifier {
         guard let modelURL = bundle.url(forResource: "HinotoriFold7Classifier", withExtension: "mlmodelc"),
               let manifestURL = bundle.url(forResource: "HinotoriFold7CoreML.manifest", withExtension: "json"),
               let vocabularyURL = bundle.url(forResource: "HinotoriFold7Vocabulary", withExtension: "json"),
-              let groupsURL = bundle.url(forResource: "HinotoriSimilarityGroups87", withExtension: "json") else {
+              let groupsURL = bundle.url(forResource: "HinotoriPrototypeCosineSimilarityGroups", withExtension: "json") else {
             throw ClassifierError.missingResource
         }
 
@@ -80,7 +82,7 @@ public final class HinotoriFold7CoreMLClassifier {
               vocabulary.labels.count == Self.classCount,
               Set(vocabulary.labels).count == Self.classCount,
               manifest.vocabulary.labels == Self.classCount,
-              similarity.schema == "hinotori-fold7-provisional-similarity-groups-v1",
+              similarity.schema == "hinotori-fold7-prototype-cosine-groups-v1",
               similarity.groups.count == 87 else {
             throw ClassifierError.invalidArtifact("Fold-07 checkpoint provenance, 229-label vocabulary, or 87-group catalog does not match")
         }
@@ -159,6 +161,7 @@ public final class HinotoriFold7CoreMLClassifier {
 
         return HinotoriFold7Prediction(
             candidates: candidates,
+            classLogits: logits,
             classCosineSimilarities: classCosines,
             queryEmbedding: embedding,
             checkpointSHA256: "c535d54e9d255937f390e71e884f146167532c4f46289af4a4d29268bcdbc44a",
@@ -178,10 +181,26 @@ public final class HinotoriFold7CoreMLClassifier {
               labels.indices.contains(selected.classIndex), labels[selected.classIndex] == selected.label else {
             throw ClassifierError.selectionNotInPrediction
         }
-        let matchedGroups = groups.filter { $0.labels.contains(selected.label) }
+        return try similarCandidates(forClassIndex: selected.classIndex, classCosineSimilarities: prediction.classCosineSimilarities)
+    }
+
+    /// Expands any class selected by the fused ensemble. Membership comes from
+    /// the 87-group catalog; this query's Fold7 prototype cosine only orders
+    /// the members and never changes ensemble probabilities.
+    public func similarCandidates(
+        forClassIndex classIndex: Int,
+        classCosineSimilarities: [Float]
+    ) throws -> HinotoriFold7SimilarityExpansion {
+        guard labels.indices.contains(classIndex),
+              classCosineSimilarities.count == Self.classCount,
+              classCosineSimilarities.allSatisfy({ $0.isFinite && (-1...1).contains($0) }) else {
+            throw ClassifierError.invalidSimilarityScores
+        }
+        let selectedLabel = labels[classIndex]
+        let matchedGroups = groups.filter { $0.labels.contains(selectedLabel) }
         var memberships: [String: Set<Int>] = [:]
         for group in matchedGroups {
-            for label in group.labels where label != selected.label {
+            for label in group.labels where label != selectedLabel {
                 memberships[label, default: []].insert(group.groupID)
             }
         }
@@ -195,7 +214,7 @@ public final class HinotoriFold7CoreMLClassifier {
                 classIndex: classIndex,
                 label: label,
                 displayGlyph: glyphByLabel[label],
-                cosineSimilarity: prediction.classCosineSimilarities[classIndex],
+                cosineSimilarity: classCosineSimilarities[classIndex],
                 groupIDs: groupIDs.sorted()
             ))
         }
@@ -209,11 +228,11 @@ public final class HinotoriFold7CoreMLClassifier {
         for group in matchedGroups {
             var groupCandidates: [HinotoriFold7SimilarityCandidate] = []
             var groupScore = -Float.infinity
-            for label in group.labels where label != selected.label {
+            for label in group.labels where label != selectedLabel {
                 guard let classIndex = classIndexByLabel[label] else {
                     throw ClassifierError.invalidArtifact("similarity group contains a label absent from the vocabulary")
                 }
-                let score = prediction.classCosineSimilarities[classIndex]
+                let score = classCosineSimilarities[classIndex]
                 groupScore = max(groupScore, score)
                 groupCandidates.append(HinotoriFold7SimilarityCandidate(
                     classIndex: classIndex,
@@ -239,7 +258,7 @@ public final class HinotoriFold7CoreMLClassifier {
                 ? $0.groupID < $1.groupID
                 : $0.cosineSimilarity > $1.cosineSimilarity
         }
-        return HinotoriFold7SimilarityExpansion(selectedLabel: selected.label, candidates: prioritized, groups: suggestions)
+        return HinotoriFold7SimilarityExpansion(selectedLabel: selectedLabel, candidates: prioritized, groups: suggestions)
     }
 
     public enum ClassifierError: LocalizedError {
@@ -247,6 +266,7 @@ public final class HinotoriFold7CoreMLClassifier {
         case invalidArtifact(String)
         case modelLoadFailed(String)
         case selectionNotInPrediction
+        case invalidSimilarityScores
         case predictionFailed(String)
         case invalidOutput(String)
 
@@ -256,6 +276,7 @@ public final class HinotoriFold7CoreMLClassifier {
             case .invalidArtifact(let reason): return "Hinotori Fold-07 artifact validation failed: \(reason)"
             case .modelLoadFailed(let reason): return "Hinotori Fold-07 Core ML model load failed: \(reason)"
             case .selectionNotInPrediction: return "The selected class is not one of this Fold-07 Top-5 prediction's candidates"
+            case .invalidSimilarityScores: return "Fold-07 class index or 229-class cosine vector is invalid"
             case .predictionFailed(let reason): return "Hinotori Fold-07 prediction failed: \(reason)"
             case .invalidOutput(let reason): return "Hinotori Fold-07 output violates the model contract: \(reason)"
             }

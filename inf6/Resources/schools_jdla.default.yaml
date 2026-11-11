@@ -1,0 +1,52 @@
+# schools_jdla.default.yaml
+# JDLA（日本ディープラーニング協会）の資格試験ツリー定義
+# - このファイルはユーザーが自由に編集できる「雛形」です。
+# - 大学など他の機関を追加するときも、この構造をコピーして増やしていきます。
+
+version: 1
+
+schools:
+  - key: jdla
+    label_ja: "日本ディープラーニング協会 (JDLA)"
+    label_en: "Japan Deep Learning Association (JDLA)"
+
+    # JDLA 内の「学部」に相当するレイヤ（ここでは「資格試験」など）
+    faculties:
+      - key: jdla-qualifications
+        label_ja: "JDLA 資格試験"
+        label_en: "JDLA Qualifications"
+
+        # 学科レイヤ：E資格 / G検定 などの試験種別ごとに分ける
+        departments:
+          - key: e-shikaku
+            label_ja: "E資格"
+            label_en: "E-Certificate"
+
+            # 講座レイヤ：各版シラバス（年度別など）をぶら下げる
+            courses:
+              - id: "E-E2024-2"
+                title_ja: "E資格 試験出題範囲（E2024#2～）"
+                title_en: "E-Certificate Exam Syllabus (E2024#2 and later)"
+                # pdf_syllabi.(json|yaml|yml) の id と対応させる
+                syllabus_id: "e2024"
+                description_ja: "日本ディープラーニング協会が公開している E資格の公式改訂シラバス E2024#2～。"
+                description_en: "The official JDLA E-Certificate syllabus revision E2024#2 and later."
+
+              - id: "E-E2026-2"
+                title_ja: "E資格 試験出題範囲（E2026#2～）"
+                title_en: "E-Certificate Exam Syllabus (E2026#2 and later)"
+                syllabus_id: "e2026"
+                description_ja: "日本ディープラーニング協会が公開している E資格の公式改訂シラバス E2026#2～。LLM、RAG、自己回帰モデルなどの改訂キーワードを含みます。"
+                description_en: "The official JDLA E-Certificate syllabus revision E2026#2 and later, including revised topics such as LLMs, RAG, and autoregressive models."
+
+          - key: g-kentei
+            label_ja: "G検定"
+            label_en: "G-Test"
+
+            courses:
+              - id: "G-2024"
+                title_ja: "G検定 試験出題範囲（シラバス 2024）"
+                title_en: "G-Test Exam Syllabus (2024)"
+                syllabus_id: "g2024"
+                description_ja: "日本ディープラーニング協会が公開している G検定（ジェネラリスト検定）の 2024年版 試験出題範囲。AI・ディープラーニングの基礎概念、応用事例、ビジネス活用、法制度や倫理などを網羅しています。"
+                description_en: "Exam syllabus for the G-Test (Generalist Certification) 2024 edition published by JDLA. Covers core concepts of AI and deep learning, application examples, business use cases, as well as legal and ethical topics."

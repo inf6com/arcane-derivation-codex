@@ -92,7 +92,7 @@ public struct DerivationDocument: Codable, Sendable {
     public var recognizedSymbolStrokeIndices: [[Int]]?
     public var spatialAnalysis: Inf6SpatialRelationAnalysis?
     public var positionSensitiveClassification: Inf6PositionSensitiveClassification?
-    public var similarityExpansion: Inf6SymbolSimilarityExpansion?
+    public var similarityExpansion: HinotoriVisualSubsetExpansion?
     public var grid9: Inf6FormulaGrid9?
     public var paperEquationSpaceID: String?
     public var paperEquationID: String?
@@ -101,7 +101,7 @@ public struct DerivationDocument: Codable, Sendable {
     public var formulaStructure: FormulaStructure?
     public var paperSupplement: PaperSupplement?
 
-    public init(derivationID: UUID? = nil, origin: DerivationOrigin? = nil, steps: [DerivationStep] = [], chatMessages: [FormulaChatMessage] = [], sourceEvidenceID: UUID? = nil, sourceTitle: String? = nil, sourceLocator: String? = nil, updatedAt: Date = .now, pencilDrawingData: Data? = nil, mathML: String? = nil, mathMLVerified: Bool? = nil, aiExplanation: String? = nil, recognizedExpression: String? = nil, recognizedTokenIDs: [Int]? = nil, recognizedSymbols: [String]? = nil, recognizedGridCellIndices: [Int]? = nil, recognizedSymbolStrokeIndices: [[Int]]? = nil, spatialAnalysis: Inf6SpatialRelationAnalysis? = nil, positionSensitiveClassification: Inf6PositionSensitiveClassification? = nil, similarityExpansion: Inf6SymbolSimilarityExpansion? = nil, grid9: Inf6FormulaGrid9? = nil, paperEquationSpaceID: String? = nil, paperEquationID: String? = nil, paperEquationSpace: PaperEquationSpace? = nil, inputMethod: Inf6FormulaInputMethod? = nil, formulaStructure: FormulaStructure? = nil, paperSupplement: PaperSupplement? = nil) {
+    public init(derivationID: UUID? = nil, origin: DerivationOrigin? = nil, steps: [DerivationStep] = [], chatMessages: [FormulaChatMessage] = [], sourceEvidenceID: UUID? = nil, sourceTitle: String? = nil, sourceLocator: String? = nil, updatedAt: Date = .now, pencilDrawingData: Data? = nil, mathML: String? = nil, mathMLVerified: Bool? = nil, aiExplanation: String? = nil, recognizedExpression: String? = nil, recognizedTokenIDs: [Int]? = nil, recognizedSymbols: [String]? = nil, recognizedGridCellIndices: [Int]? = nil, recognizedSymbolStrokeIndices: [[Int]]? = nil, spatialAnalysis: Inf6SpatialRelationAnalysis? = nil, positionSensitiveClassification: Inf6PositionSensitiveClassification? = nil, similarityExpansion: HinotoriVisualSubsetExpansion? = nil, grid9: Inf6FormulaGrid9? = nil, paperEquationSpaceID: String? = nil, paperEquationID: String? = nil, paperEquationSpace: PaperEquationSpace? = nil, inputMethod: Inf6FormulaInputMethod? = nil, formulaStructure: FormulaStructure? = nil, paperSupplement: PaperSupplement? = nil) {
         self.derivationID = derivationID
         self.origin = origin
         self.steps = steps

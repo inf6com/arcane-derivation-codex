@@ -1,0 +1,140 @@
+[
+  {
+    "syllabus_section": "数学的基礎",
+    "syllabus_section_en": "Mathematical foundations",
+    "covering_tags": ["math", "probability", "linear_algebra", "statistics", "ml_basics", "information_theory", "inference"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "機械学習の基礎",
+    "syllabus_section_en": "Machine learning foundations",
+    "covering_tags": ["ml_basics", "statistics", "optimization", "regularization"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "深層学習の基礎（順伝播型ネットワーク）",
+    "syllabus_section_en": "Deep learning foundations (feedforward networks)",
+    "covering_tags": ["cnn", "residual", "imagenet"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "正規化・正則化",
+    "syllabus_section_en": "Normalization and regularization",
+    "covering_tags": ["normalization", "regularization", "batch_norm", "layer_norm", "dropout"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "最適化手法",
+    "syllabus_section_en": "Optimization methods",
+    "covering_tags": ["optimization"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "CNN・画像認識",
+    "syllabus_section_en": "CNNs and image recognition",
+    "covering_tags": ["cnn", "residual", "imagenet", "vision", "vit"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "物体検出",
+    "syllabus_section_en": "Object detection",
+    "covering_tags": ["detection", "anchor-based", "anchor-free"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "セグメンテーション",
+    "syllabus_section_en": "Segmentation",
+    "covering_tags": ["segmentation", "medical"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "RNN・時系列モデル",
+    "syllabus_section_en": "RNNs and time-series models",
+    "covering_tags": ["rnn", "gru", "seq2seq", "attention", "nmt"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "Transformer・自己注意機構",
+    "syllabus_section_en": "Transformers and self-attention mechanisms",
+    "covering_tags": ["transformer", "attention"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "自然言語処理・事前学習",
+    "syllabus_section_en": "Natural language processing and pretraining",
+    "covering_tags": ["nlp", "pretraining", "llm", "embeddings", "rag", "few_shot"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "生成モデル（GAN・VAE）",
+    "syllabus_section_en": "Generative models (GAN and VAE)",
+    "covering_tags": ["gan", "vae"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "自己教師あり学習・対照学習",
+    "syllabus_section_en": "Self-supervised learning and contrastive learning",
+    "covering_tags": ["self_supervised", "representation_learning"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "強化学習",
+    "syllabus_section_en": "Reinforcement learning",
+    "covering_tags": ["reinforcement_learning", "deep_rl"],
+    "is_high_priority": true
+  },
+  {
+    "syllabus_section": "エッジ・モデル圧縮",
+    "syllabus_section_en": "Edge deployment and model compression",
+    "covering_tags": ["edge", "efficient", "compression", "quantization", "distillation", "pruning"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "分散学習",
+    "syllabus_section_en": "Distributed learning",
+    "covering_tags": ["distributed", "federated_learning", "training"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "説明可能 AI（XAI）",
+    "syllabus_section_en": "Explainable AI (XAI)",
+    "covering_tags": ["xai"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "グラフニューラルネット",
+    "syllabus_section_en": "Graph neural networks",
+    "covering_tags": ["gnn", "graph"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "メタ学習",
+    "syllabus_section_en": "Meta-learning",
+    "covering_tags": ["meta_learning"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "音声処理",
+    "syllabus_section_en": "Speech processing",
+    "covering_tags": ["audio", "waveform"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "拡散モデル",
+    "syllabus_section_en": "Diffusion models",
+    "covering_tags": ["diffusion"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "マルチモーダル学習",
+    "syllabus_section_en": "Multimodal learning",
+    "covering_tags": ["multimodal"],
+    "is_high_priority": false
+  },
+  {
+    "syllabus_section": "PyTorch 実装",
+    "syllabus_section_en": "PyTorch implementation",
+    "covering_tags": ["curriculum", "pytorch"],
+    "is_high_priority": false
+  }
+]

@@ -17,15 +17,22 @@ public struct Inf6HandwrittenMathMLResult: Sendable, Equatable {
     /// Exact source stroke indices of each Hinotori candidate group.  Grid
     /// cells are display metadata only and must never replace this mapping.
     public let symbolStrokeIndices: [[Int]]
-    /// Rank in the shape model's original output; nil means the selected label
-    /// was added by the similarity stage and has no model rank or logit.
+    /// Rank in the calibrated Hinotori ensemble output; nil means the selected
+    /// label was added by the visual-similarity or position stage.
     public let candidateRanks: [Int?]
     public let candidateLabels: [[String]]
-    /// For each recognized symbol and each original Fold7 Top-5 rank, the
-    /// 87-group catalog members ranked by this stroke group's cosine score.
+    public let candidateModelName: String?
+    public let candidateCalibrationSHA256: String?
+    /// Original Fold7 branch Top-5 order retained for audit; the visible rank
+    /// is the calibrated ensemble rank.
+    public let fold7Top5ClassIndices: [[Int]]
+    /// Unmodified Fold7 logits aligned with `fold7Top5ClassIndices`.
+    public let fold7Top5Logits: [[Float]]
+    /// For each symbol and fused ensemble Top-5 rank, Fold7 87-group members
+    /// ranked by this stroke group's prototype cosine score.
     public let fold7SimilarityCandidates: [[[HinotoriFold7SimilarityCandidate]]]
-    /// Independent top-5 from the auxiliary typeset head, aligned to each
-    /// source symbol. Its logits are never merged with the handwritten model.
+    /// Raw typeset-branch Top-5 retained as branch evidence. The full 222-class
+    /// output is calibrated and fused with Fold7 before candidate selection.
     public let typesetCandidates: [[HinotoriTypesetCandidate]]
     /// Geometry-preserving proposals emitted after Hinotori recognition.
     /// They never confirm a formula relation without an explicit user action.
@@ -35,10 +42,10 @@ public struct Inf6HandwrittenMathMLResult: Sendable, Equatable {
     public let positionSensitiveClassification: Inf6PositionSensitiveClassification?
     /// Similar-looking labels proposed without consulting coordinates, before
     /// the downstream position-sensitive classification runs.
-    public let similarityExpansion: Inf6SymbolSimilarityExpansion?
+    public let similarityExpansion: HinotoriVisualSubsetExpansion?
     public let isProvisional: Bool
 
-    public init(tokenIDs: [Int32], decodedExpression: String, mathML: String, grid9: Inf6FormulaGrid9, symbolLabels: [String] = [], symbolGridCellIndices: [Int] = [], symbolStrokeIndices: [[Int]] = [], candidateRanks: [Int?] = [], candidateLabels: [[String]] = [], fold7SimilarityCandidates: [[[HinotoriFold7SimilarityCandidate]]] = [], typesetCandidates: [[HinotoriTypesetCandidate]] = [], spatialAnalysis: Inf6SpatialRelationAnalysis? = nil, positionSensitiveClassification: Inf6PositionSensitiveClassification? = nil, similarityExpansion: Inf6SymbolSimilarityExpansion? = nil, isProvisional: Bool = false) {
+    public init(tokenIDs: [Int32], decodedExpression: String, mathML: String, grid9: Inf6FormulaGrid9, symbolLabels: [String] = [], symbolGridCellIndices: [Int] = [], symbolStrokeIndices: [[Int]] = [], candidateRanks: [Int?] = [], candidateLabels: [[String]] = [], candidateModelName: String? = nil, candidateCalibrationSHA256: String? = nil, fold7Top5ClassIndices: [[Int]] = [], fold7Top5Logits: [[Float]] = [], fold7SimilarityCandidates: [[[HinotoriFold7SimilarityCandidate]]] = [], typesetCandidates: [[HinotoriTypesetCandidate]] = [], spatialAnalysis: Inf6SpatialRelationAnalysis? = nil, positionSensitiveClassification: Inf6PositionSensitiveClassification? = nil, similarityExpansion: HinotoriVisualSubsetExpansion? = nil, isProvisional: Bool = false) {
         self.tokenIDs = tokenIDs
         self.decodedExpression = decodedExpression
         self.mathML = mathML
@@ -48,6 +55,10 @@ public struct Inf6HandwrittenMathMLResult: Sendable, Equatable {
         self.symbolStrokeIndices = symbolStrokeIndices
         self.candidateRanks = candidateRanks
         self.candidateLabels = candidateLabels
+        self.candidateModelName = candidateModelName
+        self.candidateCalibrationSHA256 = candidateCalibrationSHA256
+        self.fold7Top5ClassIndices = fold7Top5ClassIndices
+        self.fold7Top5Logits = fold7Top5Logits
         self.fold7SimilarityCandidates = fold7SimilarityCandidates
         self.typesetCandidates = typesetCandidates
         self.spatialAnalysis = spatialAnalysis
@@ -127,7 +138,7 @@ public struct HinotoriPositionSensitiveSubset: Codable, Equatable, Sendable {
 
 /// Complete ViT-generated visual partition. Membership is coordinate- and
 /// distance-independent; the original handwriting-model ranking is retained.
-public struct FirebirdVisualSimilaritySubsetCatalog: Codable, Equatable, Sendable {
+public struct HinotoriVisualSimilaritySubsetCatalog: Codable, Equatable, Sendable {
     public struct Vocabulary: Codable, Equatable, Sendable {
         public let sha256: String
         public let labelCount: Int
@@ -146,41 +157,41 @@ public struct FirebirdVisualSimilaritySubsetCatalog: Codable, Equatable, Sendabl
     public let vit: ViTProvenance
     public let subsets: [Subset]
 
-    public static func load(bundle: Bundle) throws -> FirebirdVisualSimilaritySubsetCatalog {
-        guard let url = bundle.url(forResource: "FirebirdVisualSimilaritySubsets", withExtension: "json"),
+    public static func load(bundle: Bundle) throws -> HinotoriVisualSimilaritySubsetCatalog {
+        guard let url = bundle.url(forResource: "HinotoriVisualSimilaritySubsets", withExtension: "json"),
               let vocabularyURL = bundle.url(forResource: "HinotoriVocabulary", withExtension: "json") else {
-            throw Inf6SymbolSimilarityExpanderError.definitionUnavailable
+            throw HinotoriVisualSubsetCandidateExpanderError.definitionUnavailable
         }
         do {
             let catalog = try JSONDecoder().decode(Self.self, from: Data(contentsOf: url, options: .mappedIfSafe))
             let vocabularyData = try Data(contentsOf: vocabularyURL, options: .mappedIfSafe)
             let vocabularySHA256 = SHA256.hash(data: vocabularyData).map { String(format: "%02x", $0) }.joined()
             guard catalog.vocabulary.sha256 == vocabularySHA256 else {
-                throw Inf6SymbolSimilarityExpanderError.invalidDefinition("部分集合と分類器の語彙SHA-256が一致しません")
+                throw HinotoriVisualSubsetCandidateExpanderError.invalidDefinition("部分集合と分類器の語彙SHA-256が一致しません")
             }
             return catalog
-        } catch let error as Inf6SymbolSimilarityExpanderError {
+        } catch let error as HinotoriVisualSubsetCandidateExpanderError {
             throw error
         } catch {
-            throw Inf6SymbolSimilarityExpanderError.invalidDefinition(error.localizedDescription)
+            throw HinotoriVisualSubsetCandidateExpanderError.invalidDefinition(error.localizedDescription)
         }
     }
 
     public func validate(vocabulary: HinotoriVocabulary) throws {
         let members = subsets.flatMap(\.members)
-        guard schema == "firebird-vit-font-and-handwriting-confusion-subsets-v3",
+        guard schema == "hinotori-vit-visual-similarity-subsets-v1",
               vocabulary.labels.count == HinotoriCoreMLExecutor.classCount,
               !subsets.isEmpty,
               subsets.allSatisfy({ !$0.subsetKey.isEmpty && !$0.members.isEmpty && Set($0.members).count == $0.members.count && $0.members.contains($0.subsetKey) }),
               members.count == HinotoriCoreMLExecutor.classCount,
               Set(members).count == members.count,
               Set(members) == Set(vocabulary.labels) else {
-            throw Inf6SymbolSimilarityExpanderError.invalidDefinition("ViT部分集合が229記号を重複なく完全分割していません")
+            throw HinotoriVisualSubsetCandidateExpanderError.invalidDefinition("ViT部分集合が229記号を重複なく完全分割していません")
         }
     }
 }
 
-public struct Inf6SymbolSimilarityExpansion: Codable, Equatable, Sendable {
+public struct HinotoriVisualSubsetExpansion: Codable, Equatable, Sendable {
     public struct Symbol: Codable, Equatable, Sendable {
         public struct Supplement: Codable, Equatable, Sendable {
             public let classIndex: Int
@@ -203,7 +214,7 @@ public struct Inf6SymbolSimilarityExpansion: Codable, Equatable, Sendable {
     public let symbols: [Symbol]
 }
 
-public enum Inf6SymbolSimilarityExpanderError: LocalizedError, Equatable {
+public enum HinotoriVisualSubsetCandidateExpanderError: LocalizedError, Equatable {
     case definitionUnavailable
     case invalidDefinition(String)
     case invalidCandidates(String)
@@ -220,40 +231,40 @@ public enum Inf6SymbolSimilarityExpanderError: LocalizedError, Equatable {
 /// Expands model candidates through ViT visual subsets before position rules.
 /// Membership reads neither stroke coordinates nor handwriting feature distance.
 /// Added alternatives retain no fabricated model score.
-public enum Inf6SymbolSimilarityExpander {
-    public static let ruleVersion = "firebird-vit-symmetric-subset-expansion-v2"
+public enum HinotoriVisualSubsetCandidateExpander {
+    public static let ruleVersion = "hinotori-visual-subset-expansion-v1"
 
     public static func expand(
         candidates: [[HinotoriCandidate]],
-        catalog: FirebirdVisualSimilaritySubsetCatalog,
+        catalog: HinotoriVisualSimilaritySubsetCatalog,
         vocabulary: HinotoriVocabulary
-    ) throws -> Inf6SymbolSimilarityExpansion {
+    ) throws -> HinotoriVisualSubsetExpansion {
         try catalog.validate(vocabulary: vocabulary)
         guard !candidates.isEmpty else {
-            throw Inf6SymbolSimilarityExpanderError.invalidCandidates("候補記号がありません")
+            throw HinotoriVisualSubsetCandidateExpanderError.invalidCandidates("候補記号がありません")
         }
         let subsetByLabel = Dictionary(uniqueKeysWithValues: catalog.subsets.flatMap { subset in
             subset.members.map { ($0, subset) }
         })
-        let records = try candidates.enumerated().map { symbolIndex, modelCandidates -> Inf6SymbolSimilarityExpansion.Symbol in
+        let records = try candidates.enumerated().map { symbolIndex, modelCandidates -> HinotoriVisualSubsetExpansion.Symbol in
             guard !modelCandidates.isEmpty,
                   Set(modelCandidates.map(\.classIndex)).count == modelCandidates.count,
                   modelCandidates.allSatisfy({ vocabulary.labels.indices.contains($0.classIndex) && vocabulary.labels[$0.classIndex] == $0.label }) else {
-                throw Inf6SymbolSimilarityExpanderError.invalidCandidates("symbol-\(symbolIndex)のモデル候補が語彙またはclass indexと一致しません")
+                throw HinotoriVisualSubsetCandidateExpanderError.invalidCandidates("symbol-\(symbolIndex)のモデル候補が語彙またはclass indexと一致しません")
             }
             let modelClassIndices = Set(modelCandidates.map(\.classIndex))
-            var supplementsByClass: [Int: Inf6SymbolSimilarityExpansion.Symbol.Supplement] = [:]
+            var supplementsByClass: [Int: HinotoriVisualSubsetExpansion.Symbol.Supplement] = [:]
             for modelCandidate in modelCandidates {
                 guard let subset = subsetByLabel[modelCandidate.label] else {
-                    throw Inf6SymbolSimilarityExpanderError.invalidDefinition("分類候補に対応するViT部分集合がありません: \(modelCandidate.label)")
+                    throw HinotoriVisualSubsetCandidateExpanderError.invalidDefinition("分類候補に対応するViT部分集合がありません: \(modelCandidate.label)")
                 }
                 for label in subset.members {
                     guard let classIndex = vocabulary.labels.firstIndex(of: label) else {
-                        throw Inf6SymbolSimilarityExpanderError.invalidDefinition("ViT部分集合の記号が語彙にありません: \(label)")
+                        throw HinotoriVisualSubsetCandidateExpanderError.invalidDefinition("ViT部分集合の記号が語彙にありません: \(label)")
                     }
                     guard !modelClassIndices.contains(classIndex) else { continue }
                     if let previous = supplementsByClass[classIndex] {
-                        supplementsByClass[classIndex] = Inf6SymbolSimilarityExpansion.Symbol.Supplement(
+                        supplementsByClass[classIndex] = HinotoriVisualSubsetExpansion.Symbol.Supplement(
                             classIndex: classIndex,
                             label: label,
                             matchedModelClassIndices: Array(Set(previous.matchedModelClassIndices + [modelCandidate.classIndex])).sorted(),
@@ -262,12 +273,12 @@ public enum Inf6SymbolSimilarityExpander {
                             evidence: previous.evidence
                         )
                     } else {
-                        supplementsByClass[classIndex] = Inf6SymbolSimilarityExpansion.Symbol.Supplement(
+                        supplementsByClass[classIndex] = HinotoriVisualSubsetExpansion.Symbol.Supplement(
                             classIndex: classIndex,
                             label: label,
                             matchedModelClassIndices: [modelCandidate.classIndex],
                             subsetKey: subset.subsetKey,
-                            origin: "firebird-vit-visual-subset",
+                            origin: "hinotori-visual-subset",
                             evidence: "ViT visual subset \(subset.subsetKey); coordinate-independent membership; no model score assigned; user confirmation required"
                         )
                     }
@@ -347,6 +358,7 @@ public struct Inf6SpatialRelationAnalysis: Codable, Equatable, Sendable {
         public let classIndex: Int
         public let label: String
         public let logit: Float
+        public let ensembleProbability: Float?
     }
 
     public struct Symbol: Codable, Equatable, Sendable, Identifiable {
@@ -463,7 +475,7 @@ public enum Inf6SpatialRelationAnalyzer {
             }
             rawSymbols.append((
                 strokeIndices: group,
-                candidates: candidates[groupIndex].map { .init(classIndex: $0.classIndex, label: $0.label, logit: $0.logit) },
+                candidates: candidates[groupIndex].map { .init(classIndex: $0.classIndex, label: $0.label, logit: $0.logit, ensembleProbability: $0.ensembleProbability) },
                 bounds: .init(minX: Double(minX), minY: Double(minY), maxX: Double(maxX), maxY: Double(maxY))
             ))
         }
@@ -602,7 +614,7 @@ public enum Inf6PositionSensitiveSymbolClassifier {
     public static func classify(
         analysis: Inf6SpatialRelationAnalysis,
         subset: HinotoriPositionSensitiveSubset,
-        similarityExpansion: Inf6SymbolSimilarityExpansion? = nil,
+        similarityExpansion: HinotoriVisualSubsetExpansion? = nil,
         vocabulary: HinotoriVocabulary? = nil
     ) -> Inf6PositionSensitiveClassification {
         let symbols = analysis.symbols.map { symbol in
@@ -659,20 +671,20 @@ public enum Inf6PositionSensitiveSymbolClassifier {
     public static func candidateLabels(
         analysis: Inf6SpatialRelationAnalysis,
         classification: Inf6PositionSensitiveClassification,
-        similarityExpansion: Inf6SymbolSimilarityExpansion
+        similarityExpansion: HinotoriVisualSubsetExpansion
     ) throws -> [[String]] {
         guard classification.ruleVersion == ruleVersion,
-              similarityExpansion.catalogSchema == "firebird-vit-font-and-handwriting-confusion-subsets-v3",
+              similarityExpansion.catalogSchema == "hinotori-vit-visual-similarity-subsets-v1",
               similarityExpansion.vocabularySHA256.count == 64,
               similarityExpansion.vitCheckpointSHA256.count == 64,
               similarityExpansion.vocabularySHA256.allSatisfy(\.isHexDigit),
               similarityExpansion.vitCheckpointSHA256.allSatisfy(\.isHexDigit),
-              similarityExpansion.ruleVersion == Inf6SymbolSimilarityExpander.ruleVersion,
+              similarityExpansion.ruleVersion == HinotoriVisualSubsetCandidateExpander.ruleVersion,
               analysis.symbols.count == classification.symbols.count,
               analysis.symbols.count == similarityExpansion.symbols.count,
               analysis.symbols.map(\.id) == classification.symbols.map(\.sourceSymbolID),
               analysis.symbols.map(\.id) == similarityExpansion.symbols.map(\.sourceSymbolID) else {
-            throw Inf6SymbolSimilarityExpanderError.invalidCandidates("モデル・類似・位置成果物の記号IDまたは版が一致しません")
+            throw HinotoriVisualSubsetCandidateExpanderError.invalidCandidates("モデル・類似・位置成果物の記号IDまたは版が一致しません")
         }
         return try zip(zip(analysis.symbols, classification.symbols), similarityExpansion.symbols).map { (pair, similarity) in
             let (symbol, position) = pair
@@ -680,7 +692,7 @@ public enum Inf6PositionSensitiveSymbolClassifier {
             guard similarity.modelCandidateClassIndices == modelIndices,
                   Set(similarity.supplements.map(\.classIndex)).count == similarity.supplements.count,
                   similarity.supplements.allSatisfy({ supplement in
-                      supplement.origin == "firebird-vit-visual-subset"
+                      supplement.origin == "hinotori-visual-subset"
                           && !modelIndices.contains(supplement.classIndex)
                           && (0..<HinotoriCoreMLExecutor.classCount).contains(supplement.classIndex)
                           && !supplement.label.isEmpty
@@ -691,13 +703,13 @@ public enum Inf6PositionSensitiveSymbolClassifier {
                   let choices = position.candidateChoiceClassIndices,
                   Set(choices).count == choices.count,
                   Set(choices) == Set(modelIndices + similarity.supplements.map(\.classIndex)) else {
-                throw Inf6SymbolSimilarityExpanderError.invalidCandidates("\(symbol.id)の候補由来または位置判定後の候補集合が不正です")
+                throw HinotoriVisualSubsetCandidateExpanderError.invalidCandidates("\(symbol.id)の候補由来または位置判定後の候補集合が不正です")
             }
             let labelsByClassIndex = Dictionary(uniqueKeysWithValues: symbol.candidates.map { ($0.classIndex, $0.label) })
                 .merging(Dictionary(uniqueKeysWithValues: similarity.supplements.map { ($0.classIndex, $0.label) }), uniquingKeysWith: { first, _ in first })
             return try choices.map { classIndex in
                 guard let label = labelsByClassIndex[classIndex] else {
-                    throw Inf6SymbolSimilarityExpanderError.invalidCandidates("\(symbol.id)の候補class index \(classIndex)を復元できません")
+                    throw HinotoriVisualSubsetCandidateExpanderError.invalidCandidates("\(symbol.id)の候補class index \(classIndex)を復元できません")
                 }
                 return label
             }
@@ -967,11 +979,13 @@ public enum Inf6HandwrittenFormulaRecognition {
     public static func orderGroupsLeftToRight(
         groups: [[Int]],
         candidates: [[HinotoriCandidate]],
+        classLogits: [[Float]],
         classFeatureDistances: [[Float]],
         fold7SimilarityCandidates: [[[HinotoriFold7SimilarityCandidate]]] = [],
         strokes: [HinotoriStroke]
-    ) throws -> (groups: [[Int]], candidates: [[HinotoriCandidate]], classFeatureDistances: [[Float]], fold7SimilarityCandidates: [[[HinotoriFold7SimilarityCandidate]]]) {
+    ) throws -> (groups: [[Int]], candidates: [[HinotoriCandidate]], classLogits: [[Float]], classFeatureDistances: [[Float]], fold7SimilarityCandidates: [[[HinotoriFold7SimilarityCandidate]]]) {
         guard groups.count == candidates.count,
+              groups.count == classLogits.count,
               groups.count == classFeatureDistances.count,
               !groups.isEmpty,
               groups.allSatisfy({ !$0.isEmpty }),
@@ -980,7 +994,7 @@ public enum Inf6HandwrittenFormulaRecognition {
               fold7SimilarityCandidates.isEmpty || zip(candidates, fold7SimilarityCandidates).allSatisfy({ pair in pair.0.count == pair.1.count }) else {
             throw Inf6HandwrittenFormulaError.recognitionFailed("Hinotoriの候補群対応が不正です")
         }
-        let ordered = try groups.enumerated().map { index, group -> (index: Int, group: [Int], candidates: [HinotoriCandidate], distances: [Float], similarities: [[HinotoriFold7SimilarityCandidate]], minX: CGFloat, minY: CGFloat) in
+        let ordered = try groups.enumerated().map { index, group -> (index: Int, group: [Int], candidates: [HinotoriCandidate], logits: [Float], distances: [Float], similarities: [[HinotoriFold7SimilarityCandidate]], minX: CGFloat, minY: CGFloat) in
             guard group.allSatisfy(strokes.indices.contains) else {
                 throw Inf6HandwrittenFormulaError.recognitionFailed("Hinotoriの候補群が入力ストロークを参照していません")
             }
@@ -992,13 +1006,17 @@ public enum Inf6HandwrittenFormulaRecognition {
                   classFeatureDistances[index].allSatisfy({ $0.isFinite && (0...2).contains($0) }) else {
                 throw Inf6HandwrittenFormulaError.recognitionFailed("Hinotoriのクラス特徴距離が229件の有限値ではありません")
             }
-            return (index, group, candidates[index], classFeatureDistances[index], fold7SimilarityCandidates.isEmpty ? [] : fold7SimilarityCandidates[index], minX, minY)
+            guard classLogits[index].count == HinotoriCoreMLExecutor.classCount,
+                  classLogits[index].allSatisfy(\.isFinite) else {
+                throw Inf6HandwrittenFormulaError.recognitionFailed("Fold7の未加工分類ロジットが229件の有限値ではありません")
+            }
+            return (index, group, candidates[index], classLogits[index], classFeatureDistances[index], fold7SimilarityCandidates.isEmpty ? [] : fold7SimilarityCandidates[index], minX, minY)
         }.sorted {
             if $0.minX != $1.minX { return $0.minX < $1.minX }
             if $0.minY != $1.minY { return $0.minY < $1.minY }
             return $0.index < $1.index
         }
-        return (ordered.map { $0.group }, ordered.map { $0.candidates }, ordered.map { $0.distances }, ordered.map { $0.similarities })
+        return (ordered.map { $0.group }, ordered.map { $0.candidates }, ordered.map { $0.logits }, ordered.map { $0.distances }, ordered.map { $0.similarities })
     }
 
     public static func recognize(drawing: PKDrawing, centerFraction: CGFloat = 0.44, surfaceSize: CGSize? = nil, bundle: Bundle = .main, symbolRecognizer: (any HinotoriSymbolRecognitionEngine)? = nil, cancellationCheck: @Sendable () -> Bool = { false }) throws -> Inf6HandwrittenMathMLResult {
@@ -1023,6 +1041,7 @@ public enum Inf6HandwrittenFormulaRecognition {
         let orderedRecognition = try orderGroupsLeftToRight(
             groups: recognition.groups,
             candidates: recognition.candidates,
+            classLogits: recognition.classLogits,
             classFeatureDistances: recognition.classFeatureDistances,
             fold7SimilarityCandidates: recognition.fold7SimilarityCandidates,
             strokes: strokes
@@ -1032,16 +1051,58 @@ public enum Inf6HandwrittenFormulaRecognition {
                 !cell.strokeIndices.isEmpty && Set(group).isSubset(of: Set(cell.strokeIndices))
             })?.index ?? 5
         }
-        let vocabulary = try HinotoriVocabulary.load(bundle: bundle)
-        let similarityCatalog = try FirebirdVisualSimilaritySubsetCatalog.load(bundle: bundle)
-        let similarityExpansion = try Inf6SymbolSimilarityExpander.expand(
-            candidates: orderedRecognition.candidates,
+        let vocabulary = try HinotoriVocabulary.loadFold7(bundle: bundle)
+        let similarityCatalog = try HinotoriVisualSimilaritySubsetCatalog.load(bundle: bundle)
+        let typesetClassifier = try HinotoriTypesetAuxiliaryCoreMLClassifier(bundle: bundle)
+        let candidateEnsemble = try HinotoriSymbolCandidateEnsemble(bundle: bundle)
+        let allTypesetCandidates = try orderedRecognition.groups.enumerated().map { index, group -> [HinotoriTypesetCandidate] in
+            if cancellationCheck() { throw Inf6HandwrittenFormulaError.cancelled }
+            let groupStrokes = try group.map { strokeIndex -> [CGPoint] in
+                guard strokes.indices.contains(strokeIndex) else {
+                    throw Inf6HandwrittenFormulaError.recognitionFailed("活字候補が元ストローク範囲外を参照しています")
+                }
+                return strokes[strokeIndex].points
+            }
+            let candidates = try typesetClassifier.classify(
+                callerDesignatedSymbolStrokeGroup: groupStrokes,
+                sourceCoordinateSpace: .chatTextViewLocalPoints,
+                topK: 222
+            )
+            guard candidates.count == 222,
+                  candidates.allSatisfy({ $0.headCheckpointSHA256 == HinotoriTypesetAuxiliaryCoreMLClassifier.headCheckpointSHA256 }),
+                  Set(candidates.map(\.classIndex)).count == 222 else {
+                throw Inf6HandwrittenFormulaError.recognitionFailed("記号\(index + 1)の活字モデル全クラス出力が不正です")
+            }
+            return candidates
+        }
+        let ensembleCandidates = try orderedRecognition.groups.indices.map { index in
+            try candidateEnsemble.rank(
+                fold7Logits: orderedRecognition.classLogits[index],
+                typesetCandidates: allTypesetCandidates[index],
+                vocabulary: vocabulary,
+                topK: 5
+            )
+        }
+        guard let fold7Engine = activeSymbolRecognizer as? HinotoriFormulaFold7Engine else {
+            throw Inf6HandwrittenFormulaError.recognitionFailed("火の鳥の87群コサイン展開器が認識エンジンに接続されていません")
+        }
+        let fusedFold7SimilarityCandidates = try orderedRecognition.groups.indices.map { groupIndex in
+            try ensembleCandidates[groupIndex].map { candidate in
+                try fold7Engine.similarCandidates(
+                    forClassIndex: candidate.classIndex,
+                    classCosineSimilarities: orderedRecognition.classFeatureDistances[groupIndex].map { 1 - $0 }
+                ).candidates
+            }
+        }
+        let typesetCandidates = allTypesetCandidates.map { Array($0.prefix(5)) }
+        let similarityExpansion = try HinotoriVisualSubsetCandidateExpander.expand(
+            candidates: ensembleCandidates,
             catalog: similarityCatalog,
             vocabulary: vocabulary
         )
         let spatialAnalysis = try Inf6SpatialRelationAnalyzer.analyze(
             groups: orderedRecognition.groups,
-            candidates: orderedRecognition.candidates,
+            candidates: ensembleCandidates,
             strokes: strokes
         )
         let subset = try HinotoriPositionSensitiveSubset.load(bundle: bundle)
@@ -1052,7 +1113,7 @@ public enum Inf6HandwrittenFormulaRecognition {
             similarityExpansion: similarityExpansion,
             vocabulary: vocabulary
         )
-        guard positionSensitiveClassification.symbols.count == orderedRecognition.candidates.count else {
+        guard positionSensitiveClassification.symbols.count == ensembleCandidates.count else {
             throw Inf6HandwrittenFormulaError.recognitionFailed("位置依存記号分類の記号数がHinotori候補数と一致しません")
         }
         let reorderedCandidates = try zip(spatialAnalysis.symbols, positionSensitiveClassification.symbols).map { symbol, classification in
@@ -1080,45 +1141,14 @@ public enum Inf6HandwrittenFormulaRecognition {
                 return label
             }
         }
-        let typesetClassifier = try HinotoriTypesetAuxiliaryCoreMLClassifier(bundle: bundle)
-        let typesetCandidates = try orderedRecognition.groups.enumerated().map { index, group -> [HinotoriTypesetCandidate] in
-            if cancellationCheck() { throw Inf6HandwrittenFormulaError.cancelled }
-            let groupStrokes = try group.map { strokeIndex -> [CGPoint] in
-                guard strokes.indices.contains(strokeIndex) else {
-                    throw Inf6HandwrittenFormulaError.recognitionFailed("活字候補が元ストローク範囲外を参照しています")
-                }
-                return strokes[strokeIndex].points
+        let candidateLabelsWithFold7Similarities = try selectableCandidates.enumerated().map { index, existing -> [String] in
+            guard fusedFold7SimilarityCandidates.indices.contains(index),
+                  fusedFold7SimilarityCandidates[index].count == ensembleCandidates[index].count else {
+                throw Inf6HandwrittenFormulaError.recognitionFailed("火の鳥Top-5順位と87群コサイン候補の対応が不正です")
             }
-            let candidates = try typesetClassifier.classify(
-                callerDesignatedSymbolStrokeGroup: groupStrokes,
-                sourceCoordinateSpace: .chatTextViewLocalPoints,
-                topK: 5
-            )
-            guard candidates.count == 5,
-                  candidates.allSatisfy({ $0.headCheckpointSHA256 == HinotoriTypesetAuxiliaryCoreMLClassifier.headCheckpointSHA256 }),
-                  Set(candidates.map(\.classIndex)).count == candidates.count,
-                  !candidates.isEmpty else {
-                throw Inf6HandwrittenFormulaError.recognitionFailed("記号\(index + 1)の活字候補契約が不正です")
-            }
-            return candidates
-        }
-        let candidateLabelsWithTypeset = try zip(selectableCandidates, typesetCandidates).map { existing, typeset -> [String] in
             var labels = existing
-            for candidate in typeset where !labels.contains(candidate.label) {
+            for candidate in fusedFold7SimilarityCandidates[index].flatMap({ $0 }) where !labels.contains(candidate.label) {
                 labels.append(candidate.label)
-            }
-            return labels
-        }
-        let candidateLabelsWithFold7Similarities = try candidateLabelsWithTypeset.enumerated().map { index, existing -> [String] in
-            guard orderedRecognition.fold7SimilarityCandidates.isEmpty || orderedRecognition.fold7SimilarityCandidates.indices.contains(index),
-                  orderedRecognition.fold7SimilarityCandidates.isEmpty || orderedRecognition.fold7SimilarityCandidates[index].count == orderedRecognition.candidates[index].count else {
-                throw Inf6HandwrittenFormulaError.recognitionFailed("Fold7のTop-5順位と87類似群候補の対応が不正です")
-            }
-            var labels = existing
-            if orderedRecognition.fold7SimilarityCandidates.indices.contains(index) {
-                for candidate in orderedRecognition.fold7SimilarityCandidates[index].flatMap({ $0 }) where !labels.contains(candidate.label) {
-                    labels.append(candidate.label)
-                }
             }
             return labels
         }
@@ -1130,14 +1160,18 @@ public enum Inf6HandwrittenFormulaRecognition {
             symbolLabels: reorderedCandidates.map { $0[0].label },
             symbolGridCellIndices: groupCells,
             symbolStrokeIndices: orderedRecognition.groups,
-            candidateRanks: try zip(orderedRecognition.candidates, reorderedCandidates).map { original, reordered in
+            candidateRanks: try zip(ensembleCandidates, reorderedCandidates).map { original, reordered in
                 guard let rank = original.firstIndex(where: { $0.classIndex == reordered[0].classIndex }) else {
                     throw Inf6HandwrittenFormulaError.recognitionFailed("位置依存記号分類後の先頭候補が元のHinotori候補にありません")
                 }
                 return rank
             },
             candidateLabels: candidateLabelsWithFold7Similarities,
-            fold7SimilarityCandidates: orderedRecognition.fold7SimilarityCandidates,
+            candidateModelName: HinotoriSymbolCandidateEnsemble.modelName,
+            candidateCalibrationSHA256: candidateEnsemble.calibrationSHA256,
+            fold7Top5ClassIndices: orderedRecognition.candidates.map { $0.map(\.classIndex) },
+            fold7Top5Logits: orderedRecognition.candidates.map { $0.map(\.logit) },
+            fold7SimilarityCandidates: fusedFold7SimilarityCandidates,
             typesetCandidates: typesetCandidates,
             spatialAnalysis: spatialAnalysis,
             positionSensitiveClassification: positionSensitiveClassification,

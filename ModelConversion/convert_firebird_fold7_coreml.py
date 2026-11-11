@@ -53,7 +53,7 @@ def main() -> None:
     out = package.parent
     manifest_path = out / "HinotoriFold7CoreML.manifest.json"
     vocabulary_out = out / "HinotoriFold7Vocabulary.json"
-    similarity_out = out / "HinotoriSimilarityGroups87.json"
+    similarity_out = out / "HinotoriPrototypeCosineSimilarityGroups.json"
     if any(path.exists() for path in (package, manifest_path, vocabulary_out, similarity_out)):
         raise FileExistsError("refusing to overwrite an existing Hinotori Fold-07 export artifact")
 
@@ -119,7 +119,7 @@ def main() -> None:
             "displayGlyphs": members,
         })
     similarity_document = {
-        "schema": "hinotori-fold7-provisional-similarity-groups-v1",
+        "schema": "hinotori-fold7-prototype-cosine-groups-v1",
         "sourceContract": "cycle662-groups-under-15",
         "sourceCSV_SHA256": sha256(groups_bytes),
         "labelManifestSHA256": sha256(label_manifest_bytes),
@@ -169,7 +169,7 @@ def main() -> None:
         "input": {"name": "inkRaster", "dtype": "float32", "shape": [1, 1, 64, 64], "preprocessing": "rasterize_group from hinotori_raster_classifier.py; canonical isotropic scale; fixed 3x3 dilation"},
         "outputs": {"classLogits": {"shape": [1, CLASS_COUNT]}, "queryEmbedding": {"shape": [1, EMBEDDING_DIMENSION], "l2Normalized": True}},
         "classifierLogitScale": float(run["arcFaceScale"]),
-        "similarity": {"file": similarity_out.name, "sha256": sha256(similarity_bytes), "sourceCSV_SHA256": sha256(groups_bytes), "groupCount": len(groups), "role": "for each group intersecting exact TopK, rank its non-TopK members by query-embedding cosine similarity to normalized class prototypes; merge overlapping groups by label and retain contributing group IDs; scores are cosine similarities logit/classifierLogitScale, not neural logits"},
+        "similarity": {"file": similarity_out.name, "sha256": sha256(similarity_bytes), "sourceCSV_SHA256": sha256(groups_bytes), "groupCount": len(groups), "role": "for each selected Hinotori ensemble Top-5 class, expand only its catalog groups; rank other members by query-embedding cosine similarity to normalized class prototypes; merge overlapping memberships by label and retain group IDs; cosine values are candidate-ordering evidence, not ensemble probabilities"},
         "selectedInnerValidation": metrics.get("classifier", {}),
         "outerTestRead": False,
         "conversion": {"coremltools": ct.__version__, "torch": torch.__version__, "python": platform.python_version(), "format": "neuralNetwork", "weightStoragePrecision": "float32", "computePrecision": "float16", "minimumDeploymentTarget": "iOS13", "computeUnitPreference": "CPU_AND_NEURAL_ENGINE", "aneDispatchVerified": False},

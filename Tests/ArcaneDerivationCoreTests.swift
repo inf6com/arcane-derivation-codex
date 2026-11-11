@@ -546,6 +546,7 @@ final class ArcaneDerivationCoreTests: XCTestCase {
         let ordered = try Inf6HandwrittenFormulaRecognition.orderGroupsLeftToRight(
             groups: [[0], [1]],
             candidates: [[right], [left]],
+            classLogits: [[Float](repeating: 1, count: 229), [Float](repeating: 2, count: 229)],
             classFeatureDistances: [Array(repeating: 0.8, count: 229), Array(repeating: 0.7, count: 229)],
             strokes: strokes
         )
@@ -563,6 +564,67 @@ final class ArcaneDerivationCoreTests: XCTestCase {
         let stroke = makeStroke(points: [CGPoint(x: 10, y: 10), CGPoint(x: 40, y: 40)])
         let result = try Inf6HandwrittenFormulaRecognition.recognize(drawing: PKDrawing(strokes: [stroke]))
         XCTAssertTrue(result.isProvisional)
+    }
+
+    func testHinotoriEndToEndCoreMLLatencyOnPhysicalIPad() throws {
+#if targetEnvironment(simulator)
+        throw XCTSkip("ANE acceptance measurement must run on the physical iPad.")
+#endif
+        let strokes = [
+            makeStroke(points: [
+                CGPoint(x: 20, y: 20),
+                CGPoint(x: 32, y: 34),
+                CGPoint(x: 45, y: 50),
+                CGPoint(x: 58, y: 66),
+                CGPoint(x: 72, y: 82),
+            ]),
+            makeStroke(points: [
+                CGPoint(x: 72, y: 20),
+                CGPoint(x: 58, y: 34),
+                CGPoint(x: 45, y: 50),
+                CGPoint(x: 32, y: 66),
+                CGPoint(x: 20, y: 82),
+            ]),
+        ]
+        let drawing = PKDrawing(strokes: strokes)
+
+        // Warm the loaded Core ML models once, then measure the exact production
+        // handwriting pipeline, including segmentation, Fold7, similarity,
+        // position analysis, and typeset candidate generation.
+        let warmup = try Inf6HandwrittenFormulaRecognition.recognize(drawing: drawing)
+        XCTAssertFalse(warmup.candidateLabels.isEmpty)
+        XCTAssertEqual(warmup.candidateLabels.count, warmup.symbolStrokeIndices.count)
+        XCTAssertEqual(warmup.typesetCandidates.count, warmup.candidateLabels.count)
+        XCTAssertTrue(warmup.typesetCandidates.allSatisfy { $0.count == 5 })
+        XCTAssertNotNil(warmup.spatialAnalysis)
+        XCTAssertNotNil(warmup.similarityExpansion)
+        XCTAssertNotNil(warmup.positionSensitiveClassification)
+
+        var elapsedMilliseconds: [Double] = []
+        for _ in 0..<10 {
+            let start = CFAbsoluteTimeGetCurrent()
+            let result = try Inf6HandwrittenFormulaRecognition.recognize(drawing: drawing)
+            elapsedMilliseconds.append((CFAbsoluteTimeGetCurrent() - start) * 1_000)
+            XCTAssertEqual(result.candidateLabels.count, warmup.candidateLabels.count)
+            XCTAssertTrue(result.typesetCandidates.allSatisfy { $0.count == 5 })
+        }
+        let sorted = elapsedMilliseconds.sorted()
+        let median = sorted[sorted.count / 2]
+        let p90 = sorted[Int(Double(sorted.count - 1) * 0.9)]
+        let summary = String(
+            format: "Hinotori iPad end-to-end latency ms: n=%d median=%.2f p90=%.2f min=%.2f max=%.2f; groups=%d; candidates/group=%d; Fold7 epoch=%d; segmenter epoch=%d",
+            sorted.count,
+            median,
+            p90,
+            sorted[0],
+            sorted[sorted.count - 1],
+            warmup.candidateLabels.count,
+            warmup.candidateLabels.first?.count ?? 0,
+            HinotoriFold7CoreMLClassifier.selectedEpoch,
+            HinotoriFormulaFold7Engine.selectedEpoch
+        )
+        NSLog("[HinotoriANEAcceptance] %@", summary)
+        print("[HinotoriANEAcceptance] \(summary)")
     }
 
     func testFormulaGrid9AcceptsSingleAxisStrokeAndAssignsOneCell() throws {

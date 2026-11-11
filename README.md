@@ -15,3 +15,7 @@ This is a source-only portfolio snapshot taken from the committed DevOps revisio
 - `ArcaneDerivation.xcodeproj/`, `project.yml`: project configuration
 
 No license is declared in this snapshot.
+
+## Snapshot synchronization
+
+Synchronized from Azure DevOps commit `a70e1436` on 2026-11-12. Training runs, checkpoints, model weights, compiled Core ML packages, generated evaluation output, release media, and credentials are excluded.

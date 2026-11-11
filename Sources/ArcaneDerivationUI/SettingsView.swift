@@ -129,7 +129,7 @@ struct SettingsView: View {
             if case .success(let urls) = result, let url = urls.first {
                 do {
                     try onRootChange(url.path)
-                    rootPath = url.path
+                    rootPath = Inf6EntityImageLocation.displayPath ?? url.path
                     rootMessage = nil
                     paperRecords = []
                     Task { await reloadWorkspaceData() }
@@ -142,7 +142,7 @@ struct SettingsView: View {
             importPaper(result)
         }
         .navigationDestination(item: $selectedPaper) { paper in
-            PaperCropEditorView(rootPath: rootPath, paper: paper) { crop in
+            PaperCropEditorView(language: language, rootPath: rootPath, paper: paper) { crop in
                 paperMessage = language == .japanese ? "保存しました: \(crop.title)" : "Saved: \(crop.title)"
                 Task { await reloadWorkspaceData() }
             }

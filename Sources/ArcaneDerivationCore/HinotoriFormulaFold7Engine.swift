@@ -16,6 +16,10 @@ public final class HinotoriFormulaFold7Engine: HinotoriSymbolRecognitionEngine {
     private let groupingThreshold: Float
     private let classifier: HinotoriFold7CoreMLClassifier
 
+    public func similarCandidates(forClassIndex classIndex: Int, classCosineSimilarities: [Float]) throws -> HinotoriFold7SimilarityExpansion {
+        try classifier.similarCandidates(forClassIndex: classIndex, classCosineSimilarities: classCosineSimilarities)
+    }
+
     public init(bundle: Bundle = .main) throws {
         guard let modelURL = bundle.url(forResource: "HinotoriFormulaSegmenter", withExtension: "mlmodelc"),
               let manifestURL = bundle.url(forResource: "HinotoriFormulaSegmenter.manifest", withExtension: "json") else {
@@ -90,9 +94,11 @@ public final class HinotoriFormulaFold7Engine: HinotoriSymbolRecognitionEngine {
         }
 
         var candidates: [[HinotoriCandidate]] = []
+        var classLogits: [[Float]] = []
         var featureDistances: [[Float]] = []
         var similarityCandidates: [[[HinotoriFold7SimilarityCandidate]]] = []
         candidates.reserveCapacity(ordered.count)
+        classLogits.reserveCapacity(ordered.count)
         featureDistances.reserveCapacity(ordered.count)
         similarityCandidates.reserveCapacity(ordered.count)
         for group in ordered {
@@ -103,6 +109,7 @@ public final class HinotoriFormulaFold7Engine: HinotoriSymbolRecognitionEngine {
             candidates.append(prediction.candidates.prefix(topK).map {
                 HinotoriCandidate(classIndex: $0.classIndex, label: $0.label, logit: $0.logit)
             })
+            classLogits.append(prediction.classLogits)
             featureDistances.append(prediction.classCosineSimilarities.map { 1 - $0 })
             similarityCandidates.append(try prediction.candidates.prefix(topK).map { selected in
                 try classifier.similarCandidates(for: selected, from: prediction).candidates
@@ -111,6 +118,7 @@ public final class HinotoriFormulaFold7Engine: HinotoriSymbolRecognitionEngine {
         return HinotoriRecognition(
             groups: ordered,
             candidates: candidates,
+            classLogits: classLogits,
             classFeatureDistances: featureDistances,
             fold7SimilarityCandidates: similarityCandidates
         )

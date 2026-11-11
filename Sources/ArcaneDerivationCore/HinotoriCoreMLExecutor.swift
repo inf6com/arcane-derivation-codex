@@ -43,12 +43,26 @@ public struct HinotoriStroke: Sendable, Equatable {
 public struct HinotoriCandidate: Sendable, Equatable {
     public let classIndex: Int
     public let label: String
+    /// Unmodified Fold7 classifier logit. Similarity and position candidates
+    /// have no such logit; ensemble candidates retain the Fold7 value here.
     public let logit: Float
+    /// Probability after calibrated Fold7/typeset score fusion; nil for a
+    /// candidate that has not passed through the ensemble stage.
+    public let ensembleProbability: Float?
+
+    public init(classIndex: Int, label: String, logit: Float, ensembleProbability: Float? = nil) {
+        self.classIndex = classIndex
+        self.label = label
+        self.logit = logit
+        self.ensembleProbability = ensembleProbability
+    }
 }
 
 public struct HinotoriRecognition: Sendable, Equatable {
     public let groups: [[Int]]
     public let candidates: [[HinotoriCandidate]]
+    /// Full unmodified 229-way Fold7 logits per symbol, aligned to vocabulary.
+    public let classLogits: [[Float]]
     /// Per symbol, cosine distance from its query embedding to each class prototype.
     /// Indexing follows the fixed Hinotori vocabulary (0..<229).
     public let classFeatureDistances: [[Float]]
@@ -302,6 +316,52 @@ public struct HinotoriVocabulary: Sendable, Equatable {
         return try load(manifestURL: manifestURL)
     }
 
+    /// Loads the vocabulary paired with the active Fold-07 classifier.
+    /// This manifest is deliberately distinct from the retrieval-model
+    /// manifest consumed by `load(bundle:)`.
+    public static func loadFold7(bundle: Bundle) throws -> HinotoriVocabulary {
+        guard let manifestURL = bundle.url(forResource: "HinotoriFold7CoreML.manifest", withExtension: "json"),
+              let vocabularyURL = bundle.url(forResource: "HinotoriFold7Vocabulary", withExtension: "json") else {
+            throw HinotoriCoreMLError.invalidVocabulary("Bundle内にFold-07 manifestまたは語彙ファイルがありません")
+        }
+        let manifest: Fold7Manifest
+        do {
+            manifest = try JSONDecoder().decode(Fold7Manifest.self, from: Data(contentsOf: manifestURL, options: .mappedIfSafe))
+        } catch {
+            throw HinotoriCoreMLError.invalidVocabulary("Fold-07 manifestを読み込めません: \(error.localizedDescription)")
+        }
+        guard manifest.schema == "hinotori-fold7-spatial-pyramid-coreml-v1",
+              manifest.productModelName == "火の鳥",
+              manifest.checkpoint.epoch == HinotoriFold7CoreMLClassifier.selectedEpoch,
+              manifest.checkpoint.sha256 == HinotoriFold7CoreMLClassifier.checkpointSHA256,
+              manifest.vocabulary.file == "HinotoriFold7Vocabulary.json",
+              manifest.vocabulary.labels == HinotoriFold7CoreMLClassifier.classCount,
+              manifest.vocabulary.sha256.count == 64,
+              manifest.vocabulary.sha256.allSatisfy({ $0.isHexDigit }) else {
+            throw HinotoriCoreMLError.invalidVocabulary("Fold-07 manifestのcheckpointまたは語彙契約が一致しません")
+        }
+        let data: Data
+        do {
+            data = try Data(contentsOf: vocabularyURL, options: .mappedIfSafe)
+        } catch {
+            throw HinotoriCoreMLError.invalidVocabulary("Fold-07語彙を読み込めません: \(error.localizedDescription)")
+        }
+        let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        guard digest == manifest.vocabulary.sha256.lowercased() else {
+            throw HinotoriCoreMLError.invalidVocabulary("Fold-07語彙のSHA-256がmanifestと一致しません")
+        }
+        let document: Fold7VocabularyDocument
+        do {
+            document = try JSONDecoder().decode(Fold7VocabularyDocument.self, from: data)
+        } catch {
+            throw HinotoriCoreMLError.invalidVocabulary("Fold-07語彙JSONが不正です: \(error.localizedDescription)")
+        }
+        guard document.version == "symbol229-v1" else {
+            throw HinotoriCoreMLError.invalidVocabulary("Fold-07語彙の版がsymbol229-v1ではありません")
+        }
+        return try HinotoriVocabulary(labels: document.labels)
+    }
+
     /// Exposed for artifact verification tests.  Production callers should
     /// normally use `load(bundle:manifestResource:manifestExtension:)`.
     public static func load(manifestURL: URL) throws -> HinotoriVocabulary {
@@ -361,6 +421,27 @@ public struct HinotoriVocabulary: Sendable, Equatable {
     }
 
     private struct Document: Decodable {
+        let labels: [String]
+    }
+
+    private struct Fold7Manifest: Decodable {
+        struct Checkpoint: Decodable {
+            let epoch: Int
+            let sha256: String
+        }
+        struct Vocabulary: Decodable {
+            let file: String
+            let sha256: String
+            let labels: Int
+        }
+        let schema: String
+        let productModelName: String
+        let checkpoint: Checkpoint
+        let vocabulary: Vocabulary
+    }
+
+    private struct Fold7VocabularyDocument: Decodable {
+        let version: String
         let labels: [String]
     }
 }
@@ -444,6 +525,7 @@ public final class HinotoriCoreMLExecutor: HinotoriSymbolRecognitionEngine {
         return HinotoriRecognition(
             groups: groups,
             candidates: retrieved.map { $0.candidates },
+            classLogits: retrieved.map { $0.classLogits },
             classFeatureDistances: retrieved.map { $0.classFeatureDistances },
             fold7SimilarityCandidates: []
         )
@@ -523,7 +605,7 @@ public final class HinotoriCoreMLExecutor: HinotoriSymbolRecognitionEngine {
         return ["tracePoints": MLFeatureValue(multiArray: points), "traceValid": MLFeatureValue(multiArray: valid)]
     }
 
-    private func retrieve(query: [[[Float]]], topK: Int) throws -> (candidates: [HinotoriCandidate], classFeatureDistances: [Float]) {
+    private func retrieve(query: [[[Float]]], topK: Int) throws -> (candidates: [HinotoriCandidate], classLogits: [Float], classFeatureDistances: [Float]) {
         let queryPoints = try Self.makeArray(shape: [1, anchorBank.maxStrokes, Self.pointsPerStroke, 2])
         let queryValid = try Self.makeArray(shape: [1, anchorBank.maxStrokes])
         for strokeIndex in query.indices {
@@ -567,7 +649,7 @@ public final class HinotoriCoreMLExecutor: HinotoriSymbolRecognitionEngine {
             }
             return (Array(candidates
                 .sorted { $0.logit == $1.logit ? $0.classIndex < $1.classIndex : $0.logit > $1.logit }
-                .prefix(topK)), distances)
+                .prefix(topK)), candidates.map(\.logit), distances)
         } catch let error as HinotoriCoreMLError {
             throw error
         } catch {

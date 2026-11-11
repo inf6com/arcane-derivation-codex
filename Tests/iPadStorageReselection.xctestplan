@@ -1,0 +1,35 @@
+{
+  "configurations" : [
+    {
+      "id" : "AE7D7328-F90A-4B65-9089-F3C0DE708DE4",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "MTL_DEBUG_LAYER",
+        "value" : "0"
+      }
+    ],
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ArcaneDerivation.xcodeproj",
+      "identifier" : "2F9A2A882E2DA8A900B33F9A",
+      "name" : "inf6"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ArcaneDerivation.xcodeproj",
+        "identifier" : "B741A1D50000000000000003",
+        "name" : "inf6AppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

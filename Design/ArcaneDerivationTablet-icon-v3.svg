@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Arcane Derivation Tablet vector icon">
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1677FF"/>
+      <stop offset="1" stop-color="#06348F"/>
+    </linearGradient>
+    <linearGradient id="vectorA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#8EEBFF"/>
+    </linearGradient>
+    <linearGradient id="vectorB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B58CFF"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="round"><rect width="1024" height="1024" rx="196"/></clipPath>
+  </defs>
+
+  <rect width="1024" height="1024" rx="196" fill="url(#field)"/>
+  <g clip-path="url(#round)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M116 820H908M168 878H856M210 762H814" stroke="#8EDBFF" stroke-opacity=".22" stroke-width="3"/>
+    <path d="M220 704V226M308 760V174M396 704V226M628 704V226M716 760V174M804 704V226" stroke="#8EDBFF" stroke-opacity=".2" stroke-width="3"/>
+
+    <g stroke="url(#vectorA)" stroke-width="8" filter="url(#glow)">
+      <path d="M144 350L252 308L338 374L430 302"/>
+      <path d="M144 430L252 388L338 454L430 382"/>
+      <path d="M144 510L252 468L338 534L430 462"/>
+    </g>
+    <g fill="#E9FDFF" stroke="#1677FF" stroke-width="5">
+      <circle cx="144" cy="350" r="14"/><circle cx="252" cy="308" r="14"/><circle cx="338" cy="374" r="14"/><circle cx="430" cy="302" r="14"/>
+      <circle cx="144" cy="430" r="14"/><circle cx="252" cy="388" r="14"/><circle cx="338" cy="454" r="14"/><circle cx="430" cy="382" r="14"/>
+      <circle cx="144" cy="510" r="14"/><circle cx="252" cy="468" r="14"/><circle cx="338" cy="534" r="14"/><circle cx="430" cy="462" r="14"/>
+    </g>
+
+    <rect x="430" y="300" width="164" height="164" rx="24" fill="#0A3A9E" fill-opacity=".72" stroke="#FFFFFF" stroke-width="8"/>
+    <path d="M458 328H566M458 364H566M458 400H566M458 436H566M458 328V436M494 328V436M530 328V436M566 328V436" stroke="#BFEFFF" stroke-opacity=".72" stroke-width="3"/>
+    <path d="M458 328L494 364L530 400L566 436" stroke="#FFFFFF" stroke-width="8" filter="url(#glow)"/>
+
+    <g stroke="url(#vectorB)" stroke-width="8" filter="url(#glow)">
+      <path d="M594 348L686 302L772 374L880 330"/>
+      <path d="M594 394L686 348L772 420L880 376"/>
+      <path d="M594 440L686 394L772 466L880 422"/>
+    </g>
+    <g fill="#FFFFFF" stroke="#7F63FF" stroke-width="5">
+      <circle cx="594" cy="348" r="14"/><circle cx="686" cy="302" r="14"/><circle cx="772" cy="374" r="14"/><circle cx="880" cy="330" r="14"/>
+      <circle cx="594" cy="394" r="14"/><circle cx="686" cy="348" r="14"/><circle cx="772" cy="420" r="14"/><circle cx="880" cy="376" r="14"/>
+      <circle cx="594" cy="440" r="14"/><circle cx="686" cy="394" r="14"/><circle cx="772" cy="466" r="14"/><circle cx="880" cy="422" r="14"/>
+    </g>
+
+    <path d="M112 650H912" stroke="#FFFFFF" stroke-opacity=".8" stroke-width="5"/>
+    <path d="M512 120V900" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="4"/>
+    <circle cx="512" cy="650" r="30" fill="#FFFFFF" stroke="#7F63FF" stroke-width="8" filter="url(#glow)"/>
+  </g>
+</svg>
