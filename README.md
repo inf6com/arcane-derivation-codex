@@ -1,4 +1,4 @@
-# Arcane Derivation Codex
+# Arcane Derivation Artifact
 
 An iPad-first application for studying machine learning through source papers, mathematical derivations, computation, and implementation. The repository snapshot contains application source, tests, selected design documents, model-conversion code, and Xcode project configuration.
 
